@@ -1,5 +1,5 @@
-import { DefaultComponent } from './user_view/pages/default/default.component';
-import { DefaultRoutingModule } from './user_view/routing/default-routing.module';
+import { HeaderComponent } from './user_view/shared/layout/header/header.component';
+import { ShareAntUiModule } from './user_view/shared/share-ant-ui.module';
 import { ShareViewModule } from './user_view/shared/share-view.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';

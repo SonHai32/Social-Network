@@ -1,3 +1,4 @@
+import { ShareAntUiModule } from './share-ant-ui.module';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './layout/footer/footer.component';
 import { DefaultComponent } from './../pages/default/default.component';
@@ -12,17 +13,16 @@ import { CommonModule } from '@angular/common';
     DefaultComponent,
     HeaderComponent,
     FooterComponent,
-
   ],
   imports: [
     CommonModule,
     RouterModule,
+    ShareAntUiModule,
   ],
   exports: [
     DefaultComponent,
     HeaderComponent,
     FooterComponent,
-
   ]
 })
 export class ShareViewModule { }
