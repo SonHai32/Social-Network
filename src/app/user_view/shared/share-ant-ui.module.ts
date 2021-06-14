@@ -6,12 +6,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { nzModalAnimations, NzModalModule } from 'ng-zorro-antd/modal';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
   exports: [
     NzGridModule,
     NzInputModule,
@@ -20,9 +20,9 @@ import { nzModalAnimations, NzModalModule } from 'ng-zorro-antd/modal';
     NzTypographyModule,
     NzDrawerModule,
     NzModalModule,
+    NzImageModule,
+    NzSpaceModule,
   ],
-  declarations: []
-  
-  
+  declarations: [],
 })
-export class ShareAntUiModule { }
+export class ShareAntUiModule {}
