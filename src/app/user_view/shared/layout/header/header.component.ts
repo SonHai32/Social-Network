@@ -7,27 +7,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isMobile: boolean = false;
-  expandLoginVisible = false;
-  expandRegisterExample = false;
-  drawerPlacement: NzDrawerPlacement = 'bottom'
-  constructor(private dvDectectorService: DeviceDetectorService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.isMobile = this.dvDectectorService.isMobile();
-  }
-
-  openLogin(): void {
-    this.expandLoginVisible = true;
-  }
-  openRegister(): void {
-    this.expandRegisterExample = true;
-  }
-
-  closeLogin(): void {
-    this.expandLoginVisible = false;
-  }
-  closeRegister(): void {
-    this.expandRegisterExample = false;
   }
 }
