@@ -2,9 +2,10 @@
   *ngIf="isMobile"
   [nzClosable]="false"
   [nzVisible]="expandLoginVisible"
-  [nzPlacement]="drawerPlacement"
-  (nzOnClose)="closeLogin()"
+  nzPlacement="bottom"
+  (nzOnClose)="toggleLogin()"
   nzHeight="380px"
+  [nzTitle]="loginTitleTmp"
 >
   <ng-container *nzDrawerContent>
     <ng-container *ngTemplateOutlet="loginFormTmp"> </ng-container>
@@ -17,16 +18,11 @@
   nzCentered
   [nzFooter]="null"
   nzWidth="620px"
-  (nzOnCancel)="closeLogin()"
+  (nzOnCancel)="toggleLogin()"
   [(nzVisible)]="expandLoginVisible"
   nzCloseOnNavigation="true"
-  [nzTitle]="modalTitle"
+  [nzTitle]="loginTitleTmp"
 >
-  <ng-template #modalTitle>
-    <h2 class="m-0 p-0 text-center" nz-typography nzType="success">
-      ĐĂNG NHẬP
-    </h2>
-  </ng-template>
   <ng-template #closeIcon>
     <i nz-icon nzType="close" nzTheme="outline"></i>
   </ng-template>
@@ -43,12 +39,11 @@
           <div nz-col nzLg="14" nzSpan="24" class="my-2">
             <nz-form-item>
               <nz-form-control
-                class="w-100 "
+                class="w-100"
                 nzErrorTip="Please input your username!"
               >
-                <nz-input-group class="c-bg-secondary" nzPrefixIcon="user">
+                <nz-input-group nzPrefixIcon="user">
                   <input
-                    class="c-bg-secondary"
                     style="height: 32px"
                     type="text"
                     nz-input
@@ -67,9 +62,8 @@
                 class="w-100"
                 nzErrorTip="Please input your Password!"
               >
-                <nz-input-group class="c-bg-secondary" nzPrefixIcon="lock">
+                <nz-input-group nzPrefixIcon="lock">
                   <input
-                    class="c-bg-secondary"
                     style="height: 32px"
                     type="password"
                     nz-input
@@ -84,7 +78,9 @@
         <div nz-row nzAlign="middle" nzJustify="center">
           <div nz-col nzLg="14" nzSpan="24" class="my-2">
             <div class="d-flex justify-content-end">
-              <a nz-typography nzType="danger" class="login-form-forgot">Quên mật khẩu ?</a>
+              <a nz-typography nzType="danger" class="login-form-forgot"
+                >Quên mật khẩu ?</a
+              >
             </div>
           </div>
         </div>
@@ -118,42 +114,14 @@
             nzSpan="24"
             class="my-2 d-flex align-items-center justify-content-center"
           >
-            <nz-space
-              nzAlign="baseline"
-              nzDirection="horizontal"
-              nzSize="middle"
-            >
-              <img
-                *nzSpaceItem
-                nz-image
-                nzDisablePreview
-                width="32px"
-                height="32px"
-                nzSrc="./assets/images/icons/facebook.png"
-                alt=""
-              />
-              <img
-                *nzSpaceItem
-                nz-image
-                nzDisablePreview
-                width="32px"
-                height="32px"
-                nzSrc="./assets/images/icons/google.png"
-                alt=""
-              />
-              <img
-                *nzSpaceItem
-                nz-image
-                nzDisablePreview
-                width="32px"
-                height="32px"
-                nzSrc="./assets/images/icons/GitHub.png"
-                alt=""
-              />
-            </nz-space>
+            <auth-with-social></auth-with-social>
           </div>
         </div>
       </form>
     </div>
   </div>
+</ng-template>
+
+<ng-template #loginTitleTmp>
+  <h2 class="m-0 p-0 text-center" nz-typography nzType="success">ĐĂNG NHẬP</h2>
 </ng-template>

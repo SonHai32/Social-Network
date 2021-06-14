@@ -10,26 +10,15 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 export class LoginComponent implements OnInit {
   isMobile: boolean = false;
   expandLoginVisible = false;
-  expandRegisterExample = false;
-  drawerPlacement: NzDrawerPlacement = 'bottom'
   constructor(private dvDectectorService: DeviceDetectorService) {}
 
   ngOnInit(): void {
     this.isMobile = this.dvDectectorService.isMobile();
   }
 
-  openLogin(): void {
-    this.expandLoginVisible = true;
+  toggleLogin(): void{
+    this.expandLoginVisible = !this.expandLoginVisible
   }
-  openRegister(): void {
-    this.expandRegisterExample = true;
-  }
-
-  closeLogin(): void {
-    this.expandLoginVisible = false;
-  }
-  closeRegister(): void {
-    this.expandRegisterExample = false;
-  }
+  
 
 }
