@@ -5,6 +5,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { nzModalAnimations, NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   imports: [
@@ -16,6 +18,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     NzIconModule,
     NzButtonModule,
     NzTypographyModule,
+    NzDrawerModule,
+    NzModalModule,
   ],
   declarations: []
   
