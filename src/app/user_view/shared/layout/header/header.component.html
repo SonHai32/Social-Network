@@ -50,6 +50,7 @@
         nz-button
         nzType="primary"
         nzSearch
+        (click)="openLogin()"
       >
         <i nz-icon nzType="login"></i>
         Đăng nhập
@@ -65,6 +66,121 @@
         <i nz-icon nzType="user-add"></i>
         Đăng ký
       </button>
+    </div>
+  </div>
+</ng-template>
+
+<nz-drawer
+  *ngIf="isMobile"
+  [nzClosable]="false"
+  [nzVisible]="expandLoginVisible"
+  [nzPlacement]="drawerPlacement"
+  (nzOnClose)="closeLogin()"
+    nzHeight="380px"
+>
+  <ng-container *nzDrawerContent>
+<ng-container 
+    *ngTemplateOutlet="loginFormTmp"
+>
+
+</ng-container>      
+</ng-container>
+</nz-drawer>
+
+<nz-modal
+  *ngIf="!isMobile"
+  [nzCloseIcon]="closeIcon"
+  nzCentered
+  [nzFooter]="null"
+  nzWidth="620px"
+  (nzOnCancel)="closeLogin()"
+  [(nzVisible)]="expandLoginVisible"
+  nzCloseOnNavigation="true"
+  [nzTitle]="modalTitle"
+>
+  <ng-template #modalTitle>
+    <h2 class="m-0 p-0 text-center" nz-typography nzType="success">
+      ĐĂNG NHẬP
+    </h2>
+  </ng-template>
+  <ng-template #closeIcon>
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </ng-template>
+  <ng-container *nzModalContent>
+    <ng-container *ngTemplateOutlet="loginFormTmp"> </ng-container>
+  </ng-container>
+</nz-modal>
+
+<ng-template #loginFormTmp>
+  <div nz-row nzAlign="middle" nzJustify="center">
+    <div nz-col nzSpan="22">
+      <form nz-form class="login-form">
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div nz-col nzLg="14" nzSpan="24" class="my-2">
+            <nz-form-item>
+              <nz-form-control
+                class="w-100"
+                nzErrorTip="Please input your username!"
+              >
+                <nz-input-group nzPrefixIcon="user">
+                  <input
+                    style="height: 32px"
+                    type="text"
+                    nz-input
+                    formControlName="userName"
+                    placeholder="Tài khoản"
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div nz-col nzLg="14" nzSpan="24" class="my-2">
+            <nz-form-item nzJustify="center">
+              <nz-form-control
+                class="w-100"
+                nzErrorTip="Please input your Password!"
+              >
+                <nz-input-group nzPrefixIcon="lock">
+                  <input
+                    style="height: 32px"
+                    type="password"
+                    nz-input
+                    formControlName="password"
+                    placeholder="Mật khẩu"
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div nz-col nzLg="14" nzSpan="24" class="my-2">
+            <div class="d-flex justify-content-end">
+              <a class="login-form-forgot">Quên mật khẩu ?</a>
+            </div>
+          </div>
+        </div>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div nz-col nzLg="14" nzSpan="24" class="my-2">
+            <button
+              nzBlock
+              nz-button
+              class="login-form-button login-form-margin"
+              [nzType]="'primary'"
+            >
+            Đăng nhập
+            </button>
+          </div>
+        </div>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div nz-col nzLg="14" nzSpan="24" class="my-2 d-flex align-items-center justify-content-center">
+            <p nz-typographyi class="m-0 p-0">Bạn chưa có tài khoản ?</p>
+            <a nz-typography class="m-0 p-0">Đăng ký </a>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </ng-template>
