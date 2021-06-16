@@ -1,35 +1,12 @@
-<nz-drawer
-  *ngIf="isMobile"
-  [nzClosable]="false"
-  [nzVisible]="expandLoginVisible"
-  nzPlacement="bottom"
-  (nzOnClose)="toggleLogin()"
-  nzHeight="380px"
-  [nzTitle]="loginTitleTmp"
->
-  <ng-container *nzDrawerContent>
-    <ng-container *ngTemplateOutlet="loginFormTmp"> </ng-container>
-  </ng-container>
-</nz-drawer>
+<app-drawer *ngIf="isMobile" [drawerTitle]="'ĐĂNG NHẬP'">
+  <ng-container *ngTemplateOutlet="loginFormTmp"> </ng-container>
+</app-drawer>
 
-<nz-modal
-  *ngIf="!isMobile"
-  [nzCloseIcon]="closeIcon"
-  nzCentered
-  [nzFooter]="null"
-  nzWidth="620px"
-  (nzOnCancel)="toggleLogin()"
-  [(nzVisible)]="expandLoginVisible"
-  nzCloseOnNavigation="true"
-  [nzTitle]="loginTitleTmp"
->
-  <ng-template #closeIcon>
-    <i nz-icon nzType="close" nzTheme="outline"></i>
-  </ng-template>
-  <ng-container *nzModalContent>
-    <ng-container *ngTemplateOutlet="loginFormTmp"> </ng-container>
-  </ng-container>
-</nz-modal>
+<app-modal *ngIf="!isMobile" [modalTitle]="'ĐĂNG NHẬP'">
+  <ng-container *ngTemplateOutlet="loginFormTmp"> </ng-container>
+</app-modal>
+
+
 
 <ng-template #loginFormTmp>
   <div nz-row nzAlign="middle" nzJustify="center">
@@ -47,7 +24,6 @@
                     style="height: 32px"
                     type="text"
                     nz-input
-                    formControlName="userName"
                     placeholder="Tài khoản"
                   />
                 </nz-input-group>
@@ -67,7 +43,6 @@
                     style="height: 32px"
                     type="password"
                     nz-input
-                    formControlName="password"
                     placeholder="Mật khẩu"
                   />
                 </nz-input-group>

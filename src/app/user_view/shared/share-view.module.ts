@@ -1,3 +1,7 @@
+import { ModalComponent } from './layout/modal/modal.component';
+import { DrawerComponent } from './layout/drawer/drawer.component';
+import { RegisterComponent } from './layout/auth/register/register.component';
+import { AuthWithSocialComponent } from './layout/auth/auth-with-social/auth-with-social.component';
 import { LoginComponent } from './layout/auth/login/login.component';
 import { ShareAntUiModule } from './share-ant-ui.module';
 import { RouterModule } from '@angular/router';
@@ -15,6 +19,10 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
+    AuthWithSocialComponent,
+    RegisterComponent,
+    DrawerComponent,
+    ModalComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +34,9 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
+    RegisterComponent,
+    DrawerComponent,
+    ModalComponent,
   ]
 })
 export class ShareViewModule { }

@@ -1,4 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
-*{
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
+* {
+  font-family: "Fira Sans Extra Condensed", sans-serif;
+}
+
+.top-rounded {
+  border-top-left-radius: 25px !important;
+  border-top-right-radius: 25px !important;
+}
+
+.btn-image {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 9.5px;
+  background-color: #fff;
+  transition: all 0.4s ease-in-out;
+  &:hover {
+    background-color: #F4F6FA;
+  }
 }

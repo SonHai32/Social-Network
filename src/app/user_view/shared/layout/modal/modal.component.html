@@ -1,0 +1,22 @@
+<nz-modal
+  [nzCloseIcon]="closeIcon"
+  nzCentered
+  [nzFooter]="null"
+  nzWidth="620px"
+  (nzOnCancel)="toggleModal()"
+  [(nzVisible)]="modalVisible"
+  nzCloseOnNavigation="true"
+  [nzTitle]="modalTitleTmp"
+>
+  <ng-content> </ng-content>
+</nz-modal>
+
+<ng-template #closeIcon>
+  <i nz-icon nzType="close" nzTheme="outline"></i>
+</ng-template>
+
+<ng-template #modalTitleTmp>
+  <h2 class="m-0 p-0 text-center" nz-typography nzType="success">
+    {{ modalTitle }}
+  </h2>
+</ng-template>

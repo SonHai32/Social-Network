@@ -50,7 +50,7 @@
         nz-button
         nzType="primary"
         nzSearch
-        (click)="loginForm.openLogin()"
+        (click)="toggleLogin()"
       >
         <i nz-icon nzType="login"></i>
         Đăng nhập
@@ -62,6 +62,8 @@
         class="mx-1 d-flex align-items-center justify-content-center"
         nz-button
         nzSearch
+        (click)="toggleRegister()"
+        
       >
         <i nz-icon nzType="user-add"></i>
         Đăng ký
@@ -70,5 +72,9 @@
   </div>
 </ng-template>
 
-<user-auth-login #loginForm>
+<user-auth-login #loginform>
 </user-auth-login>
+
+<user-auth-register #registerForm>
+
+</user-auth-register>

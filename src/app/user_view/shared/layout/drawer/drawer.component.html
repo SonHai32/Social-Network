@@ -1,0 +1,15 @@
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="drawerVisible"
+  nzPlacement="bottom"
+  (nzOnClose)="toggleDrawer()"
+  nzHeight="67%"
+  [nzTitle]="drawerTitleTmp"
+>
+  <ng-container *nzDrawerContent>
+      <ng-content></ng-content>
+  </ng-container>
+</nz-drawer>
+<ng-template #drawerTitleTmp>
+  <h2 class="m-0 p-0 text-center" nz-typography nzType="success">{{drawerTitle}}</h2>
+</ng-template>

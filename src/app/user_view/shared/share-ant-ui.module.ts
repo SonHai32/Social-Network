@@ -9,10 +9,12 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [CommonModule],
   exports: [
+    ReactiveFormsModule,
     NzGridModule,
     NzInputModule,
     NzIconModule,

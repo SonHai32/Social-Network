@@ -1,0 +1,79 @@
+<app-drawer *ngIf="isMobile" [drawerTitle]="'ĐĂNG KÝ'">
+  <ng-container *ngTemplateOutlet="registerForm"> </ng-container>
+</app-drawer>
+
+<app-modal *ngIf="!isMobile" [modalTitle]="'ĐĂNG KÝ'">
+  <ng-container *ngTemplateOutlet="registerForm"> </ng-container>
+</app-modal>
+
+<ng-template #registerForm>
+  <div nz-row nzAlign="middle" nzJustify="center">
+    <div nz-col nzSpan="22">
+      <form nz-form class="login-form">
+        <nz-form-item
+          *ngFor="let field of registerField"
+          nzAlign="middle"
+          nzJustify="center"
+          [nzGutter]="[0, 16]"
+        >
+          <nz-form-control nzLg="14" nzSpan="24" class="my-2" class="w-100">
+            <nz-input-group [nzPrefixIcon]="field.icon">
+              <input
+                nz-input
+                style="height: 32px"
+                [type]="field.type"
+                [placeholder]="field.placeholder"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div nz-col nzLg="14" nzSpan="24" class="my-2">
+            <div class="d-flex justify-content-end">
+              <a nz-typography nzType="danger" class="login-form-forgot"
+                >Quên mật khẩu ?</a
+              >
+            </div>
+          </div>
+        </div>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div nz-col nzLg="10" nzSpan="24" class="my-2">
+            <button
+              nzBlock
+              nz-button
+              class="login-form-button login-form-margin"
+              [nzType]="'primary'"
+            >
+              Đăng ký
+            </button>
+          </div>
+        </div>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div
+            nz-col
+            nzLg="14"
+            nzSpan="24"
+            class="my-2 d-flex align-items-center justify-content-center"
+          >
+            <p nz-typographyi class="m-0 p-0">Bạn đã có tài khoản ?</p>
+            <a nz-typography class="m-0 p-0">Đăng nhập</a>
+          </div>
+        </div>
+        <div nz-row nzAlign="middle" nzJustify="center">
+          <div
+            nz-col
+            nzLg="14"
+            nzSpan="24"
+            class="my-2 d-flex align-items-center justify-content-center"
+          >
+            <auth-with-social></auth-with-social>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loginTitleTmp>
+  <h2 class="m-0 p-0 text-center" nz-typography nzType="success">ĐĂNG KÝ</h2>
+</ng-template>
