@@ -1,8 +1,8 @@
+import { LoginComponent } from './../components/auth/login/login.component';
+import { AuthWithSocialComponent } from './../components/auth/auth-with-social/auth-with-social.component';
+import { RegisterComponent } from './../components/auth/register/register.component';
 import { ModalComponent } from './layout/modal/modal.component';
 import { DrawerComponent } from './layout/drawer/drawer.component';
-import { RegisterComponent } from './layout/auth/register/register.component';
-import { AuthWithSocialComponent } from './layout/auth/auth-with-social/auth-with-social.component';
-import { LoginComponent } from './layout/auth/login/login.component';
 import { ShareAntUiModule } from './share-ant-ui.module';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './layout/footer/footer.component';

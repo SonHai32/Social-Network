@@ -1,5 +1,5 @@
-import { ModalComponent } from './../../modal/modal.component';
-import { DrawerComponent } from './../../drawer/drawer.component';
+import { ModalComponent } from './../../../shared/layout/modal/modal.component';
+import { DrawerComponent } from './../../../shared/layout/drawer/drawer.component';
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { DeviceDetectorService } from 'ngx-device-detector';

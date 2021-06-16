@@ -1,5 +1,5 @@
-import { LoginComponent } from './../auth/login/login.component';
-import { RegisterComponent } from './../auth/register/register.component';
+import { LoginComponent } from './../../../components/auth/login/login.component';
+import { RegisterComponent } from './../../../components/auth/register/register.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-header',
