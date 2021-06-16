@@ -9,6 +9,9 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -24,6 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzModalModule,
     NzImageModule,
     NzSpaceModule,
+    NzAffixModule,
+    NzMenuModule,
+    NzDividerModule,
   ],
   declarations: [],
 })

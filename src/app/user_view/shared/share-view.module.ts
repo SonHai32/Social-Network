@@ -1,3 +1,5 @@
+import { HomeComponent } from './../components/home/home.component';
+import { PaneMenuComponent } from './layout/pane-menu/pane-menu.component';
 import { LoginComponent } from './../components/auth/login/login.component';
 import { AuthWithSocialComponent } from './../components/auth/auth-with-social/auth-with-social.component';
 import { RegisterComponent } from './../components/auth/register/register.component';
@@ -23,6 +25,8 @@ import { CommonModule } from '@angular/common';
     RegisterComponent,
     DrawerComponent,
     ModalComponent,
+    PaneMenuComponent,
+    HomeComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +41,8 @@ import { CommonModule } from '@angular/common';
     RegisterComponent,
     DrawerComponent,
     ModalComponent,
+    PaneMenuComponent,
+    HomeComponent,
   ]
 })
 export class ShareViewModule { }
