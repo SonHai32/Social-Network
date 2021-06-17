@@ -9,17 +9,17 @@
     <h1 nz-typography class="m-0 p-0 text-center">LOGO</h1>
   </div>
   <div nz-col nzLg="12" nzSpan="24">
-    <div nz-row nzAlign="middle" nzJustify="center">
-      <div nz-col nzLg="14" nzSpan="18">
+    <div nz-row nzAlign="middle" nzJustify="end">
+      <div nz-col nzLg="8" nzSpan="18">
         <nz-input-group
-          class="rounded"
+          class="rounded border-0"
           nzSize="large"
           nzSearch
           [nzPrefix]="prefixSearchIcon"
           class="c-bg-secondary"
         >
           <input
-            class="c-bg-secondary"
+            class="c-bg-secondary border-0"
             type="text"
             nz-input
             placeholder="input search text"
@@ -63,7 +63,7 @@
         nz-button
         nzSearch
         (click)="toggleRegister()"
-        
+
       >
         <i nz-icon nzType="user-add"></i>
         Đăng ký
