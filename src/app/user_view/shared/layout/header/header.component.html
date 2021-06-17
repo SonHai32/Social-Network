@@ -12,14 +12,14 @@
     <div nz-row nzAlign="middle" nzJustify="end">
       <div nz-col nzLg="8" nzSpan="18">
         <nz-input-group
-          class="rounded border-0"
+          class="rounded"
           nzSize="large"
           nzSearch
           [nzPrefix]="prefixSearchIcon"
           class="c-bg-secondary"
         >
           <input
-            class="c-bg-secondary border-0"
+            class="c-bg-secondary"
             type="text"
             nz-input
             placeholder="input search text"
@@ -63,7 +63,6 @@
         nz-button
         nzSearch
         (click)="toggleRegister()"
-
       >
         <i nz-icon nzType="user-add"></i>
         Đăng ký
@@ -72,9 +71,6 @@
   </div>
 </ng-template>
 
-<user-auth-login #loginform>
-</user-auth-login>
+<user-auth-login #loginform> </user-auth-login>
 
-<user-auth-register #registerForm>
-
-</user-auth-register>
+<user-auth-register #registerForm> </user-auth-register>

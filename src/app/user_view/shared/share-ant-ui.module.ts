@@ -13,7 +13,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 @NgModule({
   imports: [CommonModule],
   exports: [
@@ -30,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzAffixModule,
     NzMenuModule,
     NzDividerModule,
+    NzAvatarModule,
   ],
   declarations: [],
 })

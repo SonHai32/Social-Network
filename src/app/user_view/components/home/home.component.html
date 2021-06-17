@@ -1,4 +1,125 @@
-<div class="vh-100" style="position: relative;">
-    
-  <app-pane-menu> </app-pane-menu>
+<div
+  nz-row
+  nzAlign="middle"
+  nzJustify="center"
+  class="vh-100"
+  style="position: relative"
+>
+  <div
+    nz-col
+    nzLg="4"
+    nzSpan="0"
+    class="h-100 position-relative pt-5 d-flex justify-content-center"
+    #leftContainer
+  >
+    <nz-affix [nzTarget]="leftContainer">
+      <app-pane-menu> </app-pane-menu>
+    </nz-affix>
+  </div>
+  <div nz-col nzLg="14" nzSpan="24" class="h-100 p-5">
+    <div
+      class="
+        w-100
+        rounded-12
+        bg-white
+        d-flexi
+        flex-column
+        align-items-center
+        p-4
+        shadow-sm
+      "
+    >
+      <div class="w-100 d-flex align-items-center">
+        <nz-avatar
+          nzIcon="user"
+          nzShape="square"
+          nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        ></nz-avatar>
+
+        <input
+          class="h-60 font-size-md"
+          nz-input
+          placeholder="Bạn muốn chia sẻ điều gì thế ?"
+          nzBorderless
+          nzSize="large"
+        />
+        <button
+          nzSize="large"
+          class="
+            mx-1
+            p-4
+            rounded
+            font-size-md
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+          nz-button
+          nzType="primary"
+          nzSearch
+        >
+          <i nz-icon nzType="form"></i>
+          Đăng nhập
+        </button>
+      </div>
+
+      <div class="w-100 d-flex align-items-center justify-content-start  mt-4 ">
+        <button
+          nzSize="large"
+          class="
+            mx-1
+            p-4
+            rounded
+            font-size-md
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+          nz-button
+          nzType="dashed"
+          nzSearch
+        >
+          <i nz-icon nzType="picture"></i>
+          Hình ảnh/Videos
+        </button>
+        <button
+          nzSize="large"
+          class="
+            mx-1
+            p-4
+            rounded
+            font-size-md
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+          nz-button
+          nzType="dashed"
+          nzSearch
+        >
+          <i nz-icon nzType="environment" nzTheme="outline"></i>
+         Địa điểm
+        </button>
+        <button
+          nzSize="large"
+          class="
+            mx-1
+            p-4
+            rounded
+            font-size-md
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+          nz-button
+          nzType="dashed"
+          nzSearch
+        >
+          <i nz-icon nzType="tag" nzTheme="outline"></i>
+          Hastag
+        </button>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzLg="4" nzSm="0" class="h-100"></div>
 </div>
