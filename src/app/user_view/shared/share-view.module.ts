@@ -1,3 +1,5 @@
+import { PostCreateComponent } from './../components/post/post-create/post-create.component';
+import { PostContainerComponent } from './../components/post/post-container/post-container.component';
 import { HomeComponent } from './../components/home/home.component';
 import { PaneMenuComponent } from './layout/pane-menu/pane-menu.component';
 import { LoginComponent } from './../components/auth/login/login.component';
@@ -27,6 +29,8 @@ import { CommonModule } from '@angular/common';
     ModalComponent,
     PaneMenuComponent,
     HomeComponent,
+    PostContainerComponent,
+    PostCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +47,8 @@ import { CommonModule } from '@angular/common';
     ModalComponent,
     PaneMenuComponent,
     HomeComponent,
+    PostContainerComponent,
+    PostCreateComponent,
   ]
 })
 export class ShareViewModule { }

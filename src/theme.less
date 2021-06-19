@@ -8,7 +8,7 @@
 @primary-color: #1778F2;
 @secondary-color: #F4F6FA;
 @gray-color: #ACB9C9;
-@border-radius-base: 9.8px;
+@border-radius-base: 2px;
 @font-family: 'Fira Sans Extra Condensed', sans-serif !important;
 @input-bg: @secondary-color;
 @text-color: #4c607b;
@@ -16,7 +16,9 @@
 @menu-item-active-bg: #fff;
 @input-border-color: @secondary-color;
 @input-placeholder-color: #9DA9B9;
-
+@input-hover-border-color: @secondary-color;
+@outline-width: 0px;
+@outline-color: @secondary-color;
 .c-bg-secondary{
     background: @secondary-color;
 }
@@ -70,4 +72,14 @@
 
 mt-50{
   margin-top: 50px;
+}
+
+
+.no-resize{
+  resize: none;
+}
+
+
+.font-size-sm{
+  font-size: 15px;
 }

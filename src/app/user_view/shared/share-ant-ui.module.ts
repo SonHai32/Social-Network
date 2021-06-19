@@ -12,8 +12,13 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [CommonModule],
   exports: [
@@ -31,6 +36,10 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     NzMenuModule,
     NzDividerModule,
     NzAvatarModule,
+    NzTagModule,
+    NzNoAnimationModule,
+    FormsModule,
+    NzBadgeModule,
   ],
   declarations: [],
 })
