@@ -9,7 +9,8 @@
 @secondary-color: #F4F6FA;
 @gray-color: #ACB9C9;
 @border-radius-base: 2px;
-@font-family: 'Fira Sans Extra Condensed', sans-serif !important;
+// @font-family: 'Fira Sans Extra Condensed', sans-serif !important;
+@font-family: "SF Pro Text",-apple-system,BlinkMacSystemFont,Arial,Segoe UI,Roboto,"Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 @input-bg: @secondary-color;
 @text-color: #4c607b;
 @text-color-secondary: #D5DCE5;
@@ -19,6 +20,8 @@
 @input-hover-border-color: @secondary-color;
 @outline-width: 0px;
 @outline-color: @secondary-color;
+@link-color: @text-color;
+
 .c-bg-secondary{
     background: @secondary-color;
 }
@@ -51,16 +54,25 @@
   }
 }
 .font-size-md{
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .rounded-12{
   border-radius: 12px !important;
 }
+.rounded-24{
+  border-radius: 24px !important;
+}
 
-
+.top-rounded{
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+}
 .h-60{
   height: 60px;
+}
+.h-80{
+  height: 80px;
 }
 .h-120{
   height: 120px;
@@ -81,5 +93,24 @@ mt-50{
 
 
 .font-size-sm{
-  font-size: 15px;
+  font-size: 13px;
+}
+.font-size-xs{
+  font-size: 12px;
+}
+
+.pointer{
+  cursor: pointer;
+}
+.scale-sm{
+  transition: all .2s ease-in-out;
+
+  &:hover{
+    scale: 1.05;
+  }
+}
+
+.rounded-bottom-24{
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
 }

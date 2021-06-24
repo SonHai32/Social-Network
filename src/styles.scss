@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 * {
-  font-family: "Fira Sans Extra Condensed", sans-serif;
+  // font-family: "Fira Sans Extra Condensed", sans-serif;
+
+font-family: "SF Pro Text",-apple-system,BlinkMacSystemFont,Arial,Segoe UI,Roboto,"Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
 
 .top-rounded {
@@ -17,7 +19,4 @@
   &:hover {
     background-color: #F4F6FA;
   }
-}
-.font-size-md{
-  font-size: 20px;
 }

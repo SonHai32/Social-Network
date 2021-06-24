@@ -1,71 +1,131 @@
-<div nz-row nzAlign="middle" class="bg-white">
-  <div nz-col nzSpan="24">
-    <div nz-row nzAlign="middle">
+<!-- ----------------------- -->
+<div nz-row nzAlign="middle" nzJustify="center" class="c-bg-secondary">
+  <!-- START-POST-CONTENT-CONTAINER -->
+  <div nz-col nzSpan="24" class="bg-white shadow-sm mb-3">
+    <div nz-row nzAlign="middle" nzJustify="center">
+      <!-- START-USER-LABLE -->
       <div nz-col nzSpan="24" class="d-flex align-items-center p-3">
         <nz-avatar
           class="d-flex align-items-center justify-content-center mx-1"
           nzSrc="https://static.coindesk.com/wp-content/uploads/2021/04/dogecoin-710x458.jpg?format=webp"
-          nzShape="square"
+          nzShape="circle"
           nzSize="large"
           nzIcon="user"
         ></nz-avatar>
-        <a href="#" nz-typography class="font-size-md">username</a>
+        <div class="d-flex flex-column justify-content-center">
+          <a href="#" nz-typography class="font-size-xs">
+            <strong>username</strong>
+          </a>
+          <span
+            class="d-flex align-items-center font-size-xs"
+            nz-typography
+            nzType="secondary"
+            ><i nz-icon nzType="global" nzTheme="outline" class="mr-1"></i
+            >&nbsp; Công khai</span
+          >
+        </div>
       </div>
-      <div nz-col nzSpan="24" class="p-3">
+      <!-- END-USER-LABLE -->
+
+      <!-- START-TEXT -->
+      <div nz-col nzSpan="24" class="p-4">
         <textarea
           #postContentInput
           nz-input
+          rows="4"
           nzBorderless
           placeholder="Bạn muốn chia sẻ điều gì ?"
           class="no-resize w-100"
         ></textarea>
       </div>
+      <!--END-TEXT -->
+
+      <!-- START-HASHTAG-CONTAINER -->
+      <div
+        *ngIf="addTagLabelVisible"
+        nz-col
+        nzSpan="24"
+        class="p-3 d-flex align-items-center flex-wrap"
+      >
+        <nz-tag
+          *ngFor="let tag of tags"
+          [nzColor]="'blue'"
+          nzMode="closeable"
+          (nzOnClose)="removeTag(tag)"
+          class="d-flex align-items-center mx-1 my-1 font-size-sm"
+        >
+          <i nz-icon nzType="tag" class="mx-1"></i>
+          {{ tag }}</nz-tag
+        >
+
+        <nz-tag
+          *ngIf="!inputTagVisible && addTagLabelVisible"
+          nzNoAnimation
+          nzColor="error"
+          class="d-flex align-items-center mx-1 font-size-sm"
+          (click)="showInputTag()"
+        >
+          <i nz-icon nzType="plus" class="mx-1"></i> Thêm</nz-tag
+        >
+        <input
+          *ngIf="inputTagVisible"
+          nz-input
+          type="text"
+          style="width: 78px"
+          nzSize="small"
+          class="font-size-sm"
+          (blur)="submitTag()"
+          (keydown.enter)="submitTag()"
+          [(ngModel)]="inputTagValue"
+          #inputTag
+        />
+      </div>
+
+      <!--END-HASHTAG-CONTAINER -->
     </div>
   </div>
-  <div nz-col nzSpan="24" class="p-3 d-flex align-items-center flex-wrap">
-    <nz-tag
-      *ngFor="let tag of tags"
-      [nzColor]="'blue'"
-      nzMode="closeable"
-      (nzOnClose)="removeTag(tag)"
-      class="d-flex align-items-center mx-1 font-size-sm"
-    >
-      <i nz-icon nzType="tag" class="mx-1"></i>
-      {{ tag }}</nz-tag
-    >
+  <!-- END-POST-CONTENT-CONTAINER -->
 
-    <nz-tag
-      *ngIf="!inputTagVisible && addTagLabelVisible"
-      nzNoAnimation
-      nzColor="error"
-      class="d-flex align-items-center mx-1 font-size-sm"
-      (click)="showInputTag()"
-    >
-      <i nz-icon nzType="plus" class="mx-1"></i> Thêm</nz-tag
-    >
-    <input
-      *ngIf="inputTagVisible"
-      nz-input
-      type="text"
-      style="width: 78px"
-      nzSize="small"
-      class="font-size-sm"
-      (blur)="submitTag()"
-      (keydown.enter)="submitTag()"
-      [(ngModel)]="inputTagValue"
-      #inputTag
-    />
-  </div>
-  <div nz-col nzSpan="24" class="d-flex align-items-center p-3 flex-wrap">
+  <!-- START-MEDIA-CONTAINER -->
+  <div
+    *ngIf="imageFiles.length > 0"
+    nz-col
+    nzSpan="22"
+    class="
+      d-flex
+      align-items-center
+      p-3
+      my-2
+      flex-wrap
+      bg-white
+      rounded-12
+      shadow-sm
+    "
+  >
     <nz-badge [nzCount]="iconTemplate">
-      <nz-avatar
-        class="d-flex align-items-center justify-content-center mx-1"
-        [nzShape]="'square'"
-        [nzSize]="64"
-        [nzIcon]="'picture'"
-      ></nz-avatar>
+      <img
+        nz-image
+        width="48px"
+        height="48px"
+        nzSrc="./assets/images/icons/picture.png"
+        alt=""
+      />
     </nz-badge>
-    <a nz-typography class="font-size-sm mx-2"> 2 Hinh anh dinh kem </a>
+    <a
+      nz-typography
+      nzType="danger"
+      class="font-size-sm mx-2"
+      (click)="toggleShowListImage()"
+      ><strong> {{ imageFiles.length }} tệp tin đính kèm </strong>
+    </a>
+    <div
+      *ngIf="imageFiles.length > 0 && imageListVisible"
+      style="overflow-y: scroll"
+      class="d-flex align-items-center p-3 flex-wrap h-120 w-100"
+    >
+      <nz-upload class="w-100" nzListType="picture" [(nzFileList)]="imageFiles">
+      </nz-upload>
+    </div>
     <ng-template #iconTemplate>
       <i
         class="ant-scroll-number-custom-component"
@@ -75,37 +135,151 @@
       ></i>
     </ng-template>
   </div>
-  <div nz-col nzSpan="24" class="d-flex align-items-center p-3 flex-wrap">
-    <button
-      nzSize="small"
-      class="m-1 d-flex align-items-center justify-content-center"
-      nz-button
-      nzType="dashed"
+
+  <!-- END-MEDIA-CONTAINER -->
+
+  <!-- START-OPTION-BOX -->
+  <div nz-col nzSpan="24">
+
+  <div nz-row nzJustify="space-around">
+    <div
+      nz-col
+      nzLg="5"
+      nzSpan="22"
+      class="
+        d-flex
+        align-items-center
+        p-2
+        font-size-xs
+        pointer
+        bg-white
+        rounded-12
+        my-1
+        shadow-sm
+        scale-sm
+      "
     >
-      <i nz-icon nzType="picture"></i>
-      Hình ảnh/Videos
-    </button>
-    <button
-      nzSize="small"
-      class="m-1 d-flex align-items-center justify-content-center"
-      nz-button
-      nzType="dashed"
-    >
-      <i nz-icon nzType="environment" nzTheme="outline"></i>
-      Địa điểm
-    </button>
-    <button
-      nzSize="small"
-      class="m-1 d-flex align-items-center justify-content-center"
-      nz-button
-      nzType="dashed"
+      <img
+      class="mx-1"
+        nz-image
+        width="28px"
+        height="28px"
+        nzSrc="./assets/images/icons/map.png"
+        alt=""
+      />
+      <span nz-typography> <strong> Địa điểm</strong> </span>
+    </div>
+
+    <div
       (click)="showTagLabel()"
+      nz-col
+      nzLg="5"
+      nzSpan="22"
+      class="
+        d-flex
+        align-items-center
+        p-2
+        font-size-xs
+        pointer
+        bg-white
+        rounded-12
+        my-1
+        shadow-sm
+        scale-sm
+      "
     >
-      <i nz-icon nzType="tags" nzTheme="outline"></i>
-      Hastag
-    </button>
+      <img
+      class="mx-2"
+        nz-image
+        width="28px"
+        height="28px"
+        nzSrc="./assets/images/icons/tag.png"
+        alt=""
+      />
+      <span nz-typography> <strong>Hashtag</strong> </span>
+    </div>
+    <div
+      nz-col
+      nzLg="7"
+      nzSpan="22"
+      class="
+        d-flex
+        align-items-center
+        p-2
+        font-size-xs
+        pointer
+        bg-white
+        rounded-12
+        my-1
+        shadow-sm
+        scale-sm
+      "
+    >
+      <nz-upload
+        nzFileType="image/png,image/jpeg,image/gif,image/bmp"
+        nzSize="15360"
+        [nzMultiple]="true"
+        [nzFileListRender]="nullTpl"
+        [nzBeforeUpload]="beforeUpload"
+      >
+        <ng-template #nullTpl></ng-template>
+      <div class="font-size-xs">
+
+        <img
+      class="mx-1"
+          nz-image
+          width="28px"
+          height="28px"
+          nzSrc="./assets/images/icons/picture.png"
+          alt=""
+        />
+        <span nz-typography > <strong>Khoảnh khắc</strong> </span>
+</div>
+      </nz-upload>
+    </div>
+    <div
+      nz-col
+      nzLg="5"
+      nzSpan="22"
+      class="
+        d-flex
+        align-items-center
+        p-2
+        pointer
+        bg-white
+        rounded-12
+        font-size-xs
+        my-1
+        shadow-sm
+        scale-sm
+      "
+    >
+      <img
+      class="mx-1"
+        nz-image
+        width="28px"
+        height="28px"
+        nzSrc="./assets/images/icons/add-friend.png"
+        alt=""
+      />
+      <span nz-typography> <strong>Bạn bè</strong> </span>
+    </div>
   </div>
-  <div nz-col nzSpan="24" class="p-3">
-    <button nzBlock nzSize="large" nz-button nzType="primary">Đăng bài</button>
+
+  </div>
+
+  <!-- END-OPTION-BOX -->
+
+  <div nz-col nzSpan="22" class="mt-3">
+    <button
+      class="rounded-24"
+      nzBlock
+      nzSize="large"
+      nz-button
+      nzType="primary"
+    >
+    Chia sẻ
+    </button>
   </div>
 </div>
+<!-- ----------------------- -->

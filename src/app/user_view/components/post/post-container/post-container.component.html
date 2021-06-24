@@ -1,33 +1,56 @@
 <div nz-row nzAlign="middle" class="rounded-12 bg-white p-4 shadow">
-  <div nz-col nzSpan="4" class="d-flex align-items-center">
+  <div nz-col nzSpan="24" class="d-flex align-items-center">
     <nz-avatar
       class="d-flex align-items-center justify-content-center mx-1"
       nzIcon="user"
-      nzShape="square"
+      nzShape="circle"
       nzSize="large"
       nzIcon="user"
     ></nz-avatar>
-  </div>
-  <div nz-col nzSpan="20">
-    <span (click)="toggleCreatePostDrawer()" nz-typography class="font-size-md"
+    <span (click)="toggleCreatePost()" nz-typography class="font-size-md mx-3"
       >Bạn muốn chia sẻ điều gì ?</span
     >
   </div>
 </div>
 
 <nz-drawer
+  *ngIf="isMobile"
+  class="c-bg-secondary"
+  [nzBodyStyle]="{ padding: 0, margin: 0, background: '#F4F6FA' }"
   nzPlacement="bottom"
   nzHeight="100%"
   nzClosable="true"
-  [(nzVisible)]="createPostDrawerVisible"
-  [nzCloseIcon]="closeIcon"
-  (nzOnClose)="toggleCreatePostDrawer()"
+  [(nzVisible)]="createPostVisible"
+  (nzOnClose)="toggleCreatePost()"
+  [nzTitle]="title"
 >
   <ng-container *nzDrawerContent>
     <home-post-create></home-post-create>
   </ng-container>
-
-  <ng-template #closeIcon>
-    <i nz-icon nzType="close"></i>
-  </ng-template>
 </nz-drawer>
+
+<nz-modal
+  *ngIf="!isMobile"
+  nzCentered
+  nzWidth="55%"
+  [nzBodyStyle]="{ background: '#F4F6FA', padding: '0', 'padding-bottom': '20px' }"
+  [nzTitle]="title"
+  [(nzVisible)]="createPostVisible"
+  (nzOnCancel)="toggleCreatePost()"
+  nzClassName="rounded-12"
+   [nzFooter]="null"
+>
+  <ng-container *nzModalContent>
+    <home-post-create></home-post-create>
+  </ng-container>
+</nz-modal>
+
+<ng-template #title>
+  <span nz-typography class="p-0 m-0"> <strong>Tạo bài viết</strong> </span>
+</ng-template>
+
+<ng-template #closeIcon>
+  <button nz-button nzType="primary" nzShape="circle">
+    <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
+  </button>
+</ng-template>

@@ -15,8 +15,12 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NzListModule } from 'ng-zorro-antd/list';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -40,6 +44,10 @@ import { FormsModule } from '@angular/forms';
     NzNoAnimationModule,
     FormsModule,
     NzBadgeModule,
+    NzMessageModule,
+    NzUploadModule,
+    NzListModule,
+    ScrollingModule,
   ],
   declarations: [],
 })

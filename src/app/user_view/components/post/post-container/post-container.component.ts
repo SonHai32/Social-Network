@@ -1,3 +1,4 @@
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,13 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post-container.component.scss'],
 })
 export class PostContainerComponent implements OnInit {
-  createPostDrawerVisible: boolean = false;
+  createPostVisible: boolean = false;
 
-  constructor() {}
+  isMobile: boolean = false;
 
-  ngOnInit(): void {}
+  constructor(private dv: DeviceDetectorService) {}
 
-  toggleCreatePostDrawer(): void {
-    this.createPostDrawerVisible = !this.createPostDrawerVisible;
+  ngOnInit(): void {
+    this.isMobile = this.dv.isMobile();
+  }
+
+
+  toggleCreatePost(): void {
+    this.createPostVisible = !this.createPostVisible;
   }
 }
