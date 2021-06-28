@@ -1,0 +1,25 @@
+<div [@enter]   nz-row class="p-3 bg-white rounded-12 mb-2">
+  <div nz-col nzSpan="24">
+    <div class="w-100 d-flex align-items-center">
+      <nz-avatar
+        class="d-flex align-items-center justify-content-center"
+        [nzSize]="48"
+        nzIcon="user"
+      ></nz-avatar>
+      <div class="d-flex flex-column flex-wrap">
+        <a href="#" nz-typography class="mx-2"><strong>friend name</strong></a>
+        <span nz-typography nzType="secondary" class="mx-2">Muốn kết bạn với bạn </span>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="24" class="mt-4">
+    <div nz-row>
+      <div nz-col nzSpan="12" class="px-4">
+        <button nz-button nzType="primary" nzBlock>Đồng ý</button>
+      </div>
+      <div nz-col nzSpan="12" class="px-4">
+        <button nz-button nzType="dashed" nzBlock>Từ chối</button>
+      </div>
+    </div>
+  </div>
+</div>
