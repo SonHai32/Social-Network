@@ -13,7 +13,8 @@ import vi from '@angular/common/locales/vi';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { StoreModule } from '@ngrx/store';
+import { userReducer, userState } from './user_view/store/reducer/user.reducer';
 registerLocaleData(vi);
 
 @NgModule({
@@ -22,6 +23,9 @@ registerLocaleData(vi);
   ],
   imports: [
     BrowserModule,
+    StoreModule.forRoot({
+      currentUser: userReducer
+    }),
     ShareViewModule,
     AppRoutingModule,
     FormsModule,
