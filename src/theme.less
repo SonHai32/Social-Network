@@ -1,37 +1,38 @@
-
 // Custom Theming for NG-ZORRO
 // For more information: https://ng.ant.design/docs/customize-theme/en
 @import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
-@primary-color: #1778F2;
-@secondary-color: #F4F6FA;
-@gray-color: #ACB9C9;
+@primary-color: #1778f2;
+@secondary-color: #f4f6fa;
+@gray-color: #acb9c9;
 @border-radius-base: 2px;
 // @font-family: 'Fira Sans Extra Condensed', sans-serif !important;
-@font-family: "SF Pro Text",-apple-system,BlinkMacSystemFont,Arial,Segoe UI,Roboto,"Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+@font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI,
+  Roboto, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  "Segoe UI Symbol";
 @input-bg: @secondary-color;
 @text-color: #4c607b;
-@text-color-secondary: #D5DCE5;
+@text-color-secondary: #d5dce5;
 @menu-item-active-bg: #fff;
 @input-border-color: @secondary-color;
-@input-placeholder-color: #9DA9B9;
+@input-placeholder-color: #9da9b9;
 @input-hover-border-color: @secondary-color;
 @outline-width: 0px;
 @outline-color: @secondary-color;
 @link-color: @text-color;
 
-.c-bg-secondary{
-    background: @secondary-color;
+.c-bg-secondary {
+  background: @secondary-color;
 }
 
-.font-gray{
-    color: @gray-color;
+.font-gray {
+  color: @gray-color;
 }
 
-.ant-drawer-header{
-    border-radius: 25px, 25px 25px 25px !important;
+.ant-drawer-header {
+  border-radius: 25px, 25px 25px 25px !important;
 }
 
 * {
@@ -50,67 +51,70 @@
   background-color: #fff;
   transition: all 0.4s ease-in-out;
   &:hover {
-    background-color: #F4F6FA;
+    background-color: #f4f6fa;
   }
 }
-.font-size-md{
+.font-size-md {
   font-size: 16px;
 }
 
-.rounded-12{
+.rounded-12 {
   border-radius: 12px !important;
 }
-.rounded-24{
+.rounded-24 {
   border-radius: 24px !important;
 }
 
-.top-rounded{
+.top-rounded {
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
 }
-.h-60{
+.h-60 {
   height: 60px;
 }
-.h-80{
+.h-80 {
   height: 80px;
 }
-.h-120{
+.h-120 {
   height: 120px;
 }
-.h-180{
+.h-180 {
   height: 180px;
 }
 
-
-mt-50{
+mt-50 {
   margin-top: 50px;
 }
 
-
-.no-resize{
+.no-resize {
   resize: none;
 }
 
-
-.font-size-sm{
+.font-size-sm {
   font-size: 13px;
 }
-.font-size-xs{
+.font-size-xs {
   font-size: 12px;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
-.scale-sm{
-  transition: all .2s ease-in-out;
+.scale-sm {
+  transition: all 0.2s ease-in-out;
 
-  &:hover{
+  &:hover {
     scale: 1.05;
   }
 }
 
-.rounded-bottom-24{
+.rounded-bottom-24 {
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
+}
+
+.break-line {
+  word-wrap: break-word; /* IE 5.5-7 */
+  white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+  white-space: pre-wrap; /* current browsers */
 }
