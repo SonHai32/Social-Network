@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import { userReducer, userState } from './user_view/store/reducer/user.reducer';
+import { authReducer } from './user_view/store/auth/auth.reducer';
 registerLocaleData(vi);
 
 @NgModule({
@@ -24,7 +24,7 @@ registerLocaleData(vi);
   imports: [
     BrowserModule,
     StoreModule.forRoot({
-      currentUser: userReducer
+      currentUser: authReducer
     }),
     ShareViewModule,
     AppRoutingModule,

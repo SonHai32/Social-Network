@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import {AuthActions} from '../actions/user.action';
+import {AuthActions} from './auth.action';
 import { User } from '../../models/user.model';
 
 export interface authState {
@@ -18,7 +18,7 @@ export const initialState: authState = {
   errorMessage: '',
 };
 
-export const userReducer = createReducer(
+export const authReducer = createReducer(
   initialState,
   on(AuthActions.Login, (state: authState, { user }) => {
     return {
