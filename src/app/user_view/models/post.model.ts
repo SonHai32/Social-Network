@@ -6,7 +6,7 @@ export interface Post{
   content?: string
   images?: any
   comments?: any
-  tags: any
+  tags?: any
 }
 
 

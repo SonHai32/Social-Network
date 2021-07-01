@@ -1,40 +1,30 @@
 import { User } from '../../models/user.model';
-import { ActionType, createAction, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { UserCredentials } from '../../models/user-credentials.model';
 
 export enum AuthActionTypes {
-  //LOGIN ACTION
-  CHECK_LOGIN = '[AUTH] Check Login',
-  LOGIN = '[AUTH] Login',
-  LOGIN_SUCCESS = '[AUTH] Login Success',
-  LOGIN_FAIL = '[AUTH] Login Fail',
-
-  //REGISTER ACTION
-  REGISTER = '[AUTH] Register',
-  REGISTER_SUCCESS = '[AUTH] Register Success',
-  REGISTER_FAIL = '[AUTH] Register Fail',
-
-  LOGOUT = '[AUTH] Logout'
+  GET_AUTH      = '[AUTH] Get Auth',
+  LOGIN         = '[AUTH] Login',
+  REGISTER      = '[AUTH] Register',
+  AUTH_FAIL     = '[AUTH] Fail',
+  AUTH_SUCCESS  = '[AUTH] Success',
+  LOGOUT        = '[AUTH] Logout'
 }
 
 
-export const CheckLogin              = createAction(AuthActionTypes.CHECK_LOGIN)
-export const Login                   = createAction(AuthActionTypes.LOGIN, props<{user: User}>())
-export const LoginComplete           = createAction(AuthActionTypes.LOGIN_SUCCESS, props<{user: User}>())
-export const LoginFail              = createAction(AuthActionTypes.REGISTER_FAIL, props<{errorMessage: string}>())
-export const Logout                  = createAction(AuthActionTypes.LOGOUT)
+export const GetAuth                    = createAction(AuthActionTypes.GET_AUTH)
+export const Login                      = createAction(AuthActionTypes.LOGIN, props<{userCredentials: UserCredentials}>())
+export const Register                   = createAction(AuthActionTypes.REGISTER, props<{userCredentials: UserCredentials}>())
 
-export const Register                = createAction(AuthActionTypes.REGISTER, props<{user: User}>())
-export const RegisterSuccess         = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{user: User}>())
-export const RegisterFail            = createAction(AuthActionTypes.REGISTER_FAIL, props<{errorMessage: string}>())
-
+export const AuthFail                   = createAction(AuthActionTypes.AUTH_FAIL, props<{errorMessage: string}>())
+export const AuthSuccess                = createAction(AuthActionTypes.AUTH_SUCCESS, props<{user: User}>())
+export const Logout                     = createAction(AuthActionTypes.LOGOUT)
 
 export const AuthActions = {
-  CheckLogin,
+  GetAuth,
   Login,
-  LoginComplete,
-  LoginFail,
   Logout,
   Register,
-  RegisterSuccess,
-  RegisterFail
+  AuthFail,
+  AuthSuccess
 }

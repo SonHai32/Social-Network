@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "social-network-360bd": {
+      "hosting": {
+        "Covid-Social-Network": [
+          "social-network-360bd"
+        ]
+      }
+    }
+  }
+}

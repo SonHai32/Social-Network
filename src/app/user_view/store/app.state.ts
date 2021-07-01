@@ -1,5 +1,6 @@
+import { AuthState } from './auth/auth.state';
 import { User } from '../models/user.model';
 
 export interface AppState{
-  readonly currentUser: User;
+  auth_feature: AuthState
 }

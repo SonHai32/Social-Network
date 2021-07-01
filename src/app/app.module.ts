@@ -1,9 +1,7 @@
-import { HeaderComponent } from './user_view/shared/layout/header/header.component';
-import { ShareAntUiModule } from './user_view/shared/share-ant-ui.module';
+import { AuthModule } from './user_view/modules/auth.module';
 import { ShareViewModule } from './user_view/shared/share-view.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
@@ -15,6 +13,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './user_view/store/auth/auth.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 registerLocaleData(vi);
 
 @NgModule({
@@ -23,14 +27,17 @@ registerLocaleData(vi);
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({
-      currentUser: authReducer
-    }),
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([]),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
     ShareViewModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AuthModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]

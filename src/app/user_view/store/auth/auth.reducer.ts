@@ -1,16 +1,11 @@
+import { UserCredentials } from './../../models/user-credentials.model';
+import { AuthState } from './auth.state';
 import { createReducer, on } from '@ngrx/store';
-import {AuthActions} from './auth.action';
-import { User } from '../../models/user.model';
+import { AuthActions } from './auth.action';
 
-export interface authState {
-  user: User | null;
-  isLoading: boolean;
-  authenticated: boolean;
-  hasError: boolean;
-  errorMessage: string;
-}
+export const FEATURE_KEY = 'feature_auth';
 
-export const initialState: authState = {
+export const initialState: AuthState = {
   user: null,
   isLoading: true,
   authenticated: false,
@@ -20,33 +15,45 @@ export const initialState: authState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(AuthActions.Login, (state: authState, { user }) => {
+  on(AuthActions.Login, (state: AuthState, { userCredentials }) => {
     return {
       ...state,
-      user: user,
+      userCredentials,
       isLoading: true,
     };
   }),
-  on(AuthActions.LoginComplete, (state: authState, { user }) => {
+  on(AuthActions.Register, (state: AuthState, { userCredentials }) => {
+    return {
+      ...state,
+      isLoading: false,
+      userCredentials,
+    };
+  }),
+
+  on(AuthActions.AuthFail, (state: AuthState, { errorMessage }) => {
+    return {
+      ...state,
+      isLoading: false,
+      errorMessage,
+      userCredentials: null,
+    };
+  }),
+  on(AuthActions.AuthSuccess, (state: AuthState, { user }) => {
     return {
       ...state,
       user,
       isLoading: false,
       authenticated: true,
+      errorMessage: '',
+      hasError: false,
+      UserCredentials: null,
     };
   }),
-  on(AuthActions.LoginFail, (state: authState, { errorMessage }) => {
-    return {
-      ...state,
-      isLoading: false,
-      errorMessage,
-    };
-  }),
-  on(AuthActions.Logout, (state: authState) => {
+  on(AuthActions.Logout, (state: AuthState) => {
     return {
       ...state,
       user: null,
       authenticated: false,
-    }
+    };
   })
 );

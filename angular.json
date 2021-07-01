@@ -151,6 +151,10 @@
               "devServerTarget": "Covid-Social-Network:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
