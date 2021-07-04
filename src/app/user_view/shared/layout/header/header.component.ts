@@ -1,5 +1,4 @@
-import { LoginComponent } from './../../../components/auth/login/login.component';
-import { RegisterComponent } from './../../../components/auth/register/register.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-header',
@@ -7,22 +6,22 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild(RegisterComponent) registerComp!: RegisterComponent
-  @ViewChild(LoginComponent) loginComp!: LoginComponent
-  toggleDrawerComp = RegisterComponent;
-  constructor() {}
+  authVisible: boolean = false;
+  authFormSelected: string = 'LOGIN';
+  isMobile: boolean = false
+  constructor(private dv: DeviceDetectorService) {}
 
   ngOnInit(): void {
+    this.isMobile = this.dv.isMobile()
   }
 
-  toggleRegister(){
-    this.registerComp.toggleRegister()
+  toggleAuth(formSelect?: string): void {
+    this.authVisible = !this.authVisible;
+    if (formSelect) {
+      this.changeAuthForm(formSelect);
+    }
   }
-
-  toggleLogin(){
-    this.loginComp.toggleLogin()
+  changeAuthForm(formSelected: string): void {
+    this.authFormSelected = formSelected;
   }
-
-  
-  
 }

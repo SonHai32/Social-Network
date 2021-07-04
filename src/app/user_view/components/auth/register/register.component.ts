@@ -13,32 +13,7 @@ export class RegisterComponent implements OnInit {
   @ViewChild(ModalComponent) modalComp! : ModalComponent
   isMobile: boolean = false;
   expandRegisterVisible = false;
-  registerField: filedType[] = [
-    {
-      name: 'username',
-      placeholder: 'Tài khoản',
-      type: 'text',
-      icon: 'user'
-    },
-    {
-      name: 'password',
-      placeholder: 'Mật khẩu',
-      type: 'password',
-      icon: 'lock'
-    },
-    {
-      name: 'confirmPassword',
-      placeholder: 'Nhập lại mật khẩu',
-      type: 'password',
-      icon: 'redo'
-    },
-    {
-      name: 'email',
-      placeholder: 'Email',
-      type: 'email',
-      icon: 'mail'
-    },
-  ];
+
   constructor(private dvDectectorService: DeviceDetectorService) {}
 
   ngOnInit(): void {

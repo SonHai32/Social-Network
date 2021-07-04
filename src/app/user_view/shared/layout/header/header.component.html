@@ -50,7 +50,7 @@
         nz-button
         nzType="primary"
         nzSearch
-        (click)="toggleLogin()"
+        (click)="toggleAuth('LOGIN')"
       >
         <i nz-icon nzType="login"></i>
         Đăng nhập
@@ -62,7 +62,7 @@
         class="mx-1 d-flex align-items-center justify-content-center"
         nz-button
         nzSearch
-        (click)="toggleRegister()"
+        (click)="toggleAuth('REGISTER')"
       >
         <i nz-icon nzType="user-add"></i>
         Đăng ký
@@ -71,6 +71,79 @@
   </div>
 </ng-template>
 
-<user-auth-login #loginform> </user-auth-login>
+<nz-modal
+  *ngIf="!isMobile"
+  [nzCloseIcon]="closeIcon"
+  nzCentered
+  [nzFooter]="null"
+  nzWidth="480px"
+  (nzOnCancel)="toggleAuth()"
+  [(nzVisible)]="authVisible"
+  nzCloseOnNavigation="true"
+  [nzTitle]="modalAndModalTitleTmp"
+>
+  <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
+</nz-modal>
+<nz-drawer
+  *ngIf="isMobile"
+  [nzClosable]="false"
+  [nzVisible]="authVisible"
+  nzPlacement="bottom"
+  (nzOnClose)="toggleAuth('REGIETER')"
+  nzHeight="67%"
+  [nzTitle]="modalAndModalTitleTmp"
+>
+  <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
+</nz-drawer>
 
-<user-auth-register #registerForm> </user-auth-register>
+<ng-template #authFormTpl>
+  <user-auth-register *ngIf="authFormSelected !== 'LOGIN'">
+  </user-auth-register>
+  <user-auth-login *ngIf="authFormSelected === 'LOGIN'"> </user-auth-login>
+</ng-template>
+
+<ng-template #closeIcon>
+  <i nz-icon nzType="close" nzTheme="outline"></i>
+</ng-template>
+
+<ng-template #modalAndModalTitleTmp>
+  <h3 class="m-0 p-0" nz-typography>
+    <strong *ngIf="authFormSelected === 'LOGIN'">Đăng Nhập</strong>
+    <strong *ngIf="authFormSelected !== 'LOGIN'">Đăng Ký</strong>
+  </h3>
+  <div
+    class="
+      w-100
+      my-2
+      d-flex
+      align-items-center
+      justify-content-start
+      font-size-sm
+    "
+  >
+    <p nz-typography nzType="secondary" class="m-0 p-0">
+      <strong *ngIf="authFormSelected === 'LOGIN'">
+        Bạn chưa có tài khoản ?</strong
+      >
+      <strong *ngIf="authFormSelected !== 'LOGIN'">
+        Bạn đã có tài khoản ?</strong
+      >
+    </p>
+    <a
+      *ngIf="authFormSelected === 'LOGIN'"
+      nz-typography
+      class="mx-1 p-0"
+      (click)="changeAuthForm('REGISTER')"
+    >
+      <strong> Đăng ký </strong></a
+    >
+    <a
+      *ngIf="authFormSelected !== 'LOGIN'"
+      nz-typography
+      class="mx-1 p-0"
+      (click)="changeAuthForm('LOGIN')"
+    >
+      <strong> Đăng nhập </strong></a
+    >
+  </div>
+</ng-template>

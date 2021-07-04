@@ -2,7 +2,7 @@
   [nzCloseIcon]="closeIcon"
   nzCentered
   [nzFooter]="null"
-  nzWidth="620px"
+  nzWidth="480px"
   (nzOnCancel)="toggleModal()"
   [(nzVisible)]="modalVisible"
   nzCloseOnNavigation="true"
@@ -16,7 +16,11 @@
 </ng-template>
 
 <ng-template #modalTitleTmp>
-  <h2 class="m-0 p-0 text-center" nz-typography nzType="success">
-    {{ modalTitle }}
-  </h2>
+  <h3 class="m-0 p-0" nz-typography>
+    <strong>{{ modalTitle }}</strong>
+  </h3>
+  <div class="w-100 my-2 d-flex align-items-center justify-content-start font-size-sm">
+    <p nz-typography nzType="secondary" class="m-0 p-0"><strong> Bạn chưa có tài khoản ?</strong></p>
+    <a nz-typography class="mx-1 p-0"> <strong> Đăng ký </strong></a>
+  </div>
 </ng-template>
