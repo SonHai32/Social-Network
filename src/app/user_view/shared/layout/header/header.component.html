@@ -1,29 +1,12 @@
-<div
-  nz-row
-  nzAlign="middle"
-  nzJustify="center"
-  class="glass py-3"
-  [nzGutter]="[0, 16]"
->
+<div nz-row nzAlign="middle" nzJustify="center" class="glass py-3" [nzGutter]="[0, 16]">
   <div nz-col nzLg="6" nzSpan="12">
     <h1 nz-typography class="m-0 p-0 text-center">LOGO</h1>
   </div>
   <div nz-col nzLg="12" nzSpan="24">
     <div nz-row nzAlign="middle" nzJustify="end">
       <div nz-col nzLg="8" nzSpan="18">
-        <nz-input-group
-          class="rounded outline-none"
-          nzSize="large"
-          nzSearch
-          [nzPrefix]="prefixSearchIcon"
-        >
-          <input
-            type="text"
-            nz-input
-            placeholder="input search text"
-            nzSize="large"
-            class="bg-none outline-none"
-          />
+        <nz-input-group class="rounded outline-none" nzSize="large" nzSearch [nzPrefix]="prefixSearchIcon">
+          <input type="text" nz-input placeholder="input search text" nzSize="large" class="bg-none outline-none" />
         </nz-input-group>
         <ng-template #prefixSearchIcon>
           <i nz-icon nzType="search"></i>
@@ -38,31 +21,16 @@
 
 <ng-template #loginBtnTmp>
   <div nz-row nzAlign="middle" nzJustify="center">
-    <div
-      nz-col
-      nzSpan="12"
-      class="d-flex align-items-center justify-content-end"
-    >
-      <button
-        nzSize="large"
-        class="mx-1 d-flex align-items-center justify-content-center"
-        nz-button
-        nzType="primary"
-        nzSearch
-        (click)="toggleAuth('LOGIN')"
-      >
+    <div nz-col nzSpan="12" class="d-flex align-items-center justify-content-end">
+      <button nzSize="large" class="mx-1 d-flex align-items-center justify-content-center" nz-button nzType="primary"
+        nzSearch (click)="toggleAuth('LOGIN')">
         <i nz-icon nzType="login"></i>
         Đăng nhập
       </button>
     </div>
     <div nz-col nzSpan="12">
-      <button
-        nzSize="large"
-        class="mx-1 d-flex align-items-center justify-content-center"
-        nz-button
-        nzSearch
-        (click)="toggleAuth('REGISTER')"
-      >
+      <button nzSize="large" class="mx-1 d-flex align-items-center justify-content-center" nz-button nzSearch
+        (click)="toggleAuth('REGISTER')">
         <i nz-icon nzType="user-add"></i>
         Đăng ký
       </button>
@@ -70,28 +38,12 @@
   </div>
 </ng-template>
 
-<nz-modal
-  *ngIf="!isMobile"
-  [nzCloseIcon]="closeIcon"
-  nzCentered
-  [nzFooter]="null"
-  nzWidth="480px"
-  (nzOnCancel)="toggleAuth()"
-  [(nzVisible)]="authVisible"
-  nzCloseOnNavigation="true"
-  [nzTitle]="modalAndModalTitleTmp"
->
+<nz-modal *ngIf="!isMobile" [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null" nzWidth="480px"
+  (nzOnCancel)="toggleAuth()" [(nzVisible)]="authVisible" nzCloseOnNavigation="true" [nzTitle]="modalAndModalTitleTmp">
   <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
 </nz-modal>
-<nz-drawer
-  *ngIf="isMobile"
-  [nzClosable]="false"
-  [nzVisible]="authVisible"
-  nzPlacement="bottom"
-  (nzOnClose)="toggleAuth('REGIETER')"
-  nzHeight="67%"
-  [nzTitle]="modalAndModalTitleTmp"
->
+<nz-drawer *ngIf="isMobile" [nzClosable]="false" [nzVisible]="authVisible" nzPlacement="bottom"
+  (nzOnClose)="toggleAuth('REGIETER')" nzHeight="67%" [nzTitle]="modalAndModalTitleTmp">
   <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
 </nz-drawer>
 
@@ -110,39 +62,23 @@
     <strong *ngIf="authFormSelected === 'LOGIN'">Đăng Nhập</strong>
     <strong *ngIf="authFormSelected !== 'LOGIN'">Đăng Ký</strong>
   </h3>
-  <div
-    class="
+  <div class="
       w-100
       my-2
       d-flex
       align-items-center
       justify-content-start
       font-size-sm
-    "
-  >
-    <p nz-typography nzType="secondary" class="m-0 p-0">
-      <strong *ngIf="authFormSelected === 'LOGIN'">
-        Bạn chưa có tài khoản ?</strong
-      >
-      <strong *ngIf="authFormSelected !== 'LOGIN'">
-        Bạn đã có tài khoản ?</strong
-      >
+    ">
+    <p nz-typography nzType="secondary" class="m-0 p-0" *ngIf="authFormSelected === 'LOGIN'">
+      Bạn chưa có tài khoản ?
     </p>
-    <a
-      *ngIf="authFormSelected === 'LOGIN'"
-      nz-typography
-      class="mx-1 p-0"
-      (click)="changeAuthForm('REGISTER')"
-    >
-      <strong> Đăng ký </strong></a
-    >
-    <a
-      *ngIf="authFormSelected !== 'LOGIN'"
-      nz-typography
-      class="mx-1 p-0"
-      (click)="changeAuthForm('LOGIN')"
-    >
-      <strong> Đăng nhập </strong></a
-    >
+    <p nz-typography nzType="secondary" class="m-0 p-0" *ngIf="authFormSelected !== 'LOGIN'">
+      Bạn đã có tài khoản ?
+    </p>
+    <a *ngIf="authFormSelected === 'LOGIN'" nz-typography class="mx-1 p-0" (click)="changeAuthForm('REGISTER')">
+      <strong> Đăng ký </strong></a>
+    <a *ngIf="authFormSelected !== 'LOGIN'" nz-typography class="mx-1 p-0" (click)="changeAuthForm('LOGIN')">
+      <strong> Đăng nhập </strong></a>
   </div>
 </ng-template>
