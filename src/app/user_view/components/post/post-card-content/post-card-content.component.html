@@ -2,7 +2,7 @@
   nz-row
   nzAlign="middle"
   nzJustify="center"
-  class="bg-white rounded-12 shadow-sm mt-3 p-3"
+  class="glass-2 rounded-12 shadow-sm mt-3 p-3"
 >
   <!-- START-POST-HEADER -->
   <div nz-col nzSpan="24">
@@ -111,7 +111,7 @@
   </ng-container>
 
   <!-- START-POST-OPTION -->
-  <div nz-col nzSpan="24" class="py-2 border-top border-bottom mt-2">
+  <div nz-col nzSpan="24" class="py-2 border-top border-bottom border-white mt-2">
     <div nz-row nzAlign="middle" nzJustify="center">
       <div nz-col nzSpan="8">
         <button
@@ -159,8 +159,7 @@
   <!-- START-POST-COMMENT -->
   <div nz-col nzSpan="24" class="py-2">
     <nz-input-group
-      style="border: none"
-      class="bg-white align-items-center"
+      class=" align-items-center border-none"
       [nzSuffix]="suffixTemplateInfo"
       [nzPrefix]="prefixTemplateUser"
     >
@@ -170,8 +169,9 @@
         nz-input
         placeholder="Nhập bình luận"
         nzSize="large"
-        class="px-3 rounded-24 no-resize"
+        class=" px-3 rounded no-resize border-none"
         [nzAutosize]="{ minRows: 1, maxRows: 50 }"
+
       ></textarea>
     </nz-input-group>
     <ng-template #prefixTemplateUser>

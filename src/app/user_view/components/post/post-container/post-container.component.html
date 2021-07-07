@@ -1,4 +1,4 @@
-<div nz-row nzAlign="middle" class="rounded-12 bg-white p-4 shadow">
+<div nz-row nzAlign="middle" class="rounded-12 glass p-4 shadow">
   <div nz-col nzSpan="24" class="d-flex align-items-center">
     <nz-avatar
       class="d-flex align-items-center justify-content-center mx-1"
@@ -32,8 +32,8 @@
 <nz-modal
   *ngIf="!isMobile"
   nzCentered
-  nzWidth="55%"
-  [nzBodyStyle]="{ background: '#F4F6FA', padding: '0', 'padding-bottom': '20px' }"
+  nzWidth="50%"
+  [nzBodyStyle]="{ padding: '0', 'padding-bottom': '50px' }"
   [nzTitle]="title"
   [(nzVisible)]="createPostVisible"
   (nzOnCancel)="toggleCreatePost()"

@@ -2,7 +2,7 @@
   nz-row
   nzAlign="middle"
   nzJustify="center"
-  class="bg-white shadow-sm py-3"
+  class="glass py-3"
   [nzGutter]="[0, 16]"
 >
   <div nz-col nzLg="6" nzSpan="12">
@@ -12,18 +12,17 @@
     <div nz-row nzAlign="middle" nzJustify="end">
       <div nz-col nzLg="8" nzSpan="18">
         <nz-input-group
-          class="rounded"
+          class="rounded outline-none"
           nzSize="large"
           nzSearch
           [nzPrefix]="prefixSearchIcon"
-          class="c-bg-secondary"
         >
           <input
-            class="c-bg-secondary"
             type="text"
             nz-input
             placeholder="input search text"
             nzSize="large"
+            class="bg-none outline-none"
           />
         </nz-input-group>
         <ng-template #prefixSearchIcon>

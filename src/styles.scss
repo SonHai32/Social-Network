@@ -2,9 +2,17 @@
 * {
   // font-family: "Fira Sans Extra Condensed", sans-serif;
 
-font-family: "SF Pro Text",-apple-system,BlinkMacSystemFont,Arial,Segoe UI,Roboto,"Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  scroll-behavior: smooth;
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI, Roboto, "Helvetica Neue", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+body {
+  background-color: #50e3c2;
+  background-image: radial-gradient(at 47% 33%, hsl(162, 77%, 40%) 0, transparent 59%),
+    radial-gradient(at 82% 65%, hsl(198, 100%, 50%) 0, transparent 55%);
+  background-attachment: fixed;
+}
 .top-rounded {
   border-top-left-radius: 25px !important;
   border-top-right-radius: 25px !important;
@@ -17,6 +25,6 @@ font-family: "SF Pro Text",-apple-system,BlinkMacSystemFont,Arial,Segoe UI,Robot
   background-color: #fff;
   transition: all 0.4s ease-in-out;
   &:hover {
-    background-color: #F4F6FA;
+    background-color: #f4f6fa;
   }
 }

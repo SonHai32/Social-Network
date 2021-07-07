@@ -3,23 +3,51 @@
 @import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
-@primary-color: #1778f2;
-@secondary-color: #f4f6fa;
+@primary-color: #00B2FE;
+@secondary-color: #4b5663;
 @gray-color: #acb9c9;
 @border-radius-base: 8px;
 // @font-family: 'Fira Sans Extra Condensed', sans-serif !important;
 @font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI,
   Roboto, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
   "Segoe UI Symbol";
-@input-bg: @secondary-color;
 @text-color: #4c607b;
-@text-color-secondary: #d5dce5;
-@menu-item-active-bg: #fff;
+@text-color-secondary: @secondary-color;
+@bg-none: none; 
+@menu-item-active-bg: @bg-none;
+@input-bg: @bg-none;
+// @input-border-color: #fff; 
+@menu-bg: @bg-none;
+
 // @input-border-color: @secondary-color;
 // @input-placeholder-color: #9da9b9;
-// @input-hover-border-color: @secondary-color;
+// @input-hover-border-color: none;
 // @outline-width: 0px;
 // @outline-color: @secondary-color;
+.outline-none{
+  outline-width: 0px !important;
+  border: none;
+}
+.border-none{
+  border: none;
+}
+.bg-none{
+  background: @bg-none !important;
+}
+.glass{
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter:blur(16px);
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0));
+}
+
+.glass-2 {
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter:blur(16px);
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.52));
+}
+
 @link-color: @text-color;
 .c-bg-secondary {
   background: @secondary-color;
