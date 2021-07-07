@@ -16,14 +16,36 @@
 @bg-none: none; 
 @menu-item-active-bg: @bg-none;
 @input-bg: @bg-none;
-// @input-border-color: #fff; 
 @menu-bg: @bg-none;
 
-// @input-border-color: @secondary-color;
-// @input-placeholder-color: #9da9b9;
-// @input-hover-border-color: none;
-// @outline-width: 0px;
-// @outline-color: @secondary-color;
+* {
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI, Roboto, "Helvetica Neue", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+  scroll-behavior: smooth;
+  background-color: #50e3c2;
+  background-image: radial-gradient(at 47% 33%, hsl(162, 77%, 40%) 0, transparent 59%),
+    radial-gradient(at 82% 65%, hsl(198, 100%, 50%) 0, transparent 55%);
+  background-attachment: fixed;
+}
+.top-rounded {
+  border-top-left-radius: 25px !important;
+  border-top-right-radius: 25px !important;
+}
+
+.btn-image {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 9.5px;
+  background-color: #fff;
+  transition: all 0.4s ease-in-out;
+  &:hover {
+    background-color: #f4f6fa;
+  }
+}
+
 .outline-none{
   outline-width: 0px !important;
   border: none;
@@ -61,9 +83,7 @@ background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.62), rgba(255, 2
   border-radius: 25px, 25px 25px 25px !important;
 }
 
-* {
-  font-family: "Fira Sans Extra Condensed", sans-serif;
-}
+
 
 .top-rounded {
   border-top-left-radius: 25px !important;
