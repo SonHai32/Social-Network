@@ -8,8 +8,6 @@ import { PaneMenuComponent } from './layout/pane-menu/pane-menu.component';
 import { LoginComponent } from './../components/auth/login/login.component';
 import { AuthWithSocialComponent } from './../components/auth/auth-with-social/auth-with-social.component';
 import { RegisterComponent } from './../components/auth/register/register.component';
-import { ModalComponent } from './layout/modal/modal.component';
-import { DrawerComponent } from './layout/drawer/drawer.component';
 import { ShareAntUiModule } from './share-ant-ui.module';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -28,8 +26,6 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     AuthWithSocialComponent,
     RegisterComponent,
-    DrawerComponent,
-    ModalComponent,
     PaneMenuComponent,
     HomeComponent,
     PostContainerComponent,
