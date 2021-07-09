@@ -14,10 +14,10 @@
 @text-color: #4c607b;
 @text-color-secondary: @secondary-color;
 @bg-none: none;
-@menu-item-active-bg: @bg-none;
+@menu-item-active-bg: rgba(255,255,255,.5);
 @input-bg: @bg-none;
 @menu-bg: @bg-none;
-
+@link-color: @text-color;
 * {
   font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI,
     Roboto, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -107,7 +107,6 @@ body {
   );
 }
 
-@link-color: @text-color;
 .c-bg-secondary {
   background: @secondary-color;
 }
