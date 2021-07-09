@@ -59,7 +59,7 @@
   </div>
 </ng-template>
 
-<nz-modal *ngIf="!isMobile" [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null" nzWidth="480px"
+<nz-modal *ngIf="!isMobile" nzNoAnimation [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null" nzWidth="480px"
   (nzOnCancel)="toggleAuth()" [(nzVisible)]="authVisible" nzCloseOnNavigation="true" [nzTitle]="modalAndModalTitleTmp">
   <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
 </nz-modal>
