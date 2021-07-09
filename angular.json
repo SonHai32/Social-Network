@@ -59,10 +59,12 @@
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
               }
+
             ],
             "styles": [
               "src/theme.less",
               "src/styles.scss"
+
             ],
             "scripts": []
           },
@@ -123,6 +125,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
+
             ],
             "styles": [
               "src/styles.scss"
@@ -158,6 +161,30 @@
         "deploy": {
           "builder": "@angular/fire:deploy",
           "options": {}
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "Covid-Social-Network:ionic-cordova-build",
+            "devServerTarget": "Covid-Social-Network:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "Covid-Social-Network:ionic-cordova-build:production",
+              "devServerTarget": "Covid-Social-Network:serve:production"
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "Covid-Social-Network:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "Covid-Social-Network:build:production"
+            }
+          }
         }
       }
     }

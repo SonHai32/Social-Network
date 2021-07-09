@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { IonicModule } from '@ionic/angular';
 
 registerLocaleData(vi);
 
@@ -38,6 +39,7 @@ registerLocaleData(vi);
     HttpClientModule,
     BrowserAnimationsModule,
     AuthModule,
+    IonicModule.forRoot(),
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]
