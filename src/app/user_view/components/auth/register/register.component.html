@@ -1,14 +1,13 @@
 <div nz-row nzAlign="middle" nzJustify="center">
   <div nz-col nzSpan="24">
-    <form nz-form class="login-form" [formGroup]="validateForm" (ngSubmit)="formSubmit()">
+    <form nz-form class="login-form" [formGroup]='validateForm' (ngSubmit)="submitForm()">
       <nz-form-item class="my-1">
         <div nz-col nzSpan="24" class="px-1 font-size-xs">
           <span nz-typography><strong>Email</strong></span>
         </div>
-        <nz-form-control class="w-100">
-          <nz-input-group nzPrefixIcon="mail">
-            <input style="height: 32px" name="email" type="text" nz-input placeholder="Nhập vào email của bạn"
-              formControlName='email' class="px-2" />
+        <nz-form-control class="w-100" [nzErrorTip]="getEmailErrorTooltip()">
+          <nz-input-group  nzPrefixIcon="mail">
+            <input  nz-input  nzBorderless="true" style="height: 32px" name="email" id='email' placeholder="Nhập vào email của bạn" formControlName='email' class="px-2" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -17,10 +16,10 @@
         <div nz-col nzSpan="24" class="px-1 font-size-xs">
           <span nz-typography><strong>Mật khẩu</strong></span>
         </div>
-        <nz-form-control class="w-100" nzErrorTip="Please input your Password!">
+        <nz-form-control class="w-100" [nzErrorTip]="getPasswordErrorTooltip()">
           <nz-input-group nzPrefixIcon="lock">
             <input name="password" formControlName='password' style="height: 32px" type="password" nz-input
-              placeholder="Nhập vào mật khẩu" />
+              placeholder="Nhập vào mật khẩu" (ngModelChange)="updateConfirmPassword()" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -28,7 +27,7 @@
         <div nz-col nzSpan="24" class="px-1 font-size-xs">
           <span nz-typography><strong>Nhập lại mật khẩu</strong></span>
         </div>
-        <nz-form-control class="w-100" nzErrorTip="Please input your Password!">
+        <nz-form-control class="w-100" [nzErrorTip]="getPasswordConfirmErrorTooltip()">
           <nz-input-group nzPrefixIcon="redo">
             <input name="passwordConfirm" style="height: 32px" type="password" nz-input
               formControlName="passwordConfirm" placeholder="Nhập lại mật khẩu" />
@@ -39,7 +38,7 @@
         <div nz-col nzSpan="24" class="px-1 font-size-xs">
           <span nz-typography><strong>Tên của bạn</strong></span>
         </div>
-        <nz-form-control class="w-100" nzErrorTip="Please input your username!">
+        <nz-form-control class="w-100" [nzErrorTip]="getUsernameErrorTooltip()">
           <nz-input-group nzPrefixIcon="user">
             <input style="height: 32px" type="text" nz-input formControlName="username"
               placeholder="Nhập vào tên của bạn" />
@@ -48,7 +47,7 @@
       </nz-form-item>
 
       <nz-form-item class="my-1" nz-row nzAlign="middle" nzJustify="center">
-        <nz-form-control nzSpan="22" class="my-1">
+        <nz-form-control nzSpan="24" class="my-1">
           <button nzSize="large" nzBlock nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
             Đăng ký
           </button>

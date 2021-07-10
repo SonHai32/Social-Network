@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
@@ -21,38 +22,53 @@ export class RegisterComponent implements OnInit {
     return {}
   }
 
-  emailErrorTooltip(): string {
-    if(this.validateForm.controls.email.invalid) {
-      return 'Vui lòng nhập email';
+  getEmailErrorTooltip(): string {
+    if(this.validateForm.controls.email.hasError('required')) {
+      return 'Vui lòng nhập email !';
+    }else if(this.validateForm.controls.email.invalid)
+    {
+      return 'Email không hợp lệ !';
     }
     return '';
   }
 
-  passwordErrorTooltip(): string {
+  getPasswordErrorTooltip(): string {
     if(this.validateForm.controls.password.hasError('required')) {
-      return 'Vui lòng nhập mật khẩu';
+      return 'Vui lòng nhập mật khẩu !';
     }else if(this.validateForm.controls.password.hasError('minlength')) {
-      return 'Mật khẩu phải có ít nhất 6 ký tự';
+      return 'Mật khẩu phải có ít nhất 6 ký tự !';
     }
     return '';
   }
 
-  passwordConfirmErrorTooltip(): string {
+  getPasswordConfirmErrorTooltip(): string {
     if(this.validateForm.controls.passwordConfirm.hasError('confirm')) {
-      return 'Mật khẩu không khớp';
+      return 'Mật khẩu không khớp !';
+    }else if(this.validateForm.controls.passwordConfirm.hasError('required')){
+      return 'Mật khẩu không khớp !';
     }
     return '';
+  }
+
+  getUsernameErrorTooltip(): string{
+    if(this.validateForm.controls.username.hasError('required')) {
+      return 'Vui lòng nhập tên của bạn !'
+    }else if(this.validateForm.controls.username.hasError('minlength')){
+      return 'Tên quá ngắn !'
+    }else if(this.validateForm.controls.username.hasError('maxlength')){
+      return 'Tên quá dài !'
+    }
+    return ''
   }
 
 
   updateConfirmPassword(): void {
-    Promise.resolve().then(() =>{
+    Promise.resolve().then((val) =>{
       this.validateForm.controls['passwordConfirm'].updateValueAndValidity();
     })
   }
 
-  formSubmit(): void {
-    this.validateForm.controls['email'].markAsDirty()
+  submitForm(): void {
     for(const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
@@ -63,8 +79,8 @@ export class RegisterComponent implements OnInit {
     this.validateForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(6)]],
-      passwordConfirm :[null, [Validators.required ]],
-      username:  [null, [Validators.required]]
+      passwordConfirm: [null, [Validators.required, this.confirmPassword]],
+      username:  [null, [Validators.required, Validators.minLength(2), Validators.maxLength(36)]]
     })
   }
 
