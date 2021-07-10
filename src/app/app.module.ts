@@ -35,11 +35,9 @@ registerLocaleData(vi);
     AngularFirestoreModule,
     ShareViewModule,
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AuthModule,
-    IonicModule.forRoot(),
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]
