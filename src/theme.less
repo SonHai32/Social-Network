@@ -6,7 +6,7 @@
 @primary-color: #00b2fe;
 @secondary-color: #4b5663;
 @gray-color: #acb9c9;
-@error-color: #FD70A1;
+@error-color: #fd70a1;
 @border-radius-base: 8px;
 // @font-family: 'Fira Sans Extra Condensed', sans-serif !important;
 @font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI,
@@ -15,7 +15,7 @@
 @text-color: #4c607b;
 @text-color-secondary: @secondary-color;
 @bg-none: none;
-@menu-item-active-bg: rgba(255,255,255,.5);
+@menu-item-active-bg: rgba(255, 255, 255, 0.5);
 @input-bg: @bg-none;
 @menu-bg: @bg-none;
 @link-color: @text-color;
@@ -57,7 +57,15 @@ body {
   background-attachment: fixed;
 }
 
-.icon-size{
+.text-no-copy {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.icon-size {
   font-size: 24px;
 }
 .top-rounded {
@@ -200,8 +208,7 @@ mt-50 {
   white-space: pre-wrap; /* current browsers */
 }
 
-
-.icon-button{
+.icon-button {
   padding: 2px;
   border-radius: 50%;
 }
