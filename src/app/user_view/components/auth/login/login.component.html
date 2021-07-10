@@ -1,84 +1,45 @@
 <div nz-row nzAlign="middle" nzJustify="center">
   <div nz-col nzSpan="24">
-    <form nz-form class="login-form">
-      <div nz-row nzAlign="middle" nzJustify="center">
-        <div nz-col nzSpan="22" class="my-2">
-          <nz-form-item>
-            <div nz-col nzSpan="24" class="px-1 font-size-xs">
-              <span nz-typography><strong>Email</strong></span>
-            </div>
-            <nz-form-control
-              class="w-100"
-              nzErrorTip="Please input your username!"
-            >
-              <nz-input-group nzPrefixIcon="user">
-                <input
-                  style="height: 32px"
-                  type="text"
-                  nz-input
-                  placeholder="Nhập vào email của bạn"
-                />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
+    <form nz-form class="login-form" [formGroup]='validateForm' (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <div nz-col nzSpan="24" class="px-1 font-size-xs">
+          <span nz-typography><strong>Email</strong></span>
+        </div>
+        <nz-form-control class="w-100" [nzErrorTip]="getEmailErrorTooltip()">
+          <nz-input-group nzPrefixIcon="user">
+            <input formControlName="email" style="height: 32px" type="text" nz-input
+              placeholder="Nhập vào email của bạn" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nzJustify="center">
+        <div nz-col nzSpan="24" class="px-1 font-size-xs">
+          <span nz-typography><strong>Mật khẩu</strong></span>
+        </div>
+        <nz-form-control class="w-100" [nzErrorTip]="getPasswordErrorTooltip()">
+          <nz-input-group nzPrefixIcon="lock">
+            <input formControlName="password" name="password" style="height: 32px" type="password" nz-input
+              placeholder="Nhập vào mật khẩu" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-col nzSpan="24" class="my-2">
+        <div class="d-flex justify-content-end">
+          <a nz-typography nzType="danger" class="login-form-forgot">Quên mật khẩu ?</a>
         </div>
       </div>
-      <div nz-row nzAlign="middle" nzJustify="center">
-        <div nz-col nzSpan="22" class="my-2">
-          <nz-form-item nzJustify="center">
-            <div nz-col nzSpan="24" class="px-1 font-size-xs">
-              <span nz-typography><strong>Mật khẩu</strong></span>
-            </div>
-            <nz-form-control
-              class="w-100"
-              nzErrorTip="Please input your Password!"
-            >
-              <nz-input-group nzPrefixIcon="lock">
-                <input
-                  name="password"
-                  style="height: 32px"
-                  type="password"
-                  nz-input
-                  placeholder="Nhập vào mật khẩu"
-                />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+      <div nz-col nzSpan="24" class="my-2">
+        <button nzSize="large" nzBlock nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+          Đăng nhập
+        </button>
       </div>
-      <div nz-row nzAlign="middle" nzJustify="center">
-        <div nz-col nzSpan="22" class="my-2">
-          <div class="d-flex justify-content-end">
-            <a nz-typography nzType="danger" class="login-form-forgot"
-              >Quên mật khẩu ?</a
-            >
-          </div>
-        </div>
-      </div>
-      <div nz-row nzAlign="middle" nzJustify="center">
-        <div nz-col nzSpan="22" class="my-2">
-          <button
-            nzSize="large"
-            nzBlock
-            nz-button
-            class="login-form-button login-form-margin"
-            [nzType]="'primary'"
-          >
-            Đăng nhập
-          </button>
-        </div>
-      </div>
-
-      <div nz-row nzAlign="middle" nzJustify="center">
-        <div
-          nz-col
-          nzSpan="22"
-          class="my-2 d-flex align-items-center justify-content-center"
-        >
+      <nz-form-item>
+        <div nz-col nzSpan="24" class="my-2 d-flex flex-column align-items-center justify-content-center">
+          <span nz-typography nzType="secondary">Hoặc đăng nhập bằng</span>
           <auth-with-social></auth-with-social>
         </div>
-      </div>
+      </nz-form-item>
+
     </form>
   </div>
 </div>
-
