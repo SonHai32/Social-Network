@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 @NgModule({
   imports: [CommonModule],
@@ -54,6 +55,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzPopoverModule,
     NzToolTipModule,
     NzSpinModule,
+    NzFormModule,
+
 
   ],
   declarations: [],
