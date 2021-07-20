@@ -5,22 +5,78 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { observable, Observable } from 'rxjs';
 import firebase from 'firebase';
+import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
+import { UserFirestoreService } from '../user/user-firestore.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthWithFirebaseService {
-  constructor(private auth: AngularFireAuth, private afs: AngularFirestore) {}
-  async loginWithEmailAndPassword(user: UserCredentials): Promise<any | null> {
-    const res = await this.auth.signInWithEmailAndPassword(
-      user.email,
-      user.password
-    );
-    if (res.user) {
-      return { email: res.user.email, id: res.user.uid };
-    } else {
-      return null;
-    }
+  constructor(
+    private auth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private userFirestore: UserFirestoreService
+  ) {}
+
+  checkAuth(): Observable<User> {
+    return new Observable<User>((observable) => {
+      this.auth.authState.subscribe((currentUser: firebase.User | null) => {
+        if (currentUser) {
+          const user: User = {
+            id: currentUser.uid,
+            avatar_url: currentUser.photoURL,
+            display_name: currentUser.displayName,
+            email: currentUser.email,
+          };
+          observable.next(user);
+          observable.complete();
+        } else {
+          observable.error(new Error('Bạn chưa đăng nhập'));
+        }
+      });
+    });
+  }
+  loginWithEmailAndPassword(
+    userCredentials: UserCredentials
+  ): Observable<User> {
+    return new Observable<User>((observable) => {
+      this.auth
+        .signInWithEmailAndPassword(
+          userCredentials.email,
+          userCredentials.password
+        )
+        .then((resUser: firebase.auth.UserCredential) => {
+          if (resUser.user) {
+            const currentUser: User = {
+              id: resUser.user.uid,
+              email: resUser.user.email,
+              avatar_url: resUser.user.photoURL,
+              display_name: resUser.user.displayName,
+            };
+
+            observable.next(currentUser);
+            observable.complete();
+          }
+        })
+        .catch((error: firebase.FirebaseError) => {
+          console.log(error);
+          if (error.code === 'auth/user-not-found') {
+            observable.error(new Error('Người dùng không tồn tại'));
+          } else if (error.code === 'auth/wrong-password') {
+            observable.error(
+              new Error('Đăng nhập thất bại, mật khẩu không chính xác')
+            );
+          } else if (error.code === 'auth/too-many-requests') {
+            observable.error(
+              new Error(
+                'Bạn đang cố truy cập tài khoản nhiều lần, vui lòng thử lại sau ít phút'
+              )
+            );
+          } else {
+            observable.error(error);
+          }
+        });
+    });
   }
 
   createuserwithemailandpassword(
@@ -36,10 +92,12 @@ export class AuthWithFirebaseService {
           if (res.user) {
             const userCreated: User = {
               id: res.user.uid,
-              display_name: userCredentials.display_name,
+              display_name: userCredentials.display_name
+                ? userCredentials.display_name
+                : '',
               email: userCredentials.email,
               created_at: firebase.firestore.Timestamp.now(),
-              avatar_url: `https://ui-avatars.com/api/?name=${userCredentials.display_name}&length=1`,
+              avatar_url: `https://ui-avatars.com/api/?name=${userCredentials.display_name}&length=2`,
             };
             res.user
               .updateProfile({
@@ -47,15 +105,12 @@ export class AuthWithFirebaseService {
                 photoURL: userCreated.avatar_url,
               })
               .then(() => {
-                this.afs
-                  .collection<User>('users')
-                  .add(userCreated)
-                  .then((saveUser) => {
-                    if (saveUser) {
-                      observable.next(userCreated);
-                      observable.complete();
-                    }
-                  });
+                this.userFirestore.addNewUser(userCreated).then((saveUser) => {
+                  if (saveUser) {
+                    observable.next(userCreated);
+                    observable.complete();
+                  }
+                });
               });
           }
         })
@@ -64,6 +119,51 @@ export class AuthWithFirebaseService {
             new Error('Tạo tài khoản thất bại, vui lòng kiểm tra email !')
           );
         });
+    });
+  }
+
+  signInWithPopup(popupType: 'GOOGLE' | 'FACEBOOK' | 'GITHUB'): Observable<User> {
+    return new Observable<User>((observable) => {
+      this.auth
+        .signInWithPopup( popupType === 'FACEBOOK' ? new firebase.auth.FacebookAuthProvider(): popupType ==='GOOGLE' ? new firebase.auth.GoogleAuthProvider : new firebase.auth.GithubAuthProvider)
+        .then((userCredential: firebase.auth.UserCredential) => {
+          if (userCredential.user) {
+            const user: User = {
+              id: userCredential.user.uid,
+              email: userCredential.user.email,
+              display_name: userCredential.user.displayName,
+              avatar_url: userCredential.user.photoURL,
+            };
+            if (userCredential.additionalUserInfo?.isNewUser) {
+              this.userFirestore.addNewUser(user).then((userSaved) => {
+                if (userSaved) {
+                  observable.next(user);
+                  observable.complete();
+                } else {
+                  observable.error(new Error('Có lỗi xảy ra'))
+                }
+              });
+            } else {
+              observable.next(user);
+              observable.complete();
+            }
+          }
+        })
+        .catch((error: firebase.FirebaseError) => {
+          observable.error(error);
+        });
+    });
+  }
+
+  logOut(): Observable<boolean> {
+    return new Observable<boolean>((observable) => {
+      this.auth
+        .signOut()
+        .then(() => {
+          observable.next(true);
+          observable.complete();
+        })
+        .catch((err) => observable.error(err));
     });
   }
 }

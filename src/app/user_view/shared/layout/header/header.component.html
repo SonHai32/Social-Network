@@ -4,18 +4,6 @@
   </div>
   <div nz-col nzLg="12" nzSpan="24">
     <div class="w-100 d-flex align-items-center justify-content-center text-no-copy">
-
-      <!-- <div nz-row nzAlign="middle" nzJustify="end">
-      <div nz-col nzLg="8" nzSpan="18">
-        <nz-input-group class="rounded outline-none" nzSize="large" nzSearch [nzPrefix]="prefixSearchIcon">
-          <input type="text" nz-input placeholder="input search text" nzSize="large" class="bg-none outline-none" />
-        </nz-input-group>
-        <ng-template #prefixSearchIcon>
-          <i nz-icon nzType="search"></i>
-        </ng-template>
-      </div>
-    </div> -->
-      <!-- <i name="people-outline"></i> -->
       <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2">
         <i nz-icon nzType="home" nzTheme="outline" class="icon-size"></i>
         <span nz-typography><strong>Trang chủ</strong></span>
@@ -36,11 +24,31 @@
     </div>
   </div>
   <div nz-col nzLg="6" nzSpan="12">
-    <ng-container *ngTemplateOutlet="loginBtnTmp"> </ng-container>
+    <ng-container *ngIf="isAuthenticated | async; else elsTpl">
+      <ng-container *ngTemplateOutlet="userTpl"> </ng-container>
+    </ng-container>
+    <ng-template #elsTpl>
+      <ng-container *ngTemplateOutlet="loginBtnTpl"> </ng-container>
+    </ng-template>
+
+
+
   </div>
 </div>
 
-<ng-template #loginBtnTmp>
+<ng-template #userTpl>
+  <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" nzPlacement="bottomCenter"
+    class="w-100 d-flex align-items-center justify-content-center px-5" *ngIf="currentUser">
+    <nz-avatar [nzSize]="48" nzSrc="{{currentUser.avatar_url}}" nzShape="circle"
+      class="d-flex align-items-center justify-content-center">
+    </nz-avatar>
+    <a nz-typography class="font-size-sm mx-1">{{currentUser.display_name}}</a>
+    <i nz-icon nzType="caret-down" nzTheme="outline"></i>
+  </div>
+</ng-template>
+
+
+<ng-template #loginBtnTpl>
   <div nz-row nzAlign="middle" nzJustify="center">
     <div nz-col nzSpan="12" class="d-flex align-items-center justify-content-end">
       <button nzSize="large" class="mx-1 d-flex align-items-center justify-content-center" nz-button nzType="text"
@@ -59,8 +67,9 @@
   </div>
 </ng-template>
 
-<nz-modal  [nzBodyStyle]="{}" *ngIf="!isMobile" nzNoAnimation [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null" nzWidth="480px"
-  (nzOnCancel)="toggleAuth()" [(nzVisible)]="authVisible" nzCloseOnNavigation="true" [nzTitle]="modalAndModalTitleTmp">
+<nz-modal [nzBodyStyle]="{}" *ngIf="!isMobile" nzNoAnimation [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null"
+  nzWidth="480px" (nzOnCancel)="toggleAuth()" [(nzVisible)]="authVisible" nzCloseOnNavigation="true"
+  [nzTitle]="modalAndModalTitleTmp">
   <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
 </nz-modal>
 <nz-drawer *ngIf="isMobile" [nzClosable]="false" [nzVisible]="authVisible" nzPlacement="bottom"
@@ -103,3 +112,14 @@
       <strong> Đăng nhập </strong></a>
   </div>
 </ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu class="p-4 mx-4">
+    <li nz-menu-item class="d-flex align-items-center" (click)="logout()">
+      <i nz-icon nzType="logout" nzTheme="outline" class="font-size-md"></i>
+      <span nz-typography>
+        Đăng xuất
+      </span>
+    </li>
+  </ul>
+</nz-dropdown-menu>

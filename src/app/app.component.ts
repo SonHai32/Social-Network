@@ -1,3 +1,5 @@
+import { AuthActions } from './user_view/store/auth/auth.action';
+import { AuthWithFirebaseService } from './user_view/services/auth/auth-with-firebase.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ErrorSelector } from './user_view/store/error/error.selectors';
 import { ErrorState } from './user_view/store/error/error.state';
@@ -24,6 +26,7 @@ export class AppComponent {
         this.messageService.error(val.errorMessage);
       }
     });
+    this.store.dispatch(AuthActions.CheckAuth())
 
   }
   constructor(

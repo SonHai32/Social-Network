@@ -5,11 +5,11 @@
       <!-- START-USER-LABLE -->
       <div nz-col nzSpan="24" class="d-flex align-items-center p-3">
         <nz-avatar class="d-flex align-items-center justify-content-center mx-1"
-          nzSrc="https://static.coindesk.com/wp-content/uploads/2021/04/dogecoin-710x458.jpg?format=webp"
-          nzShape="circle" nzSize="large" nzIcon="user"></nz-avatar>
+          nzSrc="{{currentUser.avatar_url}}"
+          nzShape="circle" nzSize="large" ></nz-avatar>
         <div class="d-flex flex-column justify-content-center">
           <a href="#" nz-typography class="font-size-xs">
-            <strong>username</strong>
+            <strong>{{currentUser.display_name}}</strong>
           </a>
           <span class="d-flex align-items-center font-size-xs" nz-typography nzType="secondary"><i nz-icon
               nzType="global" nzTheme="outline" class="mr-1"></i>&nbsp; Công khai</span>

@@ -10,4 +10,5 @@ export interface AuthState {
   authenticated: boolean;
   hasError: boolean;
   errorMessage: string;
+  popupType?: 'GOOGLE' | 'FACEBOOK' | 'GITHUB'
 }

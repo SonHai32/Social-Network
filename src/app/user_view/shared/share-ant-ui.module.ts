@@ -26,6 +26,8 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+
 
 @NgModule({
   imports: [CommonModule],
@@ -56,8 +58,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
     NzToolTipModule,
     NzSpinModule,
     NzFormModule,
-
-
+    NzDropDownModule,
   ],
   declarations: [],
 })

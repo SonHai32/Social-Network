@@ -1,3 +1,6 @@
+import { getUserSelector } from './../../../store/auth/auth.selectors';
+import { Store } from '@ngrx/store';
+import { User } from './../../../models/user.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
@@ -18,9 +21,17 @@ export class PostCreateComponent implements OnInit {
   imageFiles: NzUploadFile[] = []
   imageListVisible: boolean = false;
 
-  constructor(private msg: NzMessageService) {}
+  currentUser!: User;
 
-  ngOnInit(): void {}
+  constructor(private msg: NzMessageService, private store: Store) {}
+
+  ngOnInit(): void {
+    this.store.select(getUserSelector).subscribe((user: User | null) =>{
+      if(user){
+        this.currentUser = user
+      }
+    })
+  }
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.postContentInputRef?.nativeElement.focus();

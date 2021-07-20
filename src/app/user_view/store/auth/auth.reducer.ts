@@ -2,6 +2,7 @@ import { UserCredentials } from './../../models/user-credentials.model';
 import { AuthState } from './auth.state';
 import { createReducer, on } from '@ngrx/store';
 import { AuthActions } from './auth.action';
+import { state } from '@angular/animations';
 
 export const FEATURE_KEY = 'feature_auth';
 
@@ -16,6 +17,9 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
+  on(AuthActions.CheckAuth, (state) => {
+    return { ...state };
+  }),
   on(AuthActions.Login, (state: AuthState, { userCredentials }) => {
     return {
       ...state,
@@ -33,7 +37,7 @@ export const authReducer = createReducer(
       userCredentials,
       authenticated: false,
       hasError: false,
-      errorMessage: ''
+      errorMessage: '',
     };
   }),
 
@@ -60,8 +64,24 @@ export const authReducer = createReducer(
   on(AuthActions.Logout, (state: AuthState) => {
     return {
       ...state,
+      authenticated: false,
+      isLoading: true,
+    };
+  }),
+  on(AuthActions.LogoutSuccess, (state: AuthState) => {
+    return {
+      ...state,
       user: null,
+      isLoading: false,
+      hasError: false,
       authenticated: false,
     };
+  }),
+  on(AuthActions.LoginWithPopup, (state: AuthState, {popupType}) =>{
+    return{
+      ...state,
+      isLoading: true,
+      popupType
+    }
   })
 );

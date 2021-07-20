@@ -1,5 +1,9 @@
+import { Observable } from 'rxjs';
+import { AuthActions } from './../../../store/auth/auth.action';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { getIsLoadingSelector } from 'src/app/user_view/store/auth/auth.selectors';
 
 @Component({
   selector: 'user-auth-login',
@@ -8,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  isLoginLoading!: Observable<boolean>;
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   getEmailErrorTooltip(): string {
     if (this.validateForm.controls.email.hasError('required')) {
@@ -31,12 +36,25 @@ export class LoginComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
     });
+
+    this.isLoginLoading = this.store.select(getIsLoadingSelector);
   }
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
+    }
+
+    if (this.validateForm.valid) {
+      this.store.dispatch(
+        AuthActions.Login({
+          userCredentials: {
+            email: this.validateForm.controls.email.value,
+            password: this.validateForm.controls.password.value,
+          },
+        })
+      );
     }
   }
 }
