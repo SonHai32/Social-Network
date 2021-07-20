@@ -1,3 +1,5 @@
+
+import firebase from 'firebase';
 import { UserCredentials } from "../../models/user-credentials.model";
 import { User } from "../../models/user.model";
 

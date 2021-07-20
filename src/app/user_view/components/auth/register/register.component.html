@@ -48,7 +48,7 @@
 
       <nz-form-item class="my-1" nz-row nzAlign="middle" nzJustify="center">
         <nz-form-control nzSpan="24" class="my-1">
-          <button nzSize="large" nzBlock nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+          <button [nzLoading]="authLoading$ | async" nzSize="large" nzBlock nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
             Đăng ký
           </button>
         </nz-form-control>

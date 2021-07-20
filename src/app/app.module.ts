@@ -1,3 +1,4 @@
+import { ErrorModule } from './user_view/modules/error.module';
 import { AuthModule } from './user_view/modules/auth.module';
 import { ShareViewModule } from './user_view/shared/share-view.module';
 import { NgModule } from '@angular/core';
@@ -38,6 +39,7 @@ registerLocaleData(vi);
     HttpClientModule,
     BrowserAnimationsModule,
     AuthModule,
+    ErrorModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]

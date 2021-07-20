@@ -1,18 +1,18 @@
-import { User } from '../../models/user.model';
+
+import firebase from 'firebase';
 import { createAction, props } from '@ngrx/store';
 import { UserCredentials } from '../../models/user-credentials.model';
+import { User } from '../../models/user.model';
 
 export enum AuthActionTypes {
-  GET_AUTH      = '[AUTH] Get Auth',
-  LOGIN         = '[AUTH] Login',
-  REGISTER      = '[AUTH] Register',
-  AUTH_FAIL     = '[AUTH] Fail',
-  AUTH_SUCCESS  = '[AUTH] Success',
-  LOGOUT        = '[AUTH] Logout'
+  LOGIN           = '[AUTH] Login',
+  REGISTER        = '[AUTH] Register',
+  AUTH_FAIL       = '[AUTH] Fail',
+  AUTH_SUCCESS    = '[AUTH] Success',
+  LOGOUT          = '[AUTH] Logout'
 }
 
 
-export const GetAuth                    = createAction(AuthActionTypes.GET_AUTH)
 export const Login                      = createAction(AuthActionTypes.LOGIN, props<{userCredentials: UserCredentials}>())
 export const Register                   = createAction(AuthActionTypes.REGISTER, props<{userCredentials: UserCredentials}>())
 
@@ -21,7 +21,6 @@ export const AuthSuccess                = createAction(AuthActionTypes.AUTH_SUCC
 export const Logout                     = createAction(AuthActionTypes.LOGOUT)
 
 export const AuthActions = {
-  GetAuth,
   Login,
   Logout,
   Register,

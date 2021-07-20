@@ -6,8 +6,9 @@ import { AuthActions } from './auth.action';
 export const FEATURE_KEY = 'feature_auth';
 
 export const initialState: AuthState = {
+  userCredentials: null,
   user: null,
-  isLoading: true,
+  isLoading: false,
   authenticated: false,
   hasError: false,
   errorMessage: '',
@@ -20,13 +21,19 @@ export const authReducer = createReducer(
       ...state,
       userCredentials,
       isLoading: true,
+      authenticated: false,
+      hasError: false,
+      errorMessage: '',
     };
   }),
   on(AuthActions.Register, (state: AuthState, { userCredentials }) => {
     return {
       ...state,
-      isLoading: false,
+      isLoading: true,
       userCredentials,
+      authenticated: false,
+      hasError: false,
+      errorMessage: ''
     };
   }),
 
@@ -36,6 +43,7 @@ export const authReducer = createReducer(
       isLoading: false,
       errorMessage,
       userCredentials: null,
+      authenticated: false,
     };
   }),
   on(AuthActions.AuthSuccess, (state: AuthState, { user }) => {

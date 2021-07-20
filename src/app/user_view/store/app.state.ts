@@ -1,6 +1,7 @@
+import { ErrorState } from './error/error.state';
 import { AuthState } from './auth/auth.state';
-import { User } from '../models/user.model';
 
 export interface AppState{
-  auth_feature: AuthState
+  auth_feature: AuthState,
+  error_feature: ErrorState
 }
