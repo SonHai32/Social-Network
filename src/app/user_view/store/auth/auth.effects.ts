@@ -85,7 +85,7 @@ export class AuthEffects {
       ofType(AuthActions.LoginWithPopup),
       exhaustMap((action) =>
         this.authService.signInWithPopup(action.popupType).pipe(
-          timeout(20000),
+          timeout(60000),
           map((user: User) => AuthActions.AuthSuccess({ user })),
           catchError((err) =>
             merge(
@@ -96,7 +96,7 @@ export class AuthEffects {
               ),
               of(
                 ErrorActions.SetError({
-                  errorMessage: 'Lỗi quá thời gian kết nối',
+                  errorMessage: err.message,
                 })
               )
             )
