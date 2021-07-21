@@ -75,13 +75,12 @@ export class AuthEffects {
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.Logout),
-      exhaustMap(() =>
-        this.authService.logOut().pipe(
-          map(() => AuthActions.LogoutSuccess()),
-          catchError((err) =>
-            of(ErrorActions.SetError({ errorMessage: err.message }))
-          )
-        )
+      tap(() => this.store.dispatch(LoadingActions.SetLoading())),
+      switchMap(() => this.authService.logOut()),
+      map(() => AuthActions.LogoutSuccess()),
+      tap(() => this.store.dispatch(LoadingActions.ClearLoading())),
+      catchError((err) =>
+        of(ErrorActions.SetError({ errorMessage: err.message }))
       )
     )
   );

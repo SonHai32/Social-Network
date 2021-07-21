@@ -67,12 +67,12 @@
   </div>
 </ng-template>
 
-<nz-modal [nzBodyStyle]="{}" *ngIf="!isMobile" nzNoAnimation [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null"
+<nz-modal *ngIf="!isMobile && !isAuthenticated" nzNoAnimation [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null"
   nzWidth="480px" (nzOnCancel)="toggleAuth()" [(nzVisible)]="authVisible" nzCloseOnNavigation="true"
   [nzTitle]="modalAndModalTitleTmp">
   <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
 </nz-modal>
-<nz-drawer *ngIf="isMobile" [nzClosable]="false" [nzVisible]="authVisible" nzPlacement="bottom"
+<nz-drawer *ngIf="isMobile && !isAuthenticated" [nzClosable]="false" [nzVisible]="authVisible" nzPlacement="bottom"
   (nzOnClose)="toggleAuth('REGIETER')" nzHeight="67%" [nzTitle]="modalAndModalTitleTmp">
   <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
 </nz-drawer>

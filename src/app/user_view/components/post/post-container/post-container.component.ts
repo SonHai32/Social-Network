@@ -22,14 +22,14 @@ export class PostContainerComponent implements OnInit {
     this.isMobile = this.dv.isMobile();
     this.subscription = this.store
       .select(getAuthSelector)
-      .subscribe(
-        (authenticated: boolean) => (this.isAuthenticated = authenticated)
-      );
+      .subscribe((authenticated: boolean) => {
+        this.isAuthenticated = authenticated;
+      });
   }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
 
   toggleCreatePost(): void {

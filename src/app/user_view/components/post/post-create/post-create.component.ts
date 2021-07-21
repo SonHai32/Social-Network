@@ -41,11 +41,6 @@ export class PostCreateComponent implements OnInit {
     //Add 'implements OnDestroy' to the class.
     this.subscription.unsubscribe()
   }
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.postContentInputRef?.nativeElement.focus();
-    }, 2000);
-  }
 
   showInputTag() {
     this.inputTagVisible = true;

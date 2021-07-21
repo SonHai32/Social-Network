@@ -14,7 +14,7 @@
 </div>
 
 <nz-drawer
-  *ngIf="isMobile"
+  *ngIf="isMobile && isAuthenticated"
   class="c-bg-secondary"
   [nzBodyStyle]="{ padding: 0, margin: 0, background: '#F4F6FA' }"
   nzPlacement="bottom"
@@ -30,7 +30,7 @@
 </nz-drawer>
 
 <nz-modal
-  *ngIf="!isMobile"
+  *ngIf="!isMobile && isAuthenticated"
   nzCentered
   nzWidth="50%"
   [nzBodyStyle]="{ padding: '0', 'padding-bottom': '50px' }"
