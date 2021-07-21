@@ -3,7 +3,7 @@ import { AuthWithFirebaseService } from './user_view/services/auth/auth-with-fir
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ErrorSelector } from './user_view/store/error/error.selectors';
 import { ErrorState } from './user_view/store/error/error.state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppState } from './user_view/store/app.state';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
@@ -15,23 +15,28 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Covid-Social-Network';
-
+  subscription!: Subscription;
   $error!: Observable<ErrorState>;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.$error.subscribe((val: ErrorState) => {
+    this.subscription = this.$error.subscribe((val: ErrorState) => {
       if (val.hasError) {
         this.messageService.error(val.errorMessage);
       }
     });
-    this.store.dispatch(AuthActions.CheckAuth())
+    this.store.dispatch(AuthActions.CheckAuth());
+  }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.subscription.unsubscribe()
   }
   constructor(
     private readonly store: Store<AppState>,
-    private readonly messageService: NzMessageService,
+    private readonly messageService: NzMessageService
   ) {
     this.$error = this.store.select(ErrorSelector.getErrorSelector);
   }

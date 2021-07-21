@@ -4,7 +4,7 @@ import {
   getAuthSelector,
 } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/user_view/models/user.model';
@@ -18,17 +18,31 @@ export class HeaderComponent implements OnInit {
   authFormSelected: string = 'LOGIN';
   isMobile: boolean = false;
   currentUser!: User;
-  isAuthenticated!: Observable<boolean>;
+  isAuthenticated!: boolean;
+
+  subscription: Subscription = new Subscription();
+
   constructor(private dv: DeviceDetectorService, private store: Store) {}
 
   ngOnInit(): void {
     this.isMobile = this.dv.isMobile();
-    this.isAuthenticated = this.store.select(getAuthSelector);
-    this.store.select(getUserSelector).subscribe((user: User | null) => {
-      if (user) {
-        this.currentUser = user;
-      }
-    });
+    this.subscription.add(
+      this.store.select(getAuthSelector).subscribe((authenticated: boolean) => {
+        this.isAuthenticated = authenticated;
+      })
+    );
+    this.subscription.add(
+      this.store.select(getUserSelector).subscribe((user: User | null) => {
+        if (user) {
+          this.currentUser = user;
+        }
+      })
+    );
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.subscription.unsubscribe();
   }
 
   toggleAuth(formSelect?: string): void {
@@ -41,7 +55,7 @@ export class HeaderComponent implements OnInit {
     this.authFormSelected = formSelected;
   }
 
-  logout(): void{
-    this.store.dispatch(AuthActions.Logout())
+  logout(): void {
+    this.store.dispatch(AuthActions.Logout());
   }
 }

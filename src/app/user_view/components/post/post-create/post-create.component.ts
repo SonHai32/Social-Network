@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
 import { User } from './../../../models/user.model';
@@ -18,19 +19,27 @@ export class PostCreateComponent implements OnInit {
   addTagLabelVisible: boolean = false;
   tags: string[] = [];
   inputTagValue: string = '';
-  imageFiles: NzUploadFile[] = []
+  imageFiles: NzUploadFile[] = [];
   imageListVisible: boolean = false;
 
   currentUser!: User;
+  subscription!: Subscription;
 
   constructor(private msg: NzMessageService, private store: Store) {}
 
   ngOnInit(): void {
-    this.store.select(getUserSelector).subscribe((user: User | null) =>{
-      if(user){
-        this.currentUser = user
-      }
-    })
+    this.subscription = this.store
+      .select(getUserSelector)
+      .subscribe((user: User | null) => {
+        if (user) {
+          this.currentUser = user;
+        }
+      });
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.subscription.unsubscribe()
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -94,15 +103,13 @@ export class PostCreateComponent implements OnInit {
     return isValid;
   }
 
-
   beforeUpload = (file: NzUploadFile): boolean => {
-    console.log(file)
-    this.imageFiles = this.imageFiles.concat(file)
+    console.log(file);
+    this.imageFiles = this.imageFiles.concat(file);
     return false;
   };
 
-
-  toggleShowListImage(): void{
-    this.imageListVisible = !this.imageListVisible
+  toggleShowListImage(): void {
+    this.imageListVisible = !this.imageListVisible;
   }
 }

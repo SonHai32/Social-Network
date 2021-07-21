@@ -24,7 +24,7 @@
     </div>
   </div>
   <div nz-col nzLg="6" nzSpan="12">
-    <ng-container *ngIf="isAuthenticated | async; else elsTpl">
+    <ng-container *ngIf="isAuthenticated; else elsTpl">
       <ng-container *ngTemplateOutlet="userTpl"> </ng-container>
     </ng-container>
     <ng-template #elsTpl>
