@@ -1,3 +1,11 @@
-<div>
-  <router-outlet> </router-outlet>
-</div>
+<ng-container *ngIf="$isLoading; else appTpl">
+
+  <app-loading></app-loading>
+</ng-container>
+
+<ng-template #appTpl>
+  <div>
+    <router-outlet> </router-outlet>
+  </div>
+
+</ng-template>
