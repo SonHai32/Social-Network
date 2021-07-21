@@ -1,3 +1,5 @@
+import { Store } from '@ngrx/store';
+import { LoadingActions } from './../app-loading/loading.actions';
 import { ErrorActions } from './../error/error.actions';
 import { AuthActions } from './auth.action';
 import { AuthWithFirebaseService } from './../../services/auth/auth-with-firebase.service';
@@ -9,6 +11,8 @@ import {
   exhaustMap,
   timeout,
   timeoutWith,
+  tap,
+  switchMap,
 } from 'rxjs/operators';
 import { iif, merge, of } from 'rxjs';
 import firebase from 'firebase';
@@ -19,12 +23,14 @@ export class AuthEffects {
   checkAuth$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.CheckAuth),
-      exhaustMap(() =>
-        this.authService.checkAuth().pipe(
-          map((user: User) => AuthActions.AuthSuccess({ user })),
-          catchError((err) =>
-            of(ErrorActions.SetError({ errorMessage: err.message }))
-          )
+      tap(() => this.store.dispatch(LoadingActions.SetLoading())),
+      switchMap(() => this.authService.checkAuth()),
+      tap(() => this.store.dispatch(LoadingActions.ClearLoading())),
+      map((user: User) => AuthActions.AuthSuccess({ user })),
+      catchError((err) =>
+        of(
+          ErrorActions.SetError({ errorMessage: err.message }) &&
+            LoadingActions.ClearLoading()
         )
       )
     )
@@ -108,6 +114,7 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
-    private authService: AuthWithFirebaseService
+    private authService: AuthWithFirebaseService,
+    private store: Store
   ) {}
 }
