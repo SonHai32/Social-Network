@@ -1,0 +1,85 @@
+$colors: (
+  body:      #ecf0f1,
+  dot--1:    #f44336,
+  dot--2:    #f1c40f,
+  dot--3:    #03A9F4,
+  highlight: rgba(white, .6),
+  shadow:    rgba(black, .4)
+);
+
+// Function for color to replace map-get
+@function color($key) {
+  @if map-has-key($colors, $key) {
+    @return map-get($colors, $key);
+  }
+}
+
+// Variables for dots
+$size:     18px;
+$duration: .666s;
+$timing:   linear;
+
+@mixin dot {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin: auto;
+  width: $size;
+  height: $size;
+  border-radius: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.loader {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: -90px;
+  margin: auto;
+  transform: translate3d(0, 0, 0);
+}
+
+.dot {
+  @include dot;
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      background-color: color(dot--#{$i});
+      animation: jump--#{$i} $duration $timing infinite;
+      box-shadow:
+        color(highlight) 0 0 2px 2px,
+        color(dot--#{$i}) 0 0 12px 0;
+    }
+  }
+}
+
+// Animations
+$pos: 250%;
+$d1:  6;
+$d2:  1.75;
+
+@keyframes jump--1 {
+  0%    { transform: translate3d(0, 0, 0) scale(2); }
+  12.5% { transform: translate3d($pos/$d1, -$pos/$d2, 0); }
+  25%   { transform: translate3d($pos, -$pos, 0); }
+  37.5% { transform: translate3d($pos*2, $pos, 0); }
+  50%   { transform: translate3d($pos*2, 0, 0); }
+  100%  { transform: translate3d(0, 0, 0) scale(2); }
+}
+@keyframes jump--2 {
+  0%    { transform: translate3d($pos, 0, 0); }
+  25%   { transform: translate3d(0, 0, 0) scale(2); }
+  37.5% { transform: translate3d($pos/$d1, -$pos/$d2, 0); }
+  50%   { transform: translate3d($pos, -$pos, 0); }
+  62.5% { transform: translate3d($pos*2, $pos, 0); }
+  75%   { transform: translate3d($pos*2, 0, 0); }
+  100%  { transform: translate3d($pos, 0, 0); }
+}
+@keyframes jump--3 {
+  0%    { transform: translate3d($pos*2, 0, 0); }
+  50%   { transform: translate3d(0, 0, 0) scale(2); }
+  62.5% { transform: translate3d($pos/$d1, -$pos/$d2, 0); }
+  75%   { transform: translate3d($pos, -$pos, 0); }
+  87.5% { transform: translate3d($pos*2, $pos, 0); }
+  100%  { transform: translate3d($pos*2, 0, 0); }
+}
