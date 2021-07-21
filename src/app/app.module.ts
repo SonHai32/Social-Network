@@ -1,3 +1,4 @@
+import { LoadingModule } from './user_view/modules/loading.module';
 import { ErrorModule } from './user_view/modules/error.module';
 import { AuthModule } from './user_view/modules/auth.module';
 import { ShareViewModule } from './user_view/shared/share-view.module';
@@ -20,12 +21,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { IonicModule } from '@ionic/angular';
+import { AppLoadingComponent } from './user_view/shared/layout/app-loading/app-loading.component';
 
 registerLocaleData(vi);
 
 @NgModule({
   declarations: [
     AppComponent,
+    AppLoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ registerLocaleData(vi);
     BrowserAnimationsModule,
     AuthModule,
     ErrorModule,
+    LoadingModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]
