@@ -1,3 +1,4 @@
+import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Subscription } from 'rxjs';
 import { ErrorActions } from './../../../store/error/error.actions';
 import { AuthActions } from './../../../store/auth/auth.action';
@@ -5,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Component, OnInit } from '@angular/core';
 import { getAuthSelector } from 'src/app/user_view/store/auth/auth.selectors';
+import { User } from 'src/app/user_view/models/user.model';
 
 @Component({
   selector: 'home-post-container',
@@ -15,16 +17,25 @@ export class PostContainerComponent implements OnInit {
   createPostVisible: boolean = false;
   isAuthenticated!: boolean;
   isMobile: boolean = false;
-  subscription!: Subscription;
+  subscription: Subscription = new Subscription();
+  currentUser!: User;
   constructor(private dv: DeviceDetectorService, private store: Store) {}
 
   ngOnInit(): void {
     this.isMobile = this.dv.isMobile();
-    this.subscription = this.store
+    this.subscription.add(this.store
       .select(getAuthSelector)
       .subscribe((authenticated: boolean) => {
         this.isAuthenticated = authenticated;
-      });
+      }))
+    this.subscription.add(
+      this.store.select(getUserSelector).subscribe((user: User| null) =>{
+        if(user){
+          this.currentUser = user
+        }
+      })
+    )
+
   }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.

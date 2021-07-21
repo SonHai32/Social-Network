@@ -1,45 +1,24 @@
 <div nz-row nzAlign="middle" class="rounded-12 glass p-4 shadow">
   <div nz-col nzSpan="24" class="d-flex align-items-center">
-    <nz-avatar
-      class="d-flex align-items-center justify-content-center mx-1"
-      nzIcon="user"
-      nzShape="circle"
-      nzSize="large"
-      nzIcon="user"
-    ></nz-avatar>
-    <span (click)="toggleCreatePost()" nz-typography class="font-size-md mx-3"
-      >Bạn muốn chia sẻ điều gì ?</span
-    >
+    <nz-avatar *ngIf="!isAuthenticated" class="d-flex align-items-center justify-content-center mx-1" nzIcon="user"
+      nzShape="circle" nzSize="large" nzIcon="user"></nz-avatar>
+    <nz-avatar *ngIf="isAuthenticated" class="d-flex align-items-center justify-content-center mx-1" nzIcon="user"
+      nzShape="circle" nzSize="large" nzSrc="{{currentUser.avatar_url}}"></nz-avatar>
+    <span (click)="toggleCreatePost()" nz-typography class="font-size-md mx-3">Bạn muốn chia sẻ điều gì ?</span>
   </div>
 </div>
 
-<nz-drawer
-  *ngIf="isMobile && isAuthenticated"
-  class="c-bg-secondary"
-  [nzBodyStyle]="{ padding: 0, margin: 0, background: '#F4F6FA' }"
-  nzPlacement="bottom"
-  nzHeight="100%"
-  nzClosable="true"
-  [(nzVisible)]="createPostVisible"
-  (nzOnClose)="toggleCreatePost()"
-  [nzTitle]="title"
->
+<nz-drawer *ngIf="isMobile && isAuthenticated" class="c-bg-secondary"
+  [nzBodyStyle]="{ padding: 0, margin: 0, background: '#F4F6FA' }" nzPlacement="bottom" nzHeight="100%"
+  nzClosable="true" [(nzVisible)]="createPostVisible" (nzOnClose)="toggleCreatePost()" [nzTitle]="title">
   <ng-container *nzDrawerContent>
     <home-post-create></home-post-create>
   </ng-container>
 </nz-drawer>
 
-<nz-modal
-  *ngIf="!isMobile && isAuthenticated"
-  nzCentered
-  nzWidth="50%"
-  [nzBodyStyle]="{ padding: '0', 'padding-bottom': '50px' }"
-  [nzTitle]="title"
-  [(nzVisible)]="createPostVisible"
-  (nzOnCancel)="toggleCreatePost()"
-  nzClassName="rounded-12"
-   [nzFooter]="null"
->
+<nz-modal *ngIf="!isMobile && isAuthenticated" nzCentered nzWidth="50%"
+  [nzBodyStyle]="{ padding: '0', 'padding-bottom': '50px' }" [nzTitle]="title" [(nzVisible)]="createPostVisible"
+  (nzOnCancel)="toggleCreatePost()" nzClassName="rounded-12" [nzFooter]="null">
   <ng-container *nzModalContent>
     <home-post-create></home-post-create>
   </ng-container>
