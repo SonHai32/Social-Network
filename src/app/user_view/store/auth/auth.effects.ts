@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { LoadingActions } from './../app-loading/loading.actions';
-import { ErrorActions } from './../error/error.actions';
+import { AppMessageAction } from '../app-message/app-message.actions';
 import { AuthActions } from './auth.action';
 import { AuthWithFirebaseService } from './../../services/auth/auth-with-firebase.service';
 import { Injectable } from '@angular/core';
@@ -29,7 +29,7 @@ export class AuthEffects {
       map((user: User) => AuthActions.AuthSuccess({ user })),
       catchError((err) =>
         of(
-          ErrorActions.SetError({ errorMessage: err.message }) &&
+          AppMessageAction.SetAppMessage({ message: err.message, message_type: 'error' }) &&
             LoadingActions.ClearLoading()
         )
       )
@@ -45,7 +45,7 @@ export class AuthEffects {
           catchError((error: firebase.FirebaseError) =>
             merge(
               of(AuthActions.AuthFail({ errorMessage: error.message })),
-              of(ErrorActions.SetError({ errorMessage: error.message }))
+              of(AppMessageAction.SetAppMessage({ message: error.message, message_type: 'error' }))
             )
           )
         )
@@ -64,7 +64,7 @@ export class AuthEffects {
             catchError((error: firebase.FirebaseError) =>
               merge(
                 of(AuthActions.AuthFail({ errorMessage: error.message })),
-                of(ErrorActions.SetError({ errorMessage: error.message }))
+                of(AppMessageAction.SetAppMessage({ message: error.message, message_type: 'error' }))
               )
             )
           )
@@ -80,7 +80,7 @@ export class AuthEffects {
       map(() => AuthActions.LogoutSuccess()),
       tap(() => this.store.dispatch(LoadingActions.ClearLoading())),
       catchError((err) =>
-        of(ErrorActions.SetError({ errorMessage: err.message }))
+        of(AppMessageAction.SetAppMessage({ message: err.message, message_type: 'error' }))
       )
     )
   );
@@ -100,8 +100,9 @@ export class AuthEffects {
                 })
               ),
               of(
-                ErrorActions.SetError({
-                  errorMessage: err.message,
+                AppMessageAction.SetAppMessage({
+                  message: err.message,
+                  message_type: 'error'
                 })
               )
             )

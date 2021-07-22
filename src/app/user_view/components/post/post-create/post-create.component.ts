@@ -1,5 +1,5 @@
 import { PostCreateService } from './../../../services/post/post-create/post-create.service';
-import { ErrorActions } from './../../../store/error/error.actions';
+import { AppMessageAction } from '../../../store/app-message/app-message.actions';
 import { NzImage } from 'ng-zorro-antd/image';
 import { Post } from './../../../models/post.model';
 import { Subscription } from 'rxjs';
@@ -141,7 +141,7 @@ export class PostCreateComponent implements OnInit {
               this.tags = [];
               (this.textContent = ''), (this.imageFiles = []);
               this.store.dispatch(
-                ErrorActions.SetError({ errorMessage: 'Đăng bài thành công' })
+                AppMessageAction.SetAppMessage({ message: 'Đăng bài thành công', message_type: 'success' })
               );
             }
           })

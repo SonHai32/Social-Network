@@ -1,6 +1,6 @@
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Subscription } from 'rxjs';
-import { ErrorActions } from './../../../store/error/error.actions';
+import { AppMessageAction } from '../../../store/app-message/app-message.actions';
 import { AuthActions } from './../../../store/auth/auth.action';
 import { Store } from '@ngrx/store';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -48,8 +48,9 @@ export class PostContainerComponent implements OnInit {
       this.createPostVisible = !this.createPostVisible;
     } else {
       this.store.dispatch(
-        ErrorActions.SetError({
-          errorMessage: 'Vui lòng đăng nhập để tiếp tục',
+        AppMessageAction.SetAppMessage({
+          message: 'Vui lòng đăng nhập để tiếp tục',
+          message_type: 'error'
         })
       );
     }

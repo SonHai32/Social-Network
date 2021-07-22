@@ -1,5 +1,5 @@
 import { LoadingModule } from './user_view/modules/loading.module';
-import { ErrorModule } from './user_view/modules/error.module';
+import { AppMessageModule } from './user_view/modules/app-message.module';
 import { AuthModule } from './user_view/modules/auth.module';
 import { ShareViewModule } from './user_view/shared/share-view.module';
 import { NgModule } from '@angular/core';
@@ -41,7 +41,7 @@ registerLocaleData(vi);
     HttpClientModule,
     BrowserAnimationsModule,
     AuthModule,
-    ErrorModule,
+    AppMessageModule,
     LoadingModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],

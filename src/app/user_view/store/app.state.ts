@@ -1,9 +1,9 @@
 import { LoadingState } from './app-loading/loading.state';
-import { ErrorState } from './error/error.state';
+import { AppMessageState } from './app-message/app-message.state';
 import { AuthState } from './auth/auth.state';
 
 export interface AppState{
   auth_feature: AuthState,
-  error_feature: ErrorState
+  app_message_feature: AppMessageState
   loading_feature: LoadingState,
 }
