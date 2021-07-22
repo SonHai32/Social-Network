@@ -1,6 +1,6 @@
 import { Post } from './../../../models/post.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { NzImageService } from 'ng-zorro-antd/image';
+import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 @Component({
   selector: 'home-post-card-content',
   templateUrl: './post-card-content.component.html',
@@ -17,7 +17,9 @@ export class PostCardContentComponent implements OnInit {
     this.commentInputValue += emoji.native;
   }
 
-  previewListImage(){
-    this.nzImageService.preview(this.post.images );
+  previewListImage() {
+    if (this.post.post_content.image_content) {
+      // this.nzImageService.preview(this.post.post_content.image_content);
+    }
   }
 }

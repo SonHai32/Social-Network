@@ -10,17 +10,15 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { vi_VN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './user_view/store/auth/auth.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { IonicModule } from '@ionic/angular';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AppLoadingComponent } from './user_view/shared/layout/app-loading/app-loading.component';
 
 registerLocaleData(vi);
@@ -37,6 +35,7 @@ registerLocaleData(vi);
     EffectsModule.forRoot([]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     ShareViewModule,
     AppRoutingModule,
     HttpClientModule,

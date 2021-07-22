@@ -15,9 +15,9 @@
         ></nz-avatar>
         <div class="d-flex flex-column mx-2">
           <a href="#" nz-typography
-            ><strong> {{ post.name }}</strong></a
+            ><strong> {{ post.create_by_username }}</strong></a
           >
-          <span nz-typography nzType="secondary">45 phút trước </span>
+          <span nz-typography nzType="secondary">{{post.created_at}} </span>
         </div>
       </div>
       <div
@@ -39,36 +39,36 @@
   </div>
   <!-- END-POST-HEADER -->
   <!-- START-POST-CONTENT -->
-  <div nz-col nzSpan="24" class="py-4">
+  <div *ngIf="post.post_content.text_content" nz-col nzSpan="24" class="py-4">
     <span nz-typography>
-      {{ post.content }}
+      {{ post.post_content.text_content }}
     </span>
   </div>
 
   <!-- END-POST-CONTENT -->
-  <ng-container *ngIf="post.images" [ngSwitch]="post.images.length">
+  <ng-container *ngIf="post.post_content.image_content" [ngSwitch]="post.post_content.image_content.length">
     <ng-container *ngSwitchCase="1">
       <ng-container
-        *ngTemplateOutlet="fullImgTpl; context: { src: post.images[0].src }"
+        *ngTemplateOutlet="fullImgTpl; context: { src: post.post_content.image_content[0]}"
       ></ng-container>
     </ng-container>
 
     <ng-container *ngSwitchCase="2">
-      <ng-container *ngFor="let image of post.images">
+      <ng-container *ngFor="let image of post.post_content.image_content">
         <ng-container
           *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
         ></ng-container>
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="4">
-      <ng-container *ngFor="let image of post.images">
+      <ng-container *ngFor="let image of post.post_content.image_content">
         <ng-container
           *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
         ></ng-container>
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="3">
-      <ng-container *ngFor="let image of post.images; index as idx">
+      <ng-container *ngFor="let image of post.post_content.image_content; index as idx">
         <ng-container *ngIf="idx < 2; else elseTemplate">
           <ng-container
             *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
@@ -82,7 +82,7 @@
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchDefault>
-      <ng-container *ngFor="let image of post.images; index as idx">
+      <ng-container *ngFor="let image of post.post_content.image_content; index as idx">
         <ng-container *ngIf="idx < 3">
           <ng-container
             *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
@@ -93,7 +93,7 @@
         <ng-container
           *ngTemplateOutlet="
             halfImgTpl;
-            context: { src: post.images[3].src, tpl: moreimageoverlaytpl }
+            context: { src: post.post_content.image_content[3].src , tpl: moreimageoverlaytpl }
           "
         >
         </ng-container>
@@ -103,7 +103,7 @@
             class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center pointer"
             style="opacity: 0.67; position: absolute; top: 0; left: 0"
           >
-            <h3 nz-typography nzType="secondary">+ {{post.images.length - 4}}</h3>
+            <h3 nz-typography nzType="secondary">+ {{post.post_content.image_content.length -4}}</h3>
           </div>
         </ng-template>
       </ng-container>

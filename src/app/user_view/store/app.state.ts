@@ -5,5 +5,5 @@ import { AuthState } from './auth/auth.state';
 export interface AppState{
   auth_feature: AuthState,
   error_feature: ErrorState
-  loading_feature: LoadingState
+  loading_feature: LoadingState,
 }
