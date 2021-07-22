@@ -42,33 +42,45 @@ export class PostCreateService {
   }
 
   postUpload(
-    postUpload: Post,
-    postImageContent?: NzUploadFile[]
+    postOriginal: Post,
+    postImageContent?: NzUploadFile[] | null
   ): Observable<boolean> {
     return new Observable<boolean>((observable) => {
       const upload = (post: Post) => {
-        this.afdb.collection<Post>('posts').add({...post, id: this.afdb.createId()}).then((resPost) =>{
-          if(resPost){
-            observable.next(true)
-            observable.complete()
-          }
-        }).catch(err => observable.error(err))
+        this.afdb
+          .collection<Post>('posts')
+          .add({ ...post, id: this.afdb.createId() })
+          .then((resPost) => {
+            if (resPost) {
+              observable.next(true);
+              observable.complete();
+            } else {
+              observable.next(false);
+              observable.complete();
+            }
+          })
+          .catch((err) => observable.error(err));
       };
 
       if (postImageContent) {
         this.fileUpload(postImageContent).subscribe((val: string[]) => {
           const imageList: NzImage[] = [];
-          val.forEach((url: string) =>{
-            imageList.push({src: url})
-          })
+          val.forEach((url: string) => {
+            imageList.push({ src: url });
+          });
 
-          upload({...postUpload, post_content: {...postUpload.post_content, image_content: imageList}})
+          upload({
+            ...postOriginal,
+            post_content: {
+              ...postOriginal.post_content,
+              image_content: imageList,
+            },
+          });
         });
-      }else{
-        upload(postUpload)
+      } else {
+        upload(postOriginal);
       }
     });
-
   }
 
   constructor(

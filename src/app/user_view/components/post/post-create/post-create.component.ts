@@ -134,7 +134,7 @@ export class PostCreateComponent implements OnInit {
 
       this.subscription.add(
         this.postUploadService
-          .postUpload(post, this.imageFiles)
+          .postUpload(post, this.imageFiles.length > 0 ?  this.imageFiles : null)
           .subscribe((val: boolean) => {
             this.postUploading = false;
             if (val) {
