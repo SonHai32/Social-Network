@@ -3,27 +3,27 @@
     <h1 nz-typography class="m-0 p-0 text-center">LOGO</h1>
   </div>
   <div nz-col nzLg="12" nzSpan="24">
-    <div class="w-100 d-flex align-items-center justify-content-center text-no-copy">
-      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2">
+    <div class="w-100 d-flex align-items-center justify-content-center text-no-copy ">
+      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="home" nzTheme="outline" class="icon-size"></i>
-        <span nz-typography><strong>Trang chủ</strong></span>
+        <span nz-typography class="text-center"><strong>Trang chủ</strong></span>
       </div>
-      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2">
+      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="team" nzTheme="outline" class="icon-size"></i>
-        <span nz-typography><strong>Bạn bè</strong></span>
+        <span nz-typography class="text-center"><strong>Bạn bè</strong></span>
       </div>
-      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2">
+      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="search" nzTheme="outline" class="icon-size"></i>
-        <span nz-typography><strong>Tìm kiếm</strong></span>
+        <span nz-typography class="text-center"><strong>Tìm kiếm</strong></span>
       </div>
-      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2">
+      <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
-        <span nz-typography><strong>Thông báo</strong></span>
+        <span nz-typography class="text-center"><strong>Thông báo</strong></span>
       </div>
 
     </div>
   </div>
-  <div nz-col nzLg="6" nzSpan="12">
+  <div nz-col nzLg="6" nzSpan="24">
     <ng-container *ngIf="isAuthenticated; else elsTpl">
       <ng-container *ngTemplateOutlet="userTpl"> </ng-container>
     </ng-container>
