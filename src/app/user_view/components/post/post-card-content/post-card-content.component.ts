@@ -1,6 +1,10 @@
+import { getUserSelector } from './../../../store/auth/auth.selectors';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { Post } from './../../../models/post.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { NzImage, NzImageService } from 'ng-zorro-antd/image';
+import { User } from 'src/app/user_view/models/user.model';
 @Component({
   selector: 'home-post-card-content',
   templateUrl: './post-card-content.component.html',
@@ -8,10 +12,20 @@ import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 })
 export class PostCardContentComponent implements OnInit {
   @Input('post') post!: Post;
-  constructor(private nzImageService: NzImageService) {}
+  constructor(private store: Store) {}
   commentInputValue: string = '';
 
-  ngOnInit(): void {}
+  currentUser!: User;
+  subscription: Subscription = new Subscription()
+  ngOnInit(): void {
+    this.subscription.add(
+      this.store.select(getUserSelector).subscribe((user: User| null) =>{
+        if(user){
+          this.currentUser = user
+        }
+      })
+    )
+  }
   addEmoji(event: any) {
     const { emoji } = event;
     this.commentInputValue += emoji.native;
