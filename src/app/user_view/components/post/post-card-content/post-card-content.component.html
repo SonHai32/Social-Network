@@ -1,38 +1,18 @@
-<div
-  nz-row
-  nzAlign="middle"
-  nzJustify="center"
-  class="glass-2 rounded-12 shadow-sm mt-3 p-3"
->
+<div nz-row nzAlign="middle" nzJustify="center" class="glass-2 rounded-12 shadow-sm mt-3 p-3">
   <!-- START-POST-HEADER -->
   <div nz-col nzSpan="24">
     <div nz-row nzAlign="middle">
       <div nz-col nzSpan="12" class="d-flex">
-        <nz-avatar
-          class="d-flex align-items-center justify-content-center"
-          [nzSize]="48"
-          nzIcon="user"
-        ></nz-avatar>
+        <nz-avatar class="d-flex align-items-center justify-content-center" [nzSize]="48" nzSrc="{{post.avatar_url}}">
+        </nz-avatar>
         <div class="d-flex flex-column mx-2">
-          <a href="#" nz-typography
-            ><strong> {{ post.create_by_username }}</strong></a
-          >
+          <a href="#" nz-typography><strong> {{ post.create_by_username }}</strong></a>
           <span nz-typography nzType="secondary">{{post.created_at}} </span>
         </div>
       </div>
-      <div
-        nz-col
-        nzSpan="12"
-        class="d-flex justify-content-end align-items-center"
-      >
+      <div nz-col nzSpan="12" class="d-flex justify-content-end align-items-center">
         <button nz-button nzType="text" nzShape="circle">
-          <i
-            font-size-md
-            nz-icon
-            nzType="more"
-            nzTheme="outline"
-            [nzRotate]="90"
-          ></i>
+          <i font-size-md nz-icon nzType="more" nzTheme="outline" [nzRotate]="90"></i>
         </button>
       </div>
     </div>
@@ -48,61 +28,46 @@
   <!-- END-POST-CONTENT -->
   <ng-container *ngIf="post.post_content.image_content" [ngSwitch]="post.post_content.image_content.length">
     <ng-container *ngSwitchCase="1">
-      <ng-container
-        *ngTemplateOutlet="fullImgTpl; context: { src: post.post_content.image_content[0].src}"
-      ></ng-container>
+      <ng-container *ngTemplateOutlet="fullImgTpl; context: { src: post.post_content.image_content[0].src}">
+      </ng-container>
     </ng-container>
 
     <ng-container *ngSwitchCase="2">
       <ng-container *ngFor="let image of post.post_content.image_content">
-        <ng-container
-          *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
-        ></ng-container>
+        <ng-container *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"></ng-container>
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="4">
       <ng-container *ngFor="let image of post.post_content.image_content">
-        <ng-container
-          *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
-        ></ng-container>
+        <ng-container *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"></ng-container>
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="3">
       <ng-container *ngFor="let image of post.post_content.image_content; index as idx">
         <ng-container *ngIf="idx < 2; else elseTemplate">
-          <ng-container
-            *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"></ng-container>
         </ng-container>
         <ng-template #elseTemplate>
-          <ng-container
-            *ngTemplateOutlet="fullImgTpl; context: { src: image.src }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="fullImgTpl; context: { src: image.src }"></ng-container>
         </ng-template>
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchDefault>
       <ng-container *ngFor="let image of post.post_content.image_content; index as idx">
         <ng-container *ngIf="idx < 3">
-          <ng-container
-            *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="halfImgTpl; context: { src: image.src }"></ng-container>
         </ng-container>
       </ng-container>
       <ng-container>
-        <ng-container
-          *ngTemplateOutlet="
+        <ng-container *ngTemplateOutlet="
             halfImgTpl;
             context: { src: post.post_content.image_content[3].src , tpl: moreimageoverlaytpl }
-          "
-        >
+          ">
         </ng-container>
         <ng-template #moreimageoverlaytpl>
-          <div
-            (click)="previewListImage()"
+          <div (click)="previewListImage()"
             class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center pointer"
-            style="opacity: 0.67; position: absolute; top: 0; left: 0"
-          >
+            style="opacity: 0.67; position: absolute; top: 0; left: 0">
             <h3 nz-typography nzType="secondary">+ {{post.post_content.image_content.length -4}}</h3>
           </div>
         </ng-template>
@@ -114,12 +79,7 @@
   <div nz-col nzSpan="24" class="py-2 border-top border-bottom border-white mt-2">
     <div nz-row nzAlign="middle" nzJustify="center">
       <div nz-col nzSpan="8">
-        <button
-          nz-button
-          nzBlock
-          nzType="text"
-          class="d-flex align-items-center justify-content-center"
-        >
+        <button nz-button nzBlock nzType="text" class="d-flex align-items-center justify-content-center">
           <i nz-icon nzType="heart" nzTheme="outline" class="mx-1"></i>
 
           <span nz-typography class="font-size-sm">
@@ -128,12 +88,7 @@
         </button>
       </div>
       <div nz-col nzSpan="8">
-        <button
-          nz-button
-          nzBlock
-          nzType="text"
-          class="d-flex align-items-center justify-content-center"
-        >
+        <button nz-button nzBlock nzType="text" class="d-flex align-items-center justify-content-center">
           <i nz-icon nzType="message" nzTheme="outline" class="mx-1"></i>
           <span nz-typography class="font-size-sm">
             <strong> Bình luận </strong>
@@ -141,12 +96,7 @@
         </button>
       </div>
       <div nz-col nzSpan="8">
-        <button
-          nz-button
-          nzBlock
-          nzType="text"
-          class="d-flex align-items-center justify-content-center"
-        >
+        <button nz-button nzBlock nzType="text" class="d-flex align-items-center justify-content-center">
           <i nz-icon nzType="share-alt" nzTheme="outline" class="mx-1"></i>
           <span nz-typography class="font-size-sm">
             <strong> Chia sẻ </strong>
@@ -158,66 +108,30 @@
   <!-- END-POST-OPTION -->
   <!-- START-POST-COMMENT -->
   <div nz-col nzSpan="24" class="py-2">
-    <nz-input-group
-      class=" align-items-center border-none"
-      [nzSuffix]="suffixTemplateInfo"
-      [nzPrefix]="prefixTemplateUser"
-    >
-      <textarea
-        [(ngModel)]="commentInputValue"
-        type="text"
-        nz-input
-        placeholder="Nhập bình luận"
-        nzSize="large"
-        class=" px-3 rounded no-resize border-none"
-        [nzAutosize]="{ minRows: 1, maxRows: 50 }"
-
-      ></textarea>
+    <nz-input-group class=" align-items-center border-none" [nzSuffix]="suffixTemplateInfo"
+      [nzPrefix]="prefixTemplateUser">
+      <textarea [(ngModel)]="commentInputValue" type="text" nz-input placeholder="Nhập bình luận" nzSize="large"
+        class=" px-3 rounded no-resize border-none" [nzAutosize]="{ minRows: 1, maxRows: 50 }"></textarea>
     </nz-input-group>
     <ng-template #prefixTemplateUser>
-      <nz-avatar
-        class="d-flex align-items-center justify-content-center mx-1"
-        nzIcon="user"
-        nzShape="circle"
-        nzSize="large"
-        nzIcon="user"
-      ></nz-avatar>
+      <nz-avatar class="d-flex align-items-center justify-content-center mx-1" nzShape="circle"
+        nzSrc="{{post.avatar_url}}" nzSize="large" nzIcon="user"></nz-avatar>
     </ng-template>
     <ng-template #suffixTemplateInfo>
-      <button
-        nz-tooltip
-        nzTooltipTitle="Bình luận"
-        nzTooltipTrigger="hover"
-        nzTooltipPlacement="top"
-        nz-button
-        nzShape="circle"
-        nzType="text"
-        class="d-flex align-items-center justify-content-center"
-      >
+      <button nz-tooltip nzTooltipTitle="Bình luận" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
+        nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
         <i nz-icon nzType="send" nzTheme="outline"></i>
       </button>
-      <button
-        nz-tooltip
-        nzTooltipTitle="Hình ảnh"
-        nzTooltipTrigger="hover"
-        nzTooltipPlacement="top"
-        nz-button
-        nzShape="circle"
-        nzType="text"
-        class="d-flex align-items-center justify-content-center"
-      >
-        <i nz-icon nzType="picture" nzTheme="outline"></i></button
-    ></ng-template>
+      <button nz-tooltip nzTooltipTitle="Hình ảnh" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
+        nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
+        <i nz-icon nzType="picture" nzTheme="outline"></i></button>
+    </ng-template>
   </div>
   <!-- END-POST-COMMENT -->
 </div>
 
 <ng-template #halfImgTpl let-src="src" let-template="tpl">
-  <div
-    nz-col
-    nzSpan="12"
-    class="d-flex justify-content-center position-relative"
-  >
+  <div nz-col nzSpan="12" class="d-flex justify-content-center position-relative">
     <img nz-image [nzSrc]="src" class="img-fluid d-block w-100" />
     <ng-container *ngIf="template">
       <ng-container *ngTemplateOutlet="template"></ng-container>
@@ -225,12 +139,7 @@
   </div>
 </ng-template>
 <ng-template #fullImgTpl let-src="src">
-  <div
-
-    nz-col
-    nzSpan="24"
-    class="d-flex justify-content-center position-relative"
-  >
+  <div nz-col nzSpan="24" class="d-flex justify-content-center position-relative">
     <img nz-image [nzSrc]="src" class="img-fluid d-block w-100" />
 
   </div>
