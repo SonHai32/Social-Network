@@ -1,13 +1,11 @@
 import { map } from 'rxjs/operators';
 import { Observable, combineLatest, MonoTypeOperatorFunction } from 'rxjs';
-import * as moment from 'moment'
 import  firebase from 'firebase/app'
 
-moment.locale('vi');
 export function mapTimestamp<TData = any>(): MonoTypeOperatorFunction<TData[]>{
   return map((item: TData[]) => item.map((item) =>({
     ...item,
-    created_at: moment(((item as any)?.created_at as firebase.firestore.Timestamp).toDate()).fromNow()
+    created_at: ((item as any)?.created_at as firebase.firestore.Timestamp).toDate()
   })))
 }
 export function vmFromLatest<TVm extends {}, TComputedVM extends {} = any>(
