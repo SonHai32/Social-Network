@@ -26,7 +26,9 @@
   </div>
 
   <!-- END-POST-CONTENT -->
-  <ng-container *ngIf="post.post_content.image_content" [ngSwitch]="post.post_content.image_content.length">
+
+  <div nz-row *ngIf="post.post_content.image_content" class="bg-dark-opacity mt-2">
+  <ng-container  [ngSwitch]="post.post_content.image_content.length">
     <ng-container *ngSwitchCase="1">
       <ng-container *ngTemplateOutlet="fullImgTpl; context: { src: post.post_content.image_content[0].src}">
       </ng-container>
@@ -68,12 +70,13 @@
           <div (click)="previewListImage()"
             class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center pointer"
             style="opacity: 0.67; position: absolute; top: 0; left: 0">
-            <h3 nz-typography nzType="secondary">+ {{post.post_content.image_content.length -4}}</h3>
+            <h3 nz-typography class="text-white">+ {{post.post_content.image_content.length -4}}</h3>
           </div>
         </ng-template>
       </ng-container>
     </ng-container>
   </ng-container>
+  </div>
 
   <!-- START-POST-OPTION -->
   <div nz-col nzSpan="24" class="py-2 border-top border-bottom border-white mt-2">
@@ -134,15 +137,15 @@
 
 <ng-template #halfImgTpl let-src="src" let-template="tpl">
   <div nz-col nzSpan="12" class="d-flex justify-content-center position-relative">
-    <img nz-image [nzSrc]="src" class="img-fluid d-block w-100" />
+    <img nz-image [nzSrc]="src" class="img-fluid d-block w-100 image-max-height" />
     <ng-container *ngIf="template">
       <ng-container *ngTemplateOutlet="template"></ng-container>
     </ng-container>
   </div>
 </ng-template>
 <ng-template #fullImgTpl let-src="src">
-  <div nz-col nzSpan="24" class="d-flex justify-content-center position-relative">
-    <img nz-image [nzSrc]="src" class="img-fluid d-block w-100" />
+  <div nz-col nzSpan="24" class="d-flex justify-content-center position-relative ">
+    <img nz-image [nzSrc]="src" class="img-fluid d-block w-100 image-max-height" />
 
   </div>
 </ng-template>

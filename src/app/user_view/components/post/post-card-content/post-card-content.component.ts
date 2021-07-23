@@ -12,7 +12,7 @@ import { User } from 'src/app/user_view/models/user.model';
 })
 export class PostCardContentComponent implements OnInit {
   @Input('post') post!: Post;
-  constructor(private store: Store) {}
+  constructor(private store: Store, private imageService: NzImageService) {}
   commentInputValue: string = '';
 
   currentUser!: User;
@@ -33,7 +33,7 @@ export class PostCardContentComponent implements OnInit {
 
   previewListImage() {
     if (this.post.post_content.image_content) {
-      // this.nzImageService.preview(this.post.post_content.image_content);
+      this.imageService.preview(this.post.post_content.image_content);
     }
   }
 }
