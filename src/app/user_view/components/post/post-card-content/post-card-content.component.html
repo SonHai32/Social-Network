@@ -49,7 +49,7 @@
   <ng-container *ngIf="post.post_content.image_content" [ngSwitch]="post.post_content.image_content.length">
     <ng-container *ngSwitchCase="1">
       <ng-container
-        *ngTemplateOutlet="fullImgTpl; context: { src: post.post_content.image_content[0]}"
+        *ngTemplateOutlet="fullImgTpl; context: { src: post.post_content.image_content[0].src}"
       ></ng-container>
     </ng-container>
 

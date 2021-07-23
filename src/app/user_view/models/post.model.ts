@@ -1,10 +1,11 @@
-import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { NzImage } from 'ng-zorro-antd/image';
+import * as moment from 'moment'
+import firebase from 'firebase/app'
 export interface Post{
   id?: string,
   create_by_username: string | null,
   avatar_url: string | null,
-  created_at?: firebase.default.firestore.Timestamp | null,
+  created_at?: firebase.firestore.Timestamp | Date | moment.Moment,
   created_by_id: string ,
   post_content: {
     text_content?: string,

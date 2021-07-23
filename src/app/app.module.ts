@@ -1,3 +1,4 @@
+import { PostsModule } from './user_view/modules/posts.module';
 import { LoadingModule } from './user_view/modules/loading.module';
 import { AppMessageModule } from './user_view/modules/app-message.module';
 import { AuthModule } from './user_view/modules/auth.module';
@@ -43,6 +44,7 @@ registerLocaleData(vi);
     AuthModule,
     AppMessageModule,
     LoadingModule,
+    PostsModule
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]

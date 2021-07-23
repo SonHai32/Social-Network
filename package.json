@@ -26,6 +26,7 @@
     "@ngrx/store-devtools": "^12.2.0",
     "angular-animations": "^0.11.0",
     "firebase": "^8.7.1",
+    "moment": "^2.29.1",
     "ng-zorro-antd": "^11.4.2",
     "ngx-device-detector": "^2.1.1",
     "rxjs": "~6.6.0",

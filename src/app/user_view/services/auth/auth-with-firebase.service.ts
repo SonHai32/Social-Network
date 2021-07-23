@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { observable, Observable } from 'rxjs';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
 import { UserFirestoreService } from '../user/user-firestore.service';
 

@@ -1,5 +1,5 @@
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { UserCredentials } from "../../models/user-credentials.model";
 import { User } from "../../models/user.model";
 

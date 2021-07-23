@@ -9,7 +9,7 @@ import { User } from './../../../models/user.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'home-post-create',
@@ -125,7 +125,7 @@ export class PostCreateComponent implements OnInit {
         avatar_url: this.currentUser.avatar_url,
         create_by_username: this.currentUser.display_name,
         created_by_id: this.currentUser.id,
-        created_at: firebase.default.firestore.Timestamp.now(),
+        created_at: firebase.firestore.Timestamp.now(),
         post_content: {
           text_content: this.textContent,
           hashtag: this.tags,
