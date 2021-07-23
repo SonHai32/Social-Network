@@ -59,12 +59,10 @@
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
               }
-
             ],
             "styles": [
               "src/theme.less",
               "src/styles.scss"
-
             ],
             "scripts": []
           },
@@ -125,7 +123,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
-
             ],
             "styles": [
               "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
