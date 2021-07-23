@@ -15,6 +15,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FriendRequestListComponent } from '../components/friends/friend-request/friend-request-list/friend-request-list/friend-request-list.component';
 import { FriendRequestCardComponent } from '../components/friends/friend-request/friend-request-card/friend-request-card.component';
+import { FromNowPipe } from '../pipes/from-now.pipe';
 
 
 
@@ -33,6 +34,7 @@ import { FriendRequestCardComponent } from '../components/friends/friend-request
     PostCardContentComponent,
     FriendRequestListComponent,
     FriendRequestCardComponent,
+    FromNowPipe,
   ],
   imports: [
     CommonModule,
