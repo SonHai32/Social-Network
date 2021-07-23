@@ -32,7 +32,6 @@ registerLocaleData(vi);
   imports: [
     BrowserModule,
     StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
