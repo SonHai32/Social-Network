@@ -6,14 +6,17 @@
   </div>
   <div nz-col nzXl="12" nzLg="10" nzSpan="24" class="h-100 p-3 pt-5">
     <home-post-container></home-post-container>
+
     <ng-container *ngIf="vm$ | async as vm">
+      <ng-container *ngIf="vm.isLoading">
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 6 }" [nzActive]="true" class="glass mt-4 rounded-12 p-4"></nz-skeleton>
+      </ng-container>
+
       <ng-container *ngIf="vm.posts">
         <ng-container *ngFor="let post of vm.posts">
           <home-post-card-content [post]="post"></home-post-card-content>
         </ng-container>
       </ng-container>
-
-
 
     </ng-container>
   </div>
