@@ -1,3 +1,4 @@
+import { AppLoadingComponent } from './layout/app-loading/app-loading.component';
 import { PostCardContentComponent } from './../components/post/post-card-content/post-card-content.component';
 import { PostCreateComponent } from './../components/post/post-create/post-create.component';
 import { PostContainerComponent } from './../components/post/post-container/post-container.component';
@@ -35,12 +36,14 @@ import { FromNowPipe } from '../pipes/from-now.pipe';
     FriendRequestListComponent,
     FriendRequestCardComponent,
     FromNowPipe,
+    AppLoadingComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     ShareAntUiModule,
   ],
+  exports: [AppLoadingComponent]
 
 })
 export class ShareViewModule { }
