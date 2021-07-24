@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class PostsService {
   getAllPosts(){
-    return this.afs.collection<Post>('posts').valueChanges({
+    return this.afs.collection<Post>('posts', ref => ref.orderBy('created_at', 'desc')).valueChanges({
       idField: 'id'
     })
   }
