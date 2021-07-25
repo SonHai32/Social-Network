@@ -96,7 +96,7 @@
       <div nz-col nzSpan="8">
         <button nz-button nzBlock nzType="text" (click)="postLikeUpdate(post.id)"
           class="d-flex align-items-center justify-content-center">
-          <i *ngIf="isLiked |async; else noLiked" nz-icon nzType="heart" nzTheme="fill" class="mx-1"></i>
+          <i *ngIf="isLiked |async; else noLiked" nz-icon nzType="heart" style="color: #ff2194;" nzTheme="fill" class="mx-1"></i>
           <ng-template #noLiked>
 
             <i nz-icon nzType="heart" nzTheme="outline" class="mx-1"></i>

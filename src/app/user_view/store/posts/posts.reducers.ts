@@ -31,6 +31,9 @@ export const PostsReducers = createReducer(
   on(PostsActions.PostLike, (state: PostsState) => {
     return { ...state };
   }),
+  on(PostsActions.PostLikeSuccess, (state: PostsState) => {
+    return { ...state };
+  }),
   on(PostsActions.PostUpload, (state: PostsState) => {
     return {
       ...state,

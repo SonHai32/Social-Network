@@ -14,7 +14,6 @@ import { User } from 'src/app/user_view/models/user.model';
 })
 export class PostCardContentComponent implements OnInit {
   @Input('post') post!: Post;
-  @Output() postChanged = new EventEmitter<Post>();
   constructor(
     private store: Store,
     private imageService: NzImageService,
@@ -35,7 +34,10 @@ export class PostCardContentComponent implements OnInit {
       })
     );
     if (this.post.id && this.currentUser) {
-    this.subscription.add ((this.isLiked = this.postService.isUserLiked(this.post.id, this.currentUser.id)).subscribe)
+       this.isLiked = this.postService.isUserLiked(
+        this.post.id,
+        this.currentUser.id
+      );
     }
   }
   addEmoji(event: any) {
@@ -63,8 +65,4 @@ export class PostCardContentComponent implements OnInit {
     //Add 'implements OnDestroy' to the class.
     this.subscription.unsubscribe();
   }
-
-  // getLike(postID: string, userID: string): Observable<boolean> {
-  //   return this.postService.isLiked(postID, userID);
-  // }
 }
