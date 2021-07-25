@@ -1,9 +1,10 @@
+import { PostsService } from './../../../services/post/posts/posts.service';
 import { PostsActions } from './../../../store/posts/posts.actions';
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, observable } from 'rxjs';
 import { Post } from './../../../models/post.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NzImageService } from 'ng-zorro-antd/image';
 import { User } from 'src/app/user_view/models/user.model';
 @Component({
@@ -13,8 +14,15 @@ import { User } from 'src/app/user_view/models/user.model';
 })
 export class PostCardContentComponent implements OnInit {
   @Input('post') post!: Post;
-  constructor(private store: Store, private imageService: NzImageService) {}
+  @Output() postChanged = new EventEmitter<Post>();
+  constructor(
+    private store: Store,
+    private imageService: NzImageService,
+    private postService: PostsService
+  ) {}
   commentInputValue: string = '';
+  postLikeBy!: Observable<string[]>;
+  isLiked!: Observable<boolean>;
 
   currentUser!: User;
   subscription: Subscription = new Subscription();
@@ -26,6 +34,9 @@ export class PostCardContentComponent implements OnInit {
         }
       })
     );
+    if (this.post.id && this.currentUser) {
+    this.subscription.add ((this.isLiked = this.postService.isUserLiked(this.post.id, this.currentUser.id)).subscribe)
+    }
   }
   addEmoji(event: any) {
     const { emoji } = event;
@@ -50,6 +61,10 @@ export class PostCardContentComponent implements OnInit {
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
+
+  // getLike(postID: string, userID: string): Observable<boolean> {
+  //   return this.postService.isLiked(postID, userID);
+  // }
 }

@@ -57,5 +57,23 @@ export class PostsService {
     });
   }
 
+  isLiked(postID: string) {
+    return this.afs.doc<Post>(`posts/${postID}`).get();
+  }
+
+  isUserLiked(postID: string, userID: string): Observable<boolean> {
+    return new Observable<boolean>((observable) => {
+      this.afs.doc<Post>(`posts/${postID}`).get().subscribe((res) =>{
+        res.ref.onSnapshot((snapshot) =>{
+          if(snapshot.data()?.liked_by_user_id){
+            observable.next(snapshot.data()?.liked_by_user_id?.includes(userID));
+          }else{
+            observable.error(new Error('Bài viết không còn tồn tại'))
+          }
+        })
+      });
+    });
+  }
+
   constructor(private afs: AngularFirestore) {}
 }

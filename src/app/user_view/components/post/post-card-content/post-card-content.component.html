@@ -94,8 +94,13 @@
   <div nz-col nzSpan="24" class="py-2 border-top border-bottom border-white mt-2">
     <div nz-row nzAlign="middle" nzJustify="center">
       <div nz-col nzSpan="8">
-        <button nz-button nzBlock nzType="text" (click)="postLikeUpdate(post.id)" class="d-flex align-items-center justify-content-center">
-          <i nz-icon nzType="heart" nzTheme="outline" class="mx-1"></i>
+        <button nz-button nzBlock nzType="text" (click)="postLikeUpdate(post.id)"
+          class="d-flex align-items-center justify-content-center">
+          <i *ngIf="isLiked |async; else noLiked" nz-icon nzType="heart" nzTheme="fill" class="mx-1"></i>
+          <ng-template #noLiked>
+
+            <i nz-icon nzType="heart" nzTheme="outline" class="mx-1"></i>
+          </ng-template>
 
           <span nz-typography class="font-size-sm">
             <strong> Yêu thích </strong>
@@ -108,7 +113,6 @@
           <span nz-typography class="font-size-sm">
             <strong> Bình luận </strong>
           </span>
-          <span *ngIf="post.liked_by_user_id">{{post.liked_by_user_id.length}}</span>
         </button>
       </div>
       <div nz-col nzSpan="8">

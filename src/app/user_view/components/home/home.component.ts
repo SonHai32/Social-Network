@@ -45,6 +45,8 @@ export class HomeComponent implements OnInit {
 
 
 
+
+
   // getAllPost(){
   //   this.postsService.getAllPosts().subscribe((posts: Post[]) =>{
   //     this.posts = posts
