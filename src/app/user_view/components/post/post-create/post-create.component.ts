@@ -2,7 +2,6 @@ import { status } from './../../../models/status.model';
 import { PostSelectors } from './../../../store/posts/posts.selectors';
 import { PostsActions } from './../../../store/posts/posts.actions';
 import { PostCreateService } from './../../../services/post/post-create/post-create.service';
-import { AppMessageAction } from '../../../store/app-message/app-message.actions';
 import { NzImage } from 'ng-zorro-antd/image';
 import { Post } from './../../../models/post.model';
 import { Subscription, Observable } from 'rxjs';
@@ -11,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { User } from './../../../models/user.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import firebase from 'firebase/app';
 
 @Component({

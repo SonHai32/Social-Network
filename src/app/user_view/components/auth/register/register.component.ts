@@ -10,8 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AuthState } from 'src/app/user_view/store/auth/auth.state';
-import { getAuthSelector, getIsLoadingSelector } from 'src/app/user_view/store/auth/auth.selectors';
+import { getIsLoadingSelector } from 'src/app/user_view/store/auth/auth.selectors';
 @Component({
   selector: 'user-auth-register',
   templateUrl: './register.component.html',

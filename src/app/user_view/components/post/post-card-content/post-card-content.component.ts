@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Post } from './../../../models/post.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { NzImage, NzImageService } from 'ng-zorro-antd/image';
+import { NzImageService } from 'ng-zorro-antd/image';
 import { User } from 'src/app/user_view/models/user.model';
 @Component({
   selector: 'home-post-card-content',

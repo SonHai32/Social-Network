@@ -1,7 +1,6 @@
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Subscription } from 'rxjs';
 import { AppMessageAction } from '../../../store/app-message/app-message.actions';
-import { AuthActions } from './../../../store/auth/auth.action';
 import { Store } from '@ngrx/store';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Component, OnInit } from '@angular/core';

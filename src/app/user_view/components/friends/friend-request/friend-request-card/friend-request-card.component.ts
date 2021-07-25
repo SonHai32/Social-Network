@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  slideInLeftOnEnterAnimation,
-  slideOutRightOnLeaveAnimation,
   bounceInOnEnterAnimation,
-  slideInRightOnEnterAnimation,
-  slideInDownOnEnterAnimation,
-  slideOutRightAnimation,
 } from 'angular-animations';
 @Component({
   selector: 'friend-request-card',
