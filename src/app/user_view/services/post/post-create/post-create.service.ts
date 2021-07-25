@@ -1,3 +1,4 @@
+import { status } from './../../../models/status.model';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { NzImage } from 'ng-zorro-antd/image';
 import { combineLatest, Observable, of, observable } from 'rxjs';
@@ -43,19 +44,20 @@ export class PostCreateService {
 
   postUpload(
     postOriginal: Post,
-    postImageContent?: NzUploadFile[] | null
-  ): Observable<boolean> {
-    return new Observable<boolean>((observable) => {
+    postImageContent?: NzUploadFile[] | undefined
+  ): Observable<status> {
+    return new Observable<status>((observable) => {
       const upload = (post: Post) => {
+
         this.afdb
           .collection<Post>('posts')
-          .add({ ...post, id: this.afdb.createId() })
+          .add(post)
           .then((resPost) => {
             if (resPost) {
-              observable.next(true);
+              observable.next('success');
               observable.complete();
             } else {
-              observable.next(false);
+              observable.next('error');
               observable.complete();
             }
           })

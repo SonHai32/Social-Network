@@ -1,3 +1,4 @@
+import { PostsActions } from './../../../store/posts/posts.actions';
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -16,15 +17,15 @@ export class PostCardContentComponent implements OnInit {
   commentInputValue: string = '';
 
   currentUser!: User;
-  subscription: Subscription = new Subscription()
+  subscription: Subscription = new Subscription();
   ngOnInit(): void {
     this.subscription.add(
-      this.store.select(getUserSelector).subscribe((user: User| null) =>{
-        if(user){
-          this.currentUser = user
+      this.store.select(getUserSelector).subscribe((user: User | null) => {
+        if (user) {
+          this.currentUser = user;
         }
       })
-    )
+    );
   }
   addEmoji(event: any) {
     const { emoji } = event;
@@ -35,5 +36,20 @@ export class PostCardContentComponent implements OnInit {
     if (this.post.post_content.image_content) {
       this.imageService.preview(this.post.post_content.image_content);
     }
+  }
+
+  postLikeUpdate(postID: string | undefined) {
+    if (postID && this.currentUser.id) {
+      this.subscription.add(
+        this.store.dispatch(
+          PostsActions.PostLike({ postID, userID: this.currentUser.id })
+        )
+      );
+    }
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.subscription.unsubscribe()
   }
 }

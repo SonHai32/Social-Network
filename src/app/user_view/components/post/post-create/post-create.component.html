@@ -153,7 +153,7 @@
   <!-- END-OPTION-BOX -->
 
   <div nz-col nzSpan="22" class="mt-3">
-    <button [nzLoading]="postUploading" class="rounded" nzBlock nzSize="large" nz-button nzType="primary" (click)="createPost()">
+    <button [nzLoading]="postUploading | async" class="rounded" nzBlock nzSize="large" nz-button nzType="primary" (click)="createPost()">
       Chia sẻ
     </button>
   </div>

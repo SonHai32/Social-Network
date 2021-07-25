@@ -1,8 +1,11 @@
+import { status } from './../../../models/status.model';
+import { PostSelectors } from './../../../store/posts/posts.selectors';
+import { PostsActions } from './../../../store/posts/posts.actions';
 import { PostCreateService } from './../../../services/post/post-create/post-create.service';
 import { AppMessageAction } from '../../../store/app-message/app-message.actions';
 import { NzImage } from 'ng-zorro-antd/image';
 import { Post } from './../../../models/post.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
 import { User } from './../../../models/user.model';
@@ -29,8 +32,8 @@ export class PostCreateComponent implements OnInit {
   imageAsBase64!: NzImage[];
   textContent: string = '';
   currentUser!: User;
-  subscription!: Subscription;
-  postUploading: boolean = false;
+  subscription: Subscription = new Subscription();
+  postUploading!: Observable<boolean>;
 
   constructor(
     private msg: NzMessageService,
@@ -39,13 +42,31 @@ export class PostCreateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.store
-      .select(getUserSelector)
-      .subscribe((user: User | null) => {
+    this.subscription.add(
+      this.store.select(getUserSelector).subscribe((user: User | null) => {
         if (user) {
           this.currentUser = user;
         }
-      });
+      })
+    );
+
+    this.subscription.add(
+      this.store.dispatch(PostsActions.PostUploadStatus({ status: 'idle' }))
+    );
+
+    this.subscription.add(
+      this.store
+        .select(PostSelectors.getPostUploadStatus)
+        .subscribe((status: status) => {
+          if (status === 'success') {
+            this.textContent = '';
+            (this.imageFiles = []), (this.tags = []);
+          }
+        })
+    );
+
+    this.postUploading = this.store.select(PostSelectors.getPostUploading);
+    this.subscription.add(this.postUploading.subscribe())
   }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -119,7 +140,6 @@ export class PostCreateComponent implements OnInit {
   }
 
   createPost(): void {
-    this.postUploading = true;
     if (this.currentUser) {
       const post: Post = {
         avatar_url: this.currentUser.avatar_url,
@@ -131,22 +151,13 @@ export class PostCreateComponent implements OnInit {
           hashtag: this.tags,
         },
       };
-
-      this.subscription.add(
-        this.postUploadService
-          .postUpload(post, this.imageFiles.length > 0 ?  this.imageFiles : null)
-          .subscribe((val: boolean) => {
-            this.postUploading = false;
-            if (val) {
-              this.tags = [];
-              (this.textContent = ''), (this.imageFiles = []);
-              this.store.dispatch(
-                AppMessageAction.SetAppMessage({ message: 'Đăng bài thành công', message_type: 'success' })
-              );
-            }
-          })
-      );
-      // this.store.dispatch(PostCreateActions.PostUpload({ post }));
+      if (this.imageFiles.length > 0) {
+        this.store.dispatch(
+          PostsActions.PostUpload({ post, imageList: this.imageFiles })
+        );
+      } else {
+        this.store.dispatch(PostsActions.PostUpload({ post }));
+      }
     }
   }
 }
