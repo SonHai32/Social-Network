@@ -134,9 +134,9 @@
         class=" px-3 rounded no-resize border-none" [nzAutosize]="{ minRows: 1, maxRows: 50 }"></textarea>
     </nz-input-group>
     <ng-template #prefixTemplateUser>
-      <nz-avatar *ngIf="currentUser" class="d-flex align-items-center justify-content-center mx-1" nzShape="circle"
-        nzSrc="{{currentUser.avatar_url}}" nzSize="large" nzIcon="user"></nz-avatar>
-      <nz-avatar *ngIf="!currentUser" class="d-flex align-items-center justify-content-center mx-1" nzShape="circle"
+      <nz-avatar *ngIf="user" class="d-flex align-items-center justify-content-center mx-1" nzShape="circle"
+        nzSrc="{{user.avatar_url}}" nzSize="large" nzIcon="user"></nz-avatar>
+      <nz-avatar *ngIf="!user" class="d-flex align-items-center justify-content-center mx-1" nzShape="circle"
         nzIcon='user' nzSize="large" nzIcon="user"></nz-avatar>
     </ng-template>
     <ng-template #suffixTemplateInfo>

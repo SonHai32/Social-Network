@@ -1,3 +1,4 @@
+import { AppMessageAction } from './../../../store/app-message/app-message.actions';
 import { PostsService } from './../../../services/post/posts/posts.service';
 import { PostsActions } from './../../../store/posts/posts.actions';
 import { getUserSelector } from './../../../store/auth/auth.selectors';
@@ -14,6 +15,7 @@ import { User } from 'src/app/user_view/models/user.model';
 })
 export class PostCardContentComponent implements OnInit {
   @Input('post') post!: Post;
+  @Input('user') user!: User | null | undefined;
   constructor(
     private store: Store,
     private imageService: NzImageService,
@@ -23,22 +25,15 @@ export class PostCardContentComponent implements OnInit {
   postLikeBy!: Observable<string[]>;
   isLiked!: Observable<boolean>;
 
-  currentUser!: User;
   subscription: Subscription = new Subscription();
   ngOnInit(): void {
     this.subscription.add(
-      this.store.select(getUserSelector).subscribe((user: User | null) => {
-        if (user) {
-          this.currentUser = user;
+      this.store.select(getUserSelector).subscribe((user) => {
+        if (this.post.id && user) {
+          this.isLiked = this.postService.isUserLiked(this.post.id, user.id);
         }
       })
     );
-    if (this.post.id && this.currentUser) {
-       this.isLiked = this.postService.isUserLiked(
-        this.post.id,
-        this.currentUser.id
-      );
-    }
   }
   addEmoji(event: any) {
     const { emoji } = event;
@@ -52,10 +47,19 @@ export class PostCardContentComponent implements OnInit {
   }
 
   postLikeUpdate(postID: string | undefined) {
-    if (postID && this.currentUser.id) {
+    if (postID && this.user) {
       this.subscription.add(
         this.store.dispatch(
-          PostsActions.PostLike({ postID, userID: this.currentUser.id })
+          PostsActions.PostLike({ postID, userID: this.user.id })
+        )
+      );
+    } else {
+      this.subscription.add(
+        this.store.dispatch(
+          AppMessageAction.SetAppMessage({
+            message: 'Bạn chưa đăng nhập',
+            message_type: 'error',
+          })
         )
       );
     }

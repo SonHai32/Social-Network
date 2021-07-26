@@ -14,7 +14,7 @@
 
       <ng-container *ngIf="vm.posts">
         <ng-container *ngFor="let post of vm.posts">
-          <home-post-card-content  [post]="post"></home-post-card-content>
+          <home-post-card-content  [post]="post" [user]="vm.currentUser"></home-post-card-content>
         </ng-container>
       </ng-container>
 

@@ -1,3 +1,5 @@
+import { getUserSelector } from './../../store/auth/auth.selectors';
+import { User } from './../../models/user.model';
 import { AppState } from './../../store/app.state';
 import { GetAllPost } from './../../store/posts/posts.actions';
 import { getPostLoading } from './../../store/posts/posts.selectors';
@@ -10,6 +12,7 @@ import { getPostsSelector } from '../../store/posts/posts.selectors';
 interface PostListVm{
   posts: Post[],
   isLoading: boolean,
+  currentUser?: User | null,
 }
 @Component({
   selector: 'app-home',
@@ -37,7 +40,8 @@ export class HomeComponent implements OnInit {
     this.subscription.add(this.store.dispatch(GetAllPost()))
     this.vm$ = vmFromLatest<PostListVm>({
       posts: this.store.pipe(select(getPostsSelector)),
-      isLoading: this.store.pipe(select(getPostLoading))
+      isLoading: this.store.pipe(select(getPostLoading)),
+      currentUser: this.store.pipe(select(getUserSelector))
     })
     this.subscription.add(this.vm$.subscribe())
 
