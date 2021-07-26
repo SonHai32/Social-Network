@@ -1,6 +1,6 @@
 import { getAppLoadingSelector } from './user_view/store/app-loading/loading.selectors';
 import { AuthActions } from './user_view/store/auth/auth.action';
-import { AuthWithFirebaseService } from './user_view/services/auth/auth-with-firebase.service';
+import { AuthWithFirebaseService } from './user_view/services/auth-with-firebase.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppMessageState } from './user_view/store/app-message/app-message.state';
 import { Observable, Subscription } from 'rxjs';

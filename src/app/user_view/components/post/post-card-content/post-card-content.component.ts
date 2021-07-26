@@ -1,5 +1,5 @@
 import { AppMessageAction } from './../../../store/app-message/app-message.actions';
-import { PostsService } from './../../../services/post/posts/posts.service';
+import { PostsService } from './../../../services/posts.service';
 import { PostsActions } from './../../../store/posts/posts.actions';
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';

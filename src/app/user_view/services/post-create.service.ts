@@ -1,8 +1,8 @@
-import { status } from './../../../models/status.model';
+import { status } from '../models/status.model';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { NzImage } from 'ng-zorro-antd/image';
 import { combineLatest, Observable, of, observable } from 'rxjs';
-import { Post } from './../../../models/post.model';
+import { Post } from '../models/post.model';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import {
   AngularFireStorage,

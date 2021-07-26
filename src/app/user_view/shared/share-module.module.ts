@@ -64,4 +64,4 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
   ],
   declarations: [],
 })
-export class ShareAntUiModule {}
+export class ShareModule {}

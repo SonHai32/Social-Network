@@ -20,7 +20,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AppLoadingComponent } from './user_view/shared/layout/app-loading/app-loading.component';
 
 registerLocaleData(vi);
 

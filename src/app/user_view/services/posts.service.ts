@@ -1,7 +1,7 @@
-import { observable, Observable } from 'rxjs';
-import { Post } from './../../../models/post.model';
+import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import { Post } from '../models/post.model';
 
 @Injectable({
   providedIn: 'root',

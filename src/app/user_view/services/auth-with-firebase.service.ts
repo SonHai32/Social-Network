@@ -1,12 +1,11 @@
-import { UserCredentials } from './../../models/user-credentials.model';
-import { User } from './../../models/user.model';
+import { UserCredentials } from '../models/user-credentials.model';
+import { User } from '../models/user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { observable, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import firebase from 'firebase/app';
-import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
-import { UserFirestoreService } from '../user/user-firestore.service';
+import { UserFirestoreService } from './user-firestore.service';
 
 @Injectable({
   providedIn: 'root',

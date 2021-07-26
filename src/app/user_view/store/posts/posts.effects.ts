@@ -1,7 +1,6 @@
 import { Store } from '@ngrx/store';
 import { status } from './../../models/status.model';
-import { PostCreateService } from './../../services/post/post-create/post-create.service';
-import { User } from './../../models/user.model';
+import { PostCreateService } from '../../services/post-create.service';
 import { Post } from './../../models/post.model';
 import { AppMessageAction } from './../app-message/app-message.actions';
 import {
@@ -16,14 +15,12 @@ import {
   mergeMap,
   catchError,
   map,
-  exhaustMap,
   tap,
-  timeout,
   switchMap,
 } from 'rxjs/operators';
 import { of, merge } from 'rxjs';
-import { PostsService } from '../../services/post/posts/posts.service';
 import { mapTimestamp } from '../../utils/operators';
+import { PostsService } from '../../services/posts.service';
 @Injectable()
 export class PostsEffects {
   getAllPosts$ = createEffect(() =>
