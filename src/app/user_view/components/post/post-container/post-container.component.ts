@@ -42,6 +42,9 @@ export class PostContainerComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
+  handlePostCreateClose(){
+    this.createPostVisible = false;
+  }
   toggleCreatePost(): void {
     if (this.isAuthenticated) {
       this.createPostVisible = !this.createPostVisible;

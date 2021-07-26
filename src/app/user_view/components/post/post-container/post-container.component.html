@@ -20,7 +20,7 @@
   [nzBodyStyle]="{ padding: '0', 'padding-bottom': '50px' }" [nzTitle]="title" [(nzVisible)]="createPostVisible"
   (nzOnCancel)="toggleCreatePost()" nzClassName="rounded-12" [nzFooter]="null">
   <ng-container *nzModalContent>
-    <home-post-create></home-post-create>
+    <home-post-create (closeCreatePostModal)="handlePostCreateClose()"></home-post-create>
   </ng-container>
 </nz-modal>
 

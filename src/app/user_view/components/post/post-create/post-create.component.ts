@@ -1,7 +1,6 @@
 import { status } from './../../../models/status.model';
 import { PostSelectors } from './../../../store/posts/posts.selectors';
 import { PostsActions } from './../../../store/posts/posts.actions';
-import { PostCreateService } from './../../../services/post/post-create/post-create.service';
 import { NzImage } from 'ng-zorro-antd/image';
 import { Post } from './../../../models/post.model';
 import { Subscription, Observable } from 'rxjs';
@@ -9,7 +8,14 @@ import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
 import { User } from './../../../models/user.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import firebase from 'firebase/app';
 
@@ -19,6 +25,7 @@ import firebase from 'firebase/app';
   styleUrls: ['./post-create.component.scss'],
 })
 export class PostCreateComponent implements OnInit {
+  @Output() closeCreatePostModal = new EventEmitter();
   @ViewChild('inputTag', { static: false }) inputTagRef?: ElementRef;
   @ViewChild('postContentInput', { static: false })
   postContentInputRef?: ElementRef;
@@ -34,11 +41,7 @@ export class PostCreateComponent implements OnInit {
   subscription: Subscription = new Subscription();
   postUploading!: Observable<boolean>;
 
-  constructor(
-    private msg: NzMessageService,
-    private store: Store,
-    private postUploadService: PostCreateService
-  ) {}
+  constructor(private msg: NzMessageService, private store: Store) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -58,8 +61,9 @@ export class PostCreateComponent implements OnInit {
         .select(PostSelectors.getPostUploadStatus)
         .subscribe((status: status) => {
           if (status === 'success') {
-            this.textContent = '';
-            (this.imageFiles = []), (this.tags = []);
+            setTimeout(() => {
+              this.closeCreatePostModal.emit();
+            }, 800);
           }
         })
     );
