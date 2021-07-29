@@ -8,6 +8,7 @@ export interface Post{
   created_at?: firebase.firestore.Timestamp | Date | moment.Moment,
   created_by_id: string ,
   liked_by_user_id?: string[],
+  commentID?: string,
   post_content: {
     text_content?: string,
     image_content?: NzImage[],

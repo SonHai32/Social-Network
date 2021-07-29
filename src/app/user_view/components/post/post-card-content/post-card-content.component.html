@@ -90,25 +90,41 @@
     </ng-container>
   </div>
 
+  <!-- post-stats -->
+  <div *ngIf="totalComment | async" nz-col nzSpan="24" class="py-1 border-white mt-1">
+    <div nz-row nzAlign="middle">
+      <div nz-col nzSpan="12" class="d-flex justify-content-start">
+        <span nz-typography>
+          0 lượt thích
+        </span>
+      </div>
+      <div nz-col nzSpan="12" class="d-flex justify-content-end ">
+        <span nz-typography>
+          {{totalComment | async}} Bình luận
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- post-stats -->
   <!-- START-POST-OPTION -->
-  <div nz-col nzSpan="24" class="py-2 border-top border-bottom border-white mt-2">
+  <div nz-col nzSpan="24" class="py-2 border-top border-bottom border-white ">
     <div nz-row nzAlign="middle" nzJustify="center">
       <div nz-col nzSpan="8">
         <button nz-button nzBlock nzType="text" (click)="postLikeUpdate(post.id)"
           class="d-flex align-items-center justify-content-center">
-          <i *ngIf="isLiked |async; else noLiked" nz-icon nzType="heart" style="color: #ff2194;" nzTheme="fill" class="mx-1"></i>
+          <i *ngIf="isLiked |async; else noLiked" nz-icon nzType="heart" style="color: #ff2194;" nzTheme="fill"
+            class="mx-1"></i>
           <ng-template #noLiked>
-
             <i nz-icon nzType="heart" nzTheme="outline" class="mx-1"></i>
           </ng-template>
-
           <span nz-typography class="font-size-sm">
             <strong> Yêu thích </strong>
           </span>
         </button>
       </div>
       <div nz-col nzSpan="8">
-        <button nz-button nzBlock nzType="text" class="d-flex align-items-center justify-content-center">
+        <button (click)="toggleListComment()" nz-button nzBlock nzType="text"
+          class="d-flex align-items-center justify-content-center">
           <i nz-icon nzType="message" nzTheme="outline" class="mx-1"></i>
           <span nz-typography class="font-size-sm">
             <strong> Bình luận </strong>
@@ -126,32 +142,28 @@
     </div>
   </div>
   <!-- END-POST-OPTION -->
-  <!-- START-POST-COMMENT -->
+
   <div nz-col nzSpan="24" class="py-2">
-    <nz-input-group class=" align-items-center border-none" [nzSuffix]="suffixTemplateInfo"
-      [nzPrefix]="prefixTemplateUser">
-      <textarea [(ngModel)]="commentInputValue" type="text" nz-input placeholder="Nhập bình luận" nzSize="large"
-        class=" px-3 rounded no-resize border-none" [nzAutosize]="{ minRows: 1, maxRows: 50 }"></textarea>
-    </nz-input-group>
+    <ng-container [ngTemplateOutlet]='addCommentTemplate' [ngTemplateOutletContext]="{isChild: false}">
+    </ng-container>
     <ng-template #prefixTemplateUser>
       <nz-avatar *ngIf="user" class="d-flex align-items-center justify-content-center mx-1" nzShape="circle"
         nzSrc="{{user.avatar_url}}" nzSize="large" nzIcon="user"></nz-avatar>
       <nz-avatar *ngIf="!user" class="d-flex align-items-center justify-content-center mx-1" nzShape="circle"
         nzIcon='user' nzSize="large" nzIcon="user"></nz-avatar>
     </ng-template>
-    <ng-template #suffixTemplateInfo>
-      <button nz-tooltip nzTooltipTitle="Bình luận" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
-        nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
-        <i nz-icon nzType="send" nzTheme="outline"></i>
-      </button>
-      <button nz-tooltip nzTooltipTitle="Hình ảnh" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
-        nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
-        <i nz-icon nzType="picture" nzTheme="outline"></i></button>
-    </ng-template>
   </div>
-  <!-- END-POST-COMMENT -->
+  <ng-container *ngIf="totalComment | async as total">
+    <ng-container *ngIf="total > 0">
+      <div *ngIf="commentListVisible" nz-col nzSpan="24" class="py-2">
+        <ng-template [ngTemplateOutlet]="commentContentTpl" [ngTemplateOutletContext]="{ isChild: false }">
+        </ng-template>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>
 
+<!-- START-IMAGE-FORMAT-TEMPLATE -->
 <ng-template #halfImgTpl let-src="src" let-template="tpl">
   <div nz-col nzSpan="12" class="d-flex justify-content-center position-relative">
     <img nz-image [nzSrc]="src" class="img-fluid d-block w-100 image-max-height" />
@@ -163,6 +175,78 @@
 <ng-template #fullImgTpl let-src="src">
   <div nz-col nzSpan="24" class="d-flex justify-content-center position-relative ">
     <img nz-image [nzSrc]="src" class="img-fluid d-block w-100 image-max-height" />
-
   </div>
 </ng-template>
+<!-- START-IMAGE-FORMAT-TEMPLATE -->
+
+<!-- START-ADD-COMMENT-BOX -->
+<ng-template #addCommentTemplate let-isChild='isChild' let-commentID='commentID'>
+  <nz-input-group class=" align-items-center border-none" [nzSuffix]="suffixTemplateInfo"
+    [nzPrefix]="prefixTemplateUser">
+    <textarea #comment [value]='' type="text" nz-input placeholder="Nhập bình luận" nzSize="large"
+      class=" px-3 rounded no-resize border-none" [nzAutosize]="{ maxRows: 50 }"></textarea>
+  </nz-input-group>
+  <ng-template #suffixTemplateInfo>
+    <button (click)="postComment(comment.value, isChild, commentID)" nz-tooltip nzTooltipTitle="Bình luận"
+      nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button nzShape="circle" nzType="text"
+      class="d-flex align-items-center justify-content-center">
+      <i nz-icon nzType="send" nzTheme="outline"></i>
+    </button>
+    <button nz-tooltip nzTooltipTitle="Hình ảnh" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
+      nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
+      <i nz-icon nzType="picture" nzTheme="outline"></i></button>
+  </ng-template>
+</ng-template>
+<!-- START-ADD-COMMENT-BOX -->
+
+
+<!-- START-LIST-COMMENT-TEMPLATE -->
+<ng-template #commentContentTpl>
+  <ng-container *ngIf="comments | async; else loadingTpl">
+    <nz-comment *ngFor="let item of comments | async; index as idx"
+      class="my-3 bg-white-opacity p-3 rounded-12 shadow-sm" [nzAuthor]="authorTpl" [nzDatetime]="fromNowTpl">
+      <ng-template #authorTpl>
+        <a href="" nz-typography> <strong>{{item.created_by_display_name}}</strong></a>
+      </ng-template>
+      <ng-template #fromNowTpl>
+        <span href="" nz-typography> {{item.created_at.toDate() | fromNow}}</span>
+      </ng-template>
+      <nz-avatar nz-comment-avatar nzShape="circle" nzSrc="{{item.avatar_url}}"></nz-avatar>
+      <nz-comment-content>
+        <span nz-typography>{{item.commentText}}</span>
+      </nz-comment-content>
+      <nz-comment-action>
+        <span nz-typography (click)="toggleChildComment(idx)"><strong>Trả lời</strong></span>
+      </nz-comment-action>
+      <ng-container *ngIf="item.child_comments && item.child_comments.length">
+        <nz-comment *ngFor="let child_comment of item.child_comments" [nzAuthor]="authorTpl" [nzDatetime]="fromNowTpl">
+          <ng-template #authorTpl>
+            <a href="" nz-typography> <strong>{{child_comment.created_by_display_name}}</strong></a>
+          </ng-template>
+          <ng-template #fromNowTpl>
+            <span href="" nz-typography>{{child_comment.created_at.toDate() | fromNow}}</span>
+          </ng-template>
+          <nz-avatar nz-comment-avatar nzShape="circle" nzSrc="{{child_comment.avatar_url}}"></nz-avatar>
+          <nz-comment-content>
+            <span nz-typography>{{child_comment.commentText}}</span>
+          </nz-comment-content>
+          <nz-comment-action>
+            <span nz-typography (click)="toggleChildComment(idx)"><strong>Trả lời</strong></span>
+          </nz-comment-action>
+        </nz-comment>
+      </ng-container>
+      <ng-container *ngIf="replyCommentDisplayIndex.includes(idx)" [ngTemplateOutlet]='addCommentTemplate'
+        [ngTemplateOutletContext]="{isChild: true, commentID: item.id}">
+      </ng-container>
+    </nz-comment>
+  </ng-container>
+</ng-template>
+<!-- END-LIST-COMMENT-TEMPLATE -->
+
+<!-- START-LOADING-TEMPLATE -->
+<ng-template #loadingTpl>
+  <div class="w-100 d-flex align-items-center justify-content-center">
+    <nz-spin nzSimple></nz-spin>
+  </div>
+</ng-template>
+<!-- END-LOADING-TEMPLATE -->

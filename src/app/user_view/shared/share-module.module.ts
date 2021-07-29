@@ -28,6 +28,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
     NzFormModule,
     NzDropDownModule,
     NzSkeletonModule,
+    NzCommentModule,
   ],
   declarations: [],
 })

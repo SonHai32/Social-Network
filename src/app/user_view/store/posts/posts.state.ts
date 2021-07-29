@@ -4,10 +4,14 @@ export interface PostsState {
   posts: Post[],
   isLoading: boolean,
   page?: number,
-
-  postUpload : {
+  postUpload: {
     postUploading: boolean,
     postsUploadStatus: status
     postUploaded: boolean
+  },
+  postComment:{
+    postCommentUploading: boolean,
+    postCommentUploadStatus: status,
+    loadingPostComment: boolean,
   }
 }

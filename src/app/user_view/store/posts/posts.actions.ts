@@ -1,7 +1,8 @@
 import { status } from './../../models/status.model';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Post } from './../../models/post.model';
-import { ActionType, createAction, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { PostComment } from '../../models/comment.model';
 export enum PostActionTypes {
   GET_ALL_POSTS =  '[POSTS] Get All Post',
   GET_ALL_POSTS_SUCCESS = '[POSTS] Get All Posts Success',
@@ -11,6 +12,9 @@ export enum PostActionTypes {
   POST_UPLOAD = '[POSTS] Post Upload',
   POST_UPLOAD_SUCCESS = '[POSTS] Upload Success',
   POST_UPLOAD_FAIL = '[POSTS] Upload Fail',
+  POST_COMMENT = '[POSTS] Comment',
+  POST_COMMENT_SUCCESS = '[POSTS] Comment Success',
+  POST_COMMENT_FAIL = '[POSTS] Comment Fail',
 }
 
 export const GetAllPost = createAction(PostActionTypes.GET_ALL_POSTS)
@@ -29,6 +33,12 @@ export const PostUploadSuccess = createAction(PostActionTypes.POST_UPLOAD_SUCCES
 
 export const PostUploadFail = createAction(PostActionTypes.POST_UPLOAD_FAIL)
 
+export const PostCommentUpload = createAction(PostActionTypes.POST_COMMENT, props<{comment: PostComment,isChild: boolean, commentID?: string, imageContent?: NzUploadFile}>())
+
+export const PostCommentSuccess = createAction(PostActionTypes.POST_COMMENT_SUCCESS)
+
+export const PostCommentFail = createAction(PostActionTypes.POST_COMMENT_FAIL)
+
 export const PostsActions = {
   GetAllPost,
   GetAllPostSuccess,
@@ -37,5 +47,8 @@ export const PostsActions = {
   PostUpload,
   PostUploadSuccess,
   PostUploadFail,
-  PostUploadStatus
+  PostUploadStatus,
+  PostCommentUpload,
+  PostCommentSuccess,
+  PostCommentFail,
 }

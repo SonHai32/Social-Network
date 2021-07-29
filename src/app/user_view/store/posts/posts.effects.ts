@@ -1,3 +1,5 @@
+import { PostComment } from './../../models/comment.model';
+import { CommentService } from './../../services/comment.service';
 import { Store } from '@ngrx/store';
 import { status } from './../../models/status.model';
 import { PostCreateService } from '../../services/post-create.service';
@@ -115,9 +117,69 @@ export class PostsEffects {
     { dispatch: true }
   );
 
+  postComment$ = createEffect(
+    () =>
+      this.action$.pipe(
+        ofType(PostsActions.PostCommentUpload),
+        switchMap((action) =>
+          this.commentService.postComment(action.isChild, action.comment, action.commentID)
+        ),
+        tap((status) => {
+          if (status === 'error' || status === 'idle') {
+            PostsActions.PostCommentFail();
+          } else {
+            this.store.dispatch(PostsActions.PostCommentSuccess());
+          }
+        }),
+        map((uploadStatus: status) =>
+          PostsActions.PostCommentSuccess()
+        ),
+        catchError((err) =>
+          merge(
+            of(
+              AppMessageAction.SetAppMessage({
+                message: err.message,
+                message_type: 'error',
+              })
+            ),
+            of(PostsActions.PostCommentFail())
+          )
+        )
+      ),
+    { dispatch: true }
+  );
+
+// getComments$ = createEffect(() =>
+//     this.action$.pipe(
+//       ofType(PostsActions.GetPostComment),
+//       mergeMap((action) =>
+//         this.commentService.getAllComment(action.postID).pipe(
+//           map((res) => {
+//             return res.map((val) => {
+//               return {
+//                 ...(val.payload.doc.data() as PostComment),
+//                 id: val.payload.doc.id,
+//               };
+//             });
+//           })
+//         )
+//       ),
+//       map((posts: PostComment[]) => GetAllPostSuccess({ posts })),
+//       catchError((err) =>
+//         of(
+//           AppMessageAction.SetAppMessage({
+//             message: err.message,
+//             message_type: 'error',
+//           })
+//         )
+//       )
+//     )
+//   );
+
   constructor(
     private action$: Actions,
     private postService: PostsService,
+    private commentService: CommentService,
     private postCreateService: PostCreateService,
     private store: Store
   ) {}
