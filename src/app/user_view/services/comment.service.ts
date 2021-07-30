@@ -35,7 +35,19 @@ export class CommentService {
         ref.where('postID', '==', postID)
       )
       .snapshotChanges()
-      .pipe(map((res) => res.length));
+      .pipe(
+        map((res) => {
+          let sum = res.length;
+          res.forEach((comment) => {
+            let childComment =
+              comment.payload.doc.data().child_comments?.length;
+            if (childComment) {
+              sum += childComment;
+            }
+          });
+          return sum;
+        })
+      );
   }
 
   postComment(
@@ -68,10 +80,11 @@ export class CommentService {
             child_comments?.push(comment);
             this.afs
               .doc(`comments/${commentID}`)
-              .update({child_comments}).then(() =>{
-                observable.next('success')
-                observable.complete()
-              })
+              .update({ child_comments })
+              .then(() => {
+                observable.next('success');
+                observable.complete();
+              });
           });
       }
     });
