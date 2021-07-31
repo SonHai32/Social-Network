@@ -39,7 +39,8 @@
 
   <!-- END-POST-CONTENT -->
 
-  <div nz-row *ngIf="post.post_content.image_content" class="bg-dark-opacity mt-2">
+  <div nz-col nzSpan="24" *ngIf="post.post_content.image_content" class="bg-dark-opacity mt-2">
+  <div nz-row>
     <ng-container [ngSwitch]="post.post_content.image_content.length">
       <ng-container *ngSwitchCase="1">
         <ng-container *ngTemplateOutlet="fullImgTpl; context: { src: post.post_content.image_content[0].src}">
@@ -89,6 +90,8 @@
       </ng-container>
     </ng-container>
   </div>
+  </div>
+
 
   <!-- post-stats -->
   <div *ngIf="totalComment | async" nz-col nzSpan="24" class="py-1 border-white mt-1">
@@ -181,9 +184,9 @@
 
 <!-- START-ADD-COMMENT-BOX -->
 <ng-template #addCommentTemplate let-isChild='isChild' let-commentID='commentID'>
-  <nz-input-group class=" align-items-center border-none" [nzSuffix]="suffixTemplateInfo"
+  <nz-input-group  class="align-items-center border-none" [nzSuffix]="suffixTemplateInfo"
     [nzPrefix]="prefixTemplateUser">
-    <textarea #comment [value]='' [autofocus]='true' type="text" nz-input placeholder="Nhập bình luận" nzSize="large"
+    <textarea appScrollTo [isChild]="isChild" [el]="comment" #comment [value]='' type="text" nz-input placeholder="Nhập bình luận" nzSize="large"
       class=" px-3 rounded no-resize border-none" [nzAutosize]="{ maxRows: 50 }"></textarea>
   </nz-input-group>
   <ng-template #suffixTemplateInfo>

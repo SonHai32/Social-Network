@@ -7,7 +7,12 @@ import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
 import { Subscription, Observable, observable } from 'rxjs';
 import { Post } from './../../../models/post.model';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NzImageService } from 'ng-zorro-antd/image';
 import { User } from 'src/app/user_view/models/user.model';
 import firebase from 'firebase/app';
@@ -84,6 +89,9 @@ export class PostCardContentComponent implements OnInit {
   }
 
   postComment(commentText: string, isChild: boolean, commentID?: string) {
+    if (commentText.trim() === '') {
+      return;
+    }
     if (this.post.id && this.user?.id && this.user.display_name) {
       const comment: PostComment = {
         commentText: commentText,
@@ -117,7 +125,6 @@ export class PostCardContentComponent implements OnInit {
     }
   }
 
-
   toggleChildComment(commentIndex: number) {
     if (this.replyCommentDisplayIndex.includes(commentIndex)) {
       this.replyCommentDisplayIndex = this.replyCommentDisplayIndex.filter(
@@ -126,5 +133,10 @@ export class PostCardContentComponent implements OnInit {
     } else {
       this.replyCommentDisplayIndex.push(commentIndex);
     }
+  }
+
+  scrollToComment(el: HTMLElement){
+    // el.scrollIntoView({behavior: 'smooth'})
+    // console.log(el);
   }
 }

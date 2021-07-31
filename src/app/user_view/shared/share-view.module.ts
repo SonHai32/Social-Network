@@ -1,3 +1,4 @@
+import { ScrollToCommentDirective } from '../directives/scroll-to-comment.directive';
 import { AppLoadingComponent } from './layout/app-loading/app-loading.component';
 import { PostCardContentComponent } from './../components/post/post-card-content/post-card-content.component';
 import { PostCreateComponent } from './../components/post/post-create/post-create.component';
@@ -35,8 +36,9 @@ import { FromNowPipe } from '../pipes/from-now.pipe';
     FriendRequestCardComponent,
     FromNowPipe,
     AppLoadingComponent,
+    ScrollToCommentDirective,
   ],
   imports: [CommonModule, RouterModule, ShareModule],
-  exports: [AppLoadingComponent],
+  exports: [AppLoadingComponent, ScrollToCommentDirective],
 })
 export class ShareViewModule {}
