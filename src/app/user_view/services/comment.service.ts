@@ -14,7 +14,7 @@ export class CommentService {
   getAllComment(postID: string) {
     return this.afs
       .collection<PostComment>('comments', (ref) =>
-        ref.where('postID', '==', postID)
+        ref.where('postID', '==', postID).orderBy('created_at','asc')
       )
       .snapshotChanges()
       .pipe(
