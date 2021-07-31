@@ -9,7 +9,7 @@
 
     <ng-container *ngIf="vm$ | async as vm">
       <ng-container *ngIf="vm.isLoading">
-        <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 6 }" [nzActive]="true" class="glass mt-4 rounded-12 p-4"></nz-skeleton>
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 6 }" [nzActive]="true" class="glass shadow-sm mt-4 rounded-12 p-4"></nz-skeleton>
       </ng-container>
 
       <ng-container *ngIf="vm.posts">
