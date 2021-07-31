@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Post } from '../models/post.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,19 @@ export class PostsService {
     return this.afs
       .collection<Post>('posts', (ref) => ref.orderBy('created_at', 'desc'))
       .snapshotChanges(['added', 'removed']);
+  }
+
+  getPostLike(postID: string): Observable<number>{
+    return this.afs.doc<Post>(`posts/${postID}`).snapshotChanges().pipe(
+      map(resPost => {
+        let count = resPost.payload.data()?.liked_by_user_id?.length
+        if(count){
+          return count
+        }else{
+          return 0
+        }
+      })
+    )
   }
 
   postUpdateLike(postID: string, userID: string): Observable<boolean> {

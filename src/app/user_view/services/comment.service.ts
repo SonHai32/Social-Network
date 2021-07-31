@@ -1,11 +1,11 @@
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { status } from './../models/status.model';
-import { Observable, observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { PostComment } from '../models/comment.model';
 import { Post } from '../models/post.model';
-import { map, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ export class CommentService {
       );
   }
 
-  getCommentCount(postID: string) {
+  getCommentCount(postID: string): Observable<number> {
     return this.afs
       .collection<PostComment>('comments', (ref) =>
         ref.where('postID', '==', postID)

@@ -39,7 +39,7 @@
 
   <!-- END-POST-CONTENT -->
 
-  <div nz-col nzSpan="24" *ngIf="post.post_content.image_content" class="bg-dark-opacity mt-2">
+  <div nz-col nzSpan="24" *ngIf="post.post_content.image_content" class="bg-dark-opacity mt-2 image-max-height">
   <div nz-row>
     <ng-container [ngSwitch]="post.post_content.image_content.length">
       <ng-container *ngSwitchCase="1">
@@ -94,16 +94,16 @@
 
 
   <!-- post-stats -->
-  <div *ngIf="totalComment | async" nz-col nzSpan="24" class="py-1 border-white mt-1">
+  <div nz-col nzSpan="24" class="py-1 border-white mt-1">
     <div nz-row nzAlign="middle">
       <div nz-col nzSpan="12" class="d-flex justify-content-start">
-        <span nz-typography>
-          0 lượt thích
+        <span  nz-typography>
+          {{totalLike | async}} Lượt thích
         </span>
       </div>
       <div nz-col nzSpan="12" class="d-flex justify-content-end ">
-        <span nz-typography>
-          {{totalComment | async}} Bình luận
+        <span  nz-typography>
+          {{totalComment |async }} Bình luận
         </span>
       </div>
     </div>
@@ -158,7 +158,7 @@
   </div>
   <ng-container *ngIf="totalComment | async as total">
     <ng-container *ngIf="total > 0">
-      <div *ngIf="commentListVisible" nz-col nzSpan="24"  class="rounded-12 shadow p-3 my-3">
+      <div *ngIf="commentListVisible"  nz-col nzSpan="24"  class="rounded-12 shadow p-3 my-3">
         <ng-template [ngTemplateOutlet]="commentContentTpl" [ngTemplateOutletContext]="{ isChild: false }">
         </ng-template>
       </div>
@@ -186,11 +186,11 @@
 <ng-template #addCommentTemplate let-isChild='isChild' let-commentID='commentID'>
   <nz-input-group  class="align-items-center border-none" [nzSuffix]="suffixTemplateInfo"
     [nzPrefix]="prefixTemplateUser">
-    <textarea appScrollTo [isChild]="isChild" [el]="comment" #comment [value]='' type="text" nz-input placeholder="Nhập bình luận" nzSize="large"
+    <textarea [disabled]="isCommentUploading | async" appScrollTo [isChild]="isChild" [el]="comment" #comment [value]='' type="text" nz-input placeholder="Nhập bình luận" nzSize="large"
       class=" px-3 rounded no-resize border-none" [nzAutosize]="{ maxRows: 50 }"></textarea>
   </nz-input-group>
   <ng-template #suffixTemplateInfo>
-    <button (click)="postComment(comment.value, isChild, commentID)" nz-tooltip nzTooltipTitle="Bình luận"
+    <button (click)="postComment(comment.value, isChild, comment, commentID)" nz-tooltip nzTooltipTitle="Bình luận"
       nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button nzShape="circle" nzType="text"
       class="d-flex align-items-center justify-content-center">
       <i nz-icon nzType="send" nzTheme="outline"></i>

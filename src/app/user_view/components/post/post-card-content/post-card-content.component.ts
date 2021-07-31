@@ -5,17 +5,13 @@ import { PostsService } from './../../../services/posts.service';
 import { PostsActions } from './../../../store/posts/posts.actions';
 import { getUserSelector } from './../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
-import { Subscription, Observable, observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Post } from './../../../models/post.model';
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NzImageService } from 'ng-zorro-antd/image';
 import { User } from 'src/app/user_view/models/user.model';
 import firebase from 'firebase/app';
+import { PostSelectors } from 'src/app/user_view/store/posts/posts.selectors';
 
 @Component({
   selector: 'home-post-card-content',
@@ -35,15 +31,20 @@ export class PostCardContentComponent implements OnInit {
   childCommentVisible: boolean = false;
   comments!: Observable<PostComment[]>;
   totalComment!: Observable<number>;
+  totalLike!: Observable<number>;
   replyCommentDisplayIndex: number[] = [];
-  commentInputValue: string = '';
   postLikeBy!: Observable<string[]>;
   isLiked!: Observable<boolean>;
   subscription: Subscription = new Subscription();
   commentListVisible: boolean = false;
+  isCommentUploading!: Observable<boolean>;
   ngOnInit(): void {
+    this.isCommentUploading = this.store.select(
+      PostSelectors.getPostCommentUploading
+    );
     if (this.post.id) {
       this.totalComment = this.commentService.getCommentCount(this.post.id);
+      this.totalLike = this.postService.getPostLike(this.post.id);
     }
     this.subscription.add(
       this.store.select(getUserSelector).subscribe((user) => {
@@ -52,10 +53,6 @@ export class PostCardContentComponent implements OnInit {
         }
       })
     );
-  }
-  addEmoji(event: any) {
-    const { emoji } = event;
-    this.commentInputValue += emoji.native;
   }
 
   previewListImage() {
@@ -88,7 +85,12 @@ export class PostCardContentComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  postComment(commentText: string, isChild: boolean, commentID?: string) {
+  postComment(
+    commentText: string,
+    isChild: boolean,
+    el: HTMLElement,
+    commentID?: string
+  ) {
     if (commentText.trim() === '') {
       return;
     }
@@ -111,6 +113,17 @@ export class PostCardContentComponent implements OnInit {
           PostsActions.PostCommentUpload({ comment, isChild, commentID })
         );
       }
+      this.isCommentUploading.subscribe((val) => {
+        setTimeout(() => {
+          (el as HTMLTextAreaElement).value = '';
+          (el as HTMLTextAreaElement).blur();
+          this.replyCommentDisplayIndex = [];
+      //  (this.commentContainerRef.scrollIntoView({ block: 'center'}));
+        }, 100);
+        if (!this.commentListVisible) {
+          this.toggleListComment();
+        }
+      });
     }
   }
 
@@ -135,7 +148,7 @@ export class PostCardContentComponent implements OnInit {
     }
   }
 
-  scrollToComment(el: HTMLElement){
+  scrollToComment(el: HTMLElement) {
     // el.scrollIntoView({behavior: 'smooth'})
     // console.log(el);
   }

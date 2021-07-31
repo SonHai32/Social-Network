@@ -131,8 +131,8 @@ export class PostsEffects {
             this.store.dispatch(PostsActions.PostCommentSuccess());
           }
         }),
-        map((uploadStatus: status) =>
-          PostsActions.PostCommentSuccess()
+        map(() =>
+          AppMessageAction.SetAppMessage({message: 'Đã bình luận bài viết', message_type: 'success'})
         ),
         catchError((err) =>
           merge(
