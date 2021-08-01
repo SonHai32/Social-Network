@@ -8,23 +8,35 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class PostsService {
-  getAllPosts() {
+  getTotalPost(): Observable<number> {
     return this.afs
-      .collection<Post>('posts', (ref) => ref.orderBy('created_at', 'desc'))
+      .collection<Post>('posts')
+      .snapshotChanges(['added', 'removed'])
+      .pipe(map((resPost) => resPost.length));
+  }
+
+  getAllPosts(limit: number) {
+    return this.afs
+      .collection<Post>('posts', (ref) =>
+        ref.orderBy('created_at', 'desc').limit(limit)
+      )
       .snapshotChanges(['added', 'removed']);
   }
 
-  getPostLike(postID: string): Observable<number>{
-    return this.afs.doc<Post>(`posts/${postID}`).snapshotChanges().pipe(
-      map(resPost => {
-        let count = resPost.payload.data()?.liked_by_user_id?.length
-        if(count){
-          return count
-        }else{
-          return 0
-        }
-      })
-    )
+  getPostLike(postID: string): Observable<number> {
+    return this.afs
+      .doc<Post>(`posts/${postID}`)
+      .snapshotChanges()
+      .pipe(
+        map((resPost) => {
+          let count = resPost.payload.data()?.liked_by_user_id?.length;
+          if (count) {
+            return count;
+          } else {
+            return 0;
+          }
+        })
+      );
   }
 
   postUpdateLike(postID: string, userID: string): Observable<boolean> {

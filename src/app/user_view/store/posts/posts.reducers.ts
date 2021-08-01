@@ -7,7 +7,8 @@ import { createReducer, on } from '@ngrx/store';
 const initialState: PostsState = {
   isLoading: false,
   posts: [],
-  page: 0,
+  limit: 10,
+  totalPost: 0,
   postUpload: {
     postUploaded: false,
     postUploading: false,
@@ -21,10 +22,22 @@ const initialState: PostsState = {
 };
 export const PostsReducers = createReducer(
   initialState,
-  on(GetAllPost, (state: PostsState) => {
+  on(PostsActions.GetTotalPost, (state: PostsState) =>{
+    return{
+      ...state
+    }
+  }),
+  on(PostsActions.GetTotalPostSuccess, (state: PostsState, {total}) =>{
+    return {
+      ...state,
+      totalPost: total
+    }
+  }),
+  on(GetAllPost, (state: PostsState, {limit}) => {
     return {
       ...state,
       isLoading: true,
+      limit
     };
   }),
   on(GetAllPostSuccess, (state: PostsState, { posts }) => {

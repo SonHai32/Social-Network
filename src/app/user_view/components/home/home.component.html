@@ -4,20 +4,19 @@
       <app-pane-menu> </app-pane-menu>
     </nz-affix>
   </div>
-  <div nz-col nzXl="12" nzLg="10" nzSpan="24" class="h-100 p-3 pt-5">
+  <div appScrollable (scrollPosition)="scrollHandle($event)" nz-col nzXl="12" nzLg="10" nzSpan="24"
+    class="h-100 p-3 pt-5">
     <home-post-container></home-post-container>
-
     <ng-container *ngIf="vm$ | async as vm">
-      <ng-container *ngIf="vm.isLoading">
-        <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 6 }" [nzActive]="true" class="glass shadow-sm mt-4 rounded-12 p-4"></nz-skeleton>
-      </ng-container>
-
       <ng-container *ngIf="vm.posts">
         <ng-container *ngFor="let post of vm.posts">
-          <home-post-card-content  [post]="post" [user]="vm.currentUser"></home-post-card-content>
+          <home-post-card-content [post]="post" [user]="vm.currentUser"></home-post-card-content>
         </ng-container>
       </ng-container>
-
+      <ng-container *ngIf="vm.isLoading">
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 6 }" [nzActive]="true"
+          class="glass shadow-sm mt-4 rounded-12 p-4"></nz-skeleton>
+      </ng-container>
     </ng-container>
   </div>
   <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="h-100 p-4 pt-5">

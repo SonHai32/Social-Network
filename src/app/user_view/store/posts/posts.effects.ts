@@ -13,23 +13,24 @@ import {
 } from './posts.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
-import {
-  mergeMap,
-  catchError,
-  map,
-  tap,
-  switchMap,
-} from 'rxjs/operators';
+import { mergeMap, catchError, map, tap, switchMap } from 'rxjs/operators';
 import { of, merge } from 'rxjs';
 import { mapTimestamp } from '../../utils/operators';
 import { PostsService } from '../../services/posts.service';
 @Injectable()
 export class PostsEffects {
+  getTotalPost$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(PostsActions.GetTotalPost),
+      mergeMap(() => this.postService.getTotalPost()),
+      map((total) => PostsActions.GetTotalPostSuccess({ total }))
+    )
+  );
   getAllPosts$ = createEffect(() =>
     this.action$.pipe(
       ofType(GetAllPost),
-      mergeMap(() =>
-        this.postService.getAllPosts().pipe(
+      mergeMap((action) =>
+        this.postService.getAllPosts(action.limit).pipe(
           map((res) => {
             return res.map((val) => {
               return {
@@ -122,7 +123,11 @@ export class PostsEffects {
       this.action$.pipe(
         ofType(PostsActions.PostCommentUpload),
         switchMap((action) =>
-          this.commentService.postComment(action.isChild, action.comment, action.commentID)
+          this.commentService.postComment(
+            action.isChild,
+            action.comment,
+            action.commentID
+          )
         ),
         tap((status) => {
           if (status === 'error' || status === 'idle') {
@@ -132,7 +137,10 @@ export class PostsEffects {
           }
         }),
         map(() =>
-          AppMessageAction.SetAppMessage({message: 'Đã bình luận bài viết', message_type: 'success'})
+          AppMessageAction.SetAppMessage({
+            message: 'Đã bình luận bài viết',
+            message_type: 'success',
+          })
         ),
         catchError((err) =>
           merge(
@@ -149,32 +157,32 @@ export class PostsEffects {
     { dispatch: true }
   );
 
-// getComments$ = createEffect(() =>
-//     this.action$.pipe(
-//       ofType(PostsActions.GetPostComment),
-//       mergeMap((action) =>
-//         this.commentService.getAllComment(action.postID).pipe(
-//           map((res) => {
-//             return res.map((val) => {
-//               return {
-//                 ...(val.payload.doc.data() as PostComment),
-//                 id: val.payload.doc.id,
-//               };
-//             });
-//           })
-//         )
-//       ),
-//       map((posts: PostComment[]) => GetAllPostSuccess({ posts })),
-//       catchError((err) =>
-//         of(
-//           AppMessageAction.SetAppMessage({
-//             message: err.message,
-//             message_type: 'error',
-//           })
-//         )
-//       )
-//     )
-//   );
+  // getComments$ = createEffect(() =>
+  //     this.action$.pipe(
+  //       ofType(PostsActions.GetPostComment),
+  //       mergeMap((action) =>
+  //         this.commentService.getAllComment(action.postID).pipe(
+  //           map((res) => {
+  //             return res.map((val) => {
+  //               return {
+  //                 ...(val.payload.doc.data() as PostComment),
+  //                 id: val.payload.doc.id,
+  //               };
+  //             });
+  //           })
+  //         )
+  //       ),
+  //       map((posts: PostComment[]) => GetAllPostSuccess({ posts })),
+  //       catchError((err) =>
+  //         of(
+  //           AppMessageAction.SetAppMessage({
+  //             message: err.message,
+  //             message_type: 'error',
+  //           })
+  //         )
+  //       )
+  //     )
+  //   );
 
   constructor(
     private action$: Actions,
