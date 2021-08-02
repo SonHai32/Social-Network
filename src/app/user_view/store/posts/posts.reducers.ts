@@ -7,7 +7,7 @@ import { createReducer, on } from '@ngrx/store';
 const initialState: PostsState = {
   isLoading: false,
   posts: [],
-  limit: 10,
+  limit: 5,
   totalPost: 0,
   postUpload: {
     postUploaded: false,
