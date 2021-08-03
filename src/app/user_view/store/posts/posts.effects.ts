@@ -2,7 +2,6 @@ import { PostComment } from './../../models/comment.model';
 import { CommentService } from './../../services/comment.service';
 import { Store } from '@ngrx/store';
 import { status } from './../../models/status.model';
-import { PostCreateService } from '../../services/post-create.service';
 import { Post } from './../../models/post.model';
 import { AppMessageAction } from './../app-message/app-message.actions';
 import {
@@ -79,7 +78,7 @@ export class PostsEffects {
       this.action$.pipe(
         ofType(PostsActions.PostUpload),
         switchMap((action) =>
-          this.postCreateService.postUpload(action.post, action.imageList)
+          this.postService.postUpload(action.post, action.imageList)
         ),
         tap((status) => {
           if (status === 'error' || status === 'idle') {
@@ -188,7 +187,6 @@ export class PostsEffects {
     private action$: Actions,
     private postService: PostsService,
     private commentService: CommentService,
-    private postCreateService: PostCreateService,
     private store: Store
   ) {}
 }

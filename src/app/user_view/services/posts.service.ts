@@ -3,6 +3,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Post } from '../models/post.model';
 import { map } from 'rxjs/operators';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { status } from '../models/status.model';
+import { NzImage } from 'ng-zorro-antd/image';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -103,6 +107,49 @@ export class PostsService {
         });
     });
   }
+postUpload(
+    postOriginal: Post,
+    postImageContent?: NzUploadFile[] | undefined
+  ): Observable<status> {
+    return new Observable<status>((observable) => {
+      const upload = (post: Post) => {
 
-  constructor(private afs: AngularFirestore) {}
+        this.afs
+          .collection<Post>('posts')
+          .add(post)
+          .then((resPost) => {
+            if (resPost) {
+              observable.next('success');
+              observable.complete();
+            } else {
+              observable.next('error');
+              observable.complete();
+            }
+          })
+          .catch((err) => observable.error(err));
+      };
+
+      if (postImageContent) {
+        this.storageService.fileUpload(postImageContent).subscribe((val: string[]) => {
+          const imageList: NzImage[] = [];
+          val.forEach((url: string) => {
+            imageList.push({ src: url });
+          });
+
+          upload({
+            ...postOriginal,
+            post_content: {
+              ...postOriginal.post_content,
+              image_content: imageList,
+            },
+          });
+        });
+      } else {
+        upload(postOriginal);
+      }
+    });
+  }
+
+
+  constructor(private afs: AngularFirestore, private storageService: StorageService) {}
 }

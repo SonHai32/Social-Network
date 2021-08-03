@@ -148,8 +148,4 @@ export class PostCardContentComponent implements OnInit {
     }
   }
 
-  scrollToComment(el: HTMLElement) {
-    // el.scrollIntoView({behavior: 'smooth'})
-    // console.log(el);
-  }
 }
