@@ -155,34 +155,6 @@ export class PostsEffects {
       ),
     { dispatch: true }
   );
-
-  // getComments$ = createEffect(() =>
-  //     this.action$.pipe(
-  //       ofType(PostsActions.GetPostComment),
-  //       mergeMap((action) =>
-  //         this.commentService.getAllComment(action.postID).pipe(
-  //           map((res) => {
-  //             return res.map((val) => {
-  //               return {
-  //                 ...(val.payload.doc.data() as PostComment),
-  //                 id: val.payload.doc.id,
-  //               };
-  //             });
-  //           })
-  //         )
-  //       ),
-  //       map((posts: PostComment[]) => GetAllPostSuccess({ posts })),
-  //       catchError((err) =>
-  //         of(
-  //           AppMessageAction.SetAppMessage({
-  //             message: err.message,
-  //             message_type: 'error',
-  //           })
-  //         )
-  //       )
-  //     )
-  //   );
-
   constructor(
     private action$: Actions,
     private postService: PostsService,
