@@ -1,13 +1,12 @@
-<div nz-row nzJustify="center">
-  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="position-relative pt-5" #leftContainer>
+<div *ngIf="vm$ | async as vm" nz-row nzJustify="center">
+  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="position-relative pt-2" #leftContainer>
     <nz-affix nzTarget="leftContainer" nzOffsetTop="50">
       <app-pane-menu> </app-pane-menu>
     </nz-affix>
   </div>
   <div appScrollable (scrollPosition)="scrollHandle($event)" nz-col nzXl="12" nzLg="10" nzSpan="24"
-    class="h-100 p-3 pt-5">
+    class="h-100 p-3 pt-2">
     <home-post-container></home-post-container>
-    <ng-container *ngIf="vm$ | async as vm">
       <ng-container *ngIf="vm.posts">
         <ng-container *ngFor="let post of vm.posts">
           <home-post-card-content [post]="post" [user]="vm.currentUser"></home-post-card-content>
@@ -17,9 +16,12 @@
         <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 6 }" [nzActive]="true"
           class="glass shadow-sm mt-4 rounded-12 p-4"></nz-skeleton>
       </ng-container>
-    </ng-container>
   </div>
-  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="h-100 p-4 pt-5">
-    <friend-request-list></friend-request-list>
+  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="h-100 p-4 pt-2">
+    <div nz-row *ngIf="vm.currentUser">
+      <div nz-col nzSpan="24">
+        <friend-request-list [currentUser]='vm.currentUser'></friend-request-list>
+      </div>
+    </div>
   </div>
 </div>
