@@ -1,13 +1,13 @@
-<div [@enter] nz-row class="p-3 glass rounded-12 mb-2 shadow-sm">
+<div *ngIf="user$" [@enter] nz-row class="p-3 glass rounded-12 mb-2 shadow-sm">
   <div nz-col nzSpan="24">
     <div class="w-100 d-flex align-items-center">
       <nz-avatar
         class="d-flex align-items-center justify-content-center"
         [nzSize]="48"
-        nzIcon="user"
+        nzSrc="{{user$.avatar_url}}"
       ></nz-avatar>
       <div class="d-flex flex-column flex-wrap">
-        <a href="#" nz-typography class="mx-2"><strong>friend name</strong></a>
+        <a href="#" nz-typography class="mx-2"><strong>{{user$.display_name}}</strong></a>
         <span nz-typography nzType="secondary" class="mx-2">Muốn kết bạn với bạn </span>
       </div>
     </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { User } from './../../../../models/user.model';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   bounceInOnEnterAnimation,
 } from 'angular-animations';
@@ -12,6 +13,7 @@ import {
 })
 export class FriendRequestCardComponent implements OnInit {
   constructor() {}
+  @Input('user') user$!: User;
 
   ngOnInit(): void {}
 }

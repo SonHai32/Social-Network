@@ -1,3 +1,4 @@
+import { PaneRightComponent } from './layout/pane-right/pane-right.component';
 import { ScrollableDirective } from './../directives/scrollable.directive';
 import { ScrollToCommentDirective } from '../directives/scroll-to-comment.directive';
 import { AppLoadingComponent } from './layout/app-loading/app-loading.component';
@@ -16,7 +17,7 @@ import { DefaultComponent } from './../pages/default/default.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FriendRequestListComponent } from '../components/friends/friend-request/friend-request-list/friend-request-list/friend-request-list.component';
+import { FriendRequestListComponent } from '../components/friends/friend-request/friend-request-list/friend-request-list.component';
 import { FriendRequestCardComponent } from '../components/friends/friend-request/friend-request-card/friend-request-card.component';
 import { FromNowPipe } from '../pipes/from-now.pipe';
 
@@ -29,6 +30,7 @@ import { FromNowPipe } from '../pipes/from-now.pipe';
     AuthWithSocialComponent,
     RegisterComponent,
     PaneMenuComponent,
+    PaneRightComponent,
     HomeComponent,
     PostContainerComponent,
     PostCreateComponent,

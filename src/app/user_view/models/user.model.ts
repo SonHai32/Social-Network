@@ -8,6 +8,7 @@ export interface User{
   avatar_url: string | null,
   posts?: [],
   friends?: [],
+  friend_requests?: User[],
   messages?: [],
 }
 

@@ -1,0 +1,11 @@
+<div nz-row>
+  <div nz-col nzSpan="24" class="mb-2 px-2">
+    <span nz-typography><strong>Lời mời kết bạn</strong></span>
+  </div>
+  <ng-container *ngIf="friendReques$ | async as requests">
+    <div *ngFor="let request of requests" nz-col nzSpan="24">
+      <friend-request-card [user]="request">
+      </friend-request-card>
+    </div>
+  </ng-container>
+</div>
