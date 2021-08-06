@@ -8,44 +8,17 @@ import firebase from 'firebase/app';
   providedIn: 'root',
 })
 export class UserService {
-  getUserOffer(userID: string) {
-    return this.afs
-      .collection<User>('users', (ref) =>
-        ref
-          .limit(2)
-          .where(firebase.firestore.FieldPath.documentId(), '!=', userID)
-      )
-      .snapshotChanges(['added', 'removed'])
-      .pipe(
-        map((user) => {
-          return user.map((val) => {
-            return {
-              ...val.payload.doc.data(),
-              id: val.payload.doc.id,
-            };
-          });
-        })
-      );
-  }
-
   sendFriendRequest(currentUser: User, userID: string) {
-    this.afs
-      .doc<User>(`users/${userID}`).get().subscribe((resUser) =>{
-          const friendRequests = resUser.data()?.friend_requests
-          if(friendRequests){
-            resUser.ref.update({friend_requests: [...friendRequests, currentUser]})
-          }else{
-            resUser.ref.update({friend_requests: [currentUser]})
-          }
-      })
+    this.afs.doc<User>(`users/${userID}`).collection<User>('friend_requests').add(currentUser)
   }
 
   getFriendRequest(userID: string){
-    return this.afs.doc<User>(`users/9dLWdhQwFn0N86pNJ2AZ`).snapshotChanges().pipe(
-      map(resUser =>{
-        console.log(resUser);
-        return  resUser.payload.data()?.friend_requests
-      })
+    return this.afs.doc<User>(`users/${userID}`).collection<User>('friend_requests', ref => ref.limit(2)).snapshotChanges(['added', 'removed']).pipe(
+      map(resUser => resUser.map( user =>{
+        return{
+          ...user.payload.doc.data() as User
+        }
+      }))
     )
   }
 

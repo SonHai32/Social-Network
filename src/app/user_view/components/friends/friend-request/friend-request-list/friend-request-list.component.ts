@@ -15,8 +15,8 @@ export class FriendRequestListComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.currentUser){
-      this.friendReques$ = this.userService.getFriendRequest(this.currentUser.id)
-      this.friendReques$.subscribe(val => console.log(val))
+      // this.userService.sendFriendRequest(this.currentUser, '0LXiOeRz9bK81h3GuCLn')
+      this.friendReques$ = this.userService.getFriendRequest('0LXiOeRz9bK81h3GuCLn')
     }
   }
 }

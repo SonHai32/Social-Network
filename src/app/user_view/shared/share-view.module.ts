@@ -1,3 +1,4 @@
+import { UserComponent } from './../components/user/user.component';
 import { PaneRightComponent } from './layout/pane-right/pane-right.component';
 import { ScrollableDirective } from './../directives/scrollable.directive';
 import { ScrollToCommentDirective } from '../directives/scroll-to-comment.directive';
@@ -20,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { FriendRequestListComponent } from '../components/friends/friend-request/friend-request-list/friend-request-list.component';
 import { FriendRequestCardComponent } from '../components/friends/friend-request/friend-request-card/friend-request-card.component';
 import { FromNowPipe } from '../pipes/from-now.pipe';
+import { FriendsListComponent } from '../components/friends/friends-list/friends-list.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { FromNowPipe } from '../pipes/from-now.pipe';
     PostCardContentComponent,
     FriendRequestListComponent,
     FriendRequestCardComponent,
+    FriendsListComponent,
+    UserComponent,
     FromNowPipe,
     AppLoadingComponent,
     ScrollToCommentDirective,
