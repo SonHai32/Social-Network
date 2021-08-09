@@ -19,7 +19,14 @@ export class PostsService {
       .pipe(map((resPost) => resPost.length));
   }
 
-  getAllPosts(limit: number) {
+  getAllPosts(limit: number, userID?: string) {
+    if (userID) {
+      return this.afs
+        .collection<Post>('posts', (ref) =>
+          ref.orderBy('created_at', 'desc').where('created_by_id', '==', userID).limit(limit)
+        )
+        .snapshotChanges(['added', 'removed']);
+    }
     return this.afs
       .collection<Post>('posts', (ref) =>
         ref.orderBy('created_at', 'desc').limit(limit)
@@ -107,13 +114,12 @@ export class PostsService {
         });
     });
   }
-postUpload(
+  postUpload(
     postOriginal: Post,
     postImageContent?: NzUploadFile[] | undefined
   ): Observable<status> {
     return new Observable<status>((observable) => {
       const upload = (post: Post) => {
-
         this.afs
           .collection<Post>('posts')
           .add(post)
@@ -130,26 +136,30 @@ postUpload(
       };
 
       if (postImageContent) {
-        this.storageService.fileUpload(postImageContent).subscribe((val: string[]) => {
-          const imageList: NzImage[] = [];
-          val.forEach((url: string) => {
-            imageList.push({ src: url });
-          });
+        this.storageService
+          .fileUpload(postImageContent)
+          .subscribe((val: string[]) => {
+            const imageList: NzImage[] = [];
+            val.forEach((url: string) => {
+              imageList.push({ src: url });
+            });
 
-          upload({
-            ...postOriginal,
-            post_content: {
-              ...postOriginal.post_content,
-              image_content: imageList,
-            },
+            upload({
+              ...postOriginal,
+              post_content: {
+                ...postOriginal.post_content,
+                image_content: imageList,
+              },
+            });
           });
-        });
       } else {
         upload(postOriginal);
       }
     });
   }
 
-
-  constructor(private afs: AngularFirestore, private storageService: StorageService) {}
+  constructor(
+    private afs: AngularFirestore,
+    private storageService: StorageService
+  ) {}
 }

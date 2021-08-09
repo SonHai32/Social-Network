@@ -1,3 +1,7 @@
+import { PostListComponent } from './../components/post/post-list/post-list.component';
+import { PostLikeSuccess } from './../store/posts/posts.actions';
+import { UserInfoComponent } from './../components/user-info/user-info.component';
+import { UserComponent } from './../components/user/user.component';
 import { DefaultComponent } from './../pages/default/default.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,7 +15,17 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
+      },
+      {
+        path: 'user/:id',
+        component: UserComponent,
+        children: [
+          {path: 'posts', component: PostListComponent,},
+          {path: 'info', component: UserInfoComponent},
+        ]
+       ,
       }
+
     ]
   }
 ]

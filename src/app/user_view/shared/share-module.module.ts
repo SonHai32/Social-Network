@@ -29,7 +29,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
-
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 @NgModule({
   imports: [CommonModule],
@@ -63,6 +63,7 @@ import { NzCommentModule } from 'ng-zorro-antd/comment';
     NzDropDownModule,
     NzSkeletonModule,
     NzCommentModule,
+    NzTabsModule,
   ],
   declarations: [],
 })

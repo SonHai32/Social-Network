@@ -1,0 +1,25 @@
+<div *ngIf="userID" nz-row nzJustify="center" nzAlign="middle" class="mt-5">
+  <div nz-col nzXl="14" nzLg="12" nzSpan="23"
+    class="position-relative rounded-12 vh-50 glass shadow-sm d-flex align-items-end justify-content-around">
+    <div *ngIf="user | async as us"
+      class="d-flex flex-column absolute-center align-items-center justify-content-center">
+      <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{us.avatar_url}}' [nzSize]="180">
+      </nz-avatar>
+      <span class="text-large" nz-typography><strong>{{us.display_name}}</strong></span>
+    </div>
+    <div class="w-100 p-3 d-flex justify-content-center" nzJustify="space-around">
+      <a nz-typography class="mx-2" [routerLink]="['/user', userID, 'posts']">Bài viết</a>
+      <a nz-typography class="mx-2" [routerLink]="['/user', userID, 'info']">Thông tin</a>
+      <a nz-typography class="mx-2">Ảnh</a>
+      <a nz-typography class="mx-2">Bạn bè</a>
+    </div>
+  </div>
+  <div nz-col nzSpan="24">
+    <div nz-row nzAlign="middle" nzJustify="center">
+      <div nz-col nzXl="14" nzLg="12" nzSpan="23">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+</div>

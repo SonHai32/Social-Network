@@ -1,3 +1,5 @@
+import { PostListComponent } from './../components/post/post-list/post-list.component';
+import { UserInfoComponent } from './../components/user-info/user-info.component';
 import { UserComponent } from './../components/user/user.component';
 import { PaneRightComponent } from './layout/pane-right/pane-right.component';
 import { ScrollableDirective } from './../directives/scrollable.directive';
@@ -34,6 +36,7 @@ import { FriendsListComponent } from '../components/friends/friends-list/friends
     PaneMenuComponent,
     PaneRightComponent,
     HomeComponent,
+    PostListComponent,
     PostContainerComponent,
     PostCreateComponent,
     PostCardContentComponent,
@@ -41,6 +44,7 @@ import { FriendsListComponent } from '../components/friends/friends-list/friends
     FriendRequestCardComponent,
     FriendsListComponent,
     UserComponent,
+    UserInfoComponent,
     FromNowPipe,
     AppLoadingComponent,
     ScrollToCommentDirective,

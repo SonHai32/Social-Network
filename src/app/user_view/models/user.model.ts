@@ -10,6 +10,8 @@ export interface User{
   friends?: [],
   friend_requests?: User[],
   messages?: [],
+  gender?: string
+  place?: string
 }
 
 

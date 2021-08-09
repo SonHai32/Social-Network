@@ -1,0 +1,88 @@
+<div *ngIf="user| async as us" nz-row class="vh-50 glass shadow-sm my-4 rounded-12">
+  <div nz-col nzSpan="24">
+    <nz-tabset class="p-4 h-100" nzTabPosition="left" nzLinkRouter  >
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'overview' }" queryParamsHandling="merge">
+          Tổng quan
+        </a>
+        <div nz-row>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+
+            <i nz-icon nzType="user" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.display_name; else undefinedTpl"><strong>{{us.display_name}}</strong></span>
+              <span nz-typography>Tên hiển thị</span>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+            <i nz-icon nzType="user-switch" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.gender; else undefinedTpl"><strong>{{us.gender}}</strong></span>
+              <span nz-typography>Giới tính</span>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+            <i nz-icon nzType="calendar" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.birthday; else undefinedTpl"><strong>{{us.birthday}}</strong></span>
+              <span nz-typography>Ngày sinh</span>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+            <i nz-icon nzType="phone" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.phone; else undefinedTpl"><strong>{{us.phone}}</strong></span>
+              <span nz-typography>Số điện thoại</span>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+            <i nz-icon nzType="mail" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.email; else undefinedTpl"><strong>{{us.email}}</strong></span>
+              <span nz-typography>Email</span>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'contact' }" queryParamsHandling="merge">
+          Liên hệ
+        </a>
+        <div nz-row>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+            <i nz-icon nzType="phone" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.phone; else undefinedTpl"><strong>{{us.phone}}</strong></span>
+              <span nz-typography>Số điện thoại</span>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+            <i nz-icon nzType="mail" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.email; else undefinedTpl"><strong>{{us.email}}</strong></span>
+              <span nz-typography>Email</span>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'address' }" queryParamsHandling="merge">
+          Nơi sinh sống
+        </a>
+        <div nz-row>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+            <i nz-icon nzType="global" nzTheme="outline" class="text-large"></i>
+            <div class="d-flex flex-column mx-3">
+              <span nz-typography *ngIf="us.place; else undefinedTpl"><strong>{{us.place}}</strong></span>
+              <span nz-typography>Nơi sinh sống</span>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>
+
+<ng-template #undefinedTpl>
+  <span nz-typography><strong>Chưa có</strong></span>
+</ng-template>

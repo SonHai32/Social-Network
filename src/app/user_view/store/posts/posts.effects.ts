@@ -29,7 +29,7 @@ export class PostsEffects {
     this.action$.pipe(
       ofType(GetAllPost),
       mergeMap((action) =>
-        this.postService.getAllPosts(action.limit).pipe(
+        this.postService.getAllPosts(action.limit, action.userID).pipe(
           map((res) => {
             return res.map((val) => {
               return {

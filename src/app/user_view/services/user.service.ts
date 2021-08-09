@@ -9,17 +9,37 @@ import firebase from 'firebase/app';
 })
 export class UserService {
   sendFriendRequest(currentUser: User, userID: string) {
-    this.afs.doc<User>(`users/${userID}`).collection<User>('friend_requests').add(currentUser)
+    this.afs
+      .doc<User>(`users/${userID}`)
+      .collection<User>('friend_requests')
+      .add(currentUser);
   }
 
-  getFriendRequest(userID: string){
-    return this.afs.doc<User>(`users/${userID}`).collection<User>('friend_requests', ref => ref.limit(2)).snapshotChanges(['added', 'removed']).pipe(
-      map(resUser => resUser.map( user =>{
-        return{
-          ...user.payload.doc.data() as User
-        }
-      }))
-    )
+  getFriendRequest(userID: string) {
+    return this.afs
+      .doc<User>(`users/${userID}`)
+      .collection<User>('friend_requests', (ref) => ref.limit(2))
+      .snapshotChanges(['added', 'removed'])
+      .pipe(
+        map((resUser) =>
+          resUser.map((user) => {
+            return {
+              ...(user.payload.doc.data() as User),
+            };
+          })
+        )
+      );
+  }
+
+  getUserInfo(userID: string) {
+    return this.afs
+      .doc<User>(`users/${userID}`)
+      .get()
+      .pipe(
+        map((res) => {
+          return { ...res.data(), id: res.id } as User;
+        })
+      );
   }
 
   constructor(private afs: AngularFirestore) {}

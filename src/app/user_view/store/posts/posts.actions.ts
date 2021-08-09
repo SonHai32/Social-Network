@@ -23,7 +23,7 @@ export const GetTotalPost = createAction(PostActionTypes.GET_TOTAL_POST)
 
 export const GetTotalPostSuccess = createAction(PostActionTypes.GET_TOTAL_POST_SUCCESS, props<{total: number}>())
 
-export const GetAllPost = createAction(PostActionTypes.GET_ALL_POSTS, props<{limit: number}>())
+export const GetAllPost = createAction(PostActionTypes.GET_ALL_POSTS, props<{limit: number, userID?: string}>())
 
 export const GetAllPostSuccess = createAction(PostActionTypes.GET_ALL_POSTS_SUCCESS, props<{posts: Post[]}>())
 
