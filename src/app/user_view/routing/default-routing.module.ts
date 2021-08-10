@@ -1,3 +1,4 @@
+import { FriendComponent } from './../components/friends/friend/friend.component';
 import { PostListComponent } from './../components/post/post-list/post-list.component';
 import { PostLikeSuccess } from './../store/posts/posts.actions';
 import { UserInfoComponent } from './../components/user-info/user-info.component';
@@ -6,37 +7,40 @@ import { DefaultComponent } from './../pages/default/default.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {HomeComponent} from '../components/home/home.component'
+import { HomeComponent } from '../components/home/home.component';
 const routes: Routes = [
   {
     path: '',
     component: DefaultComponent,
-    children:[
+    children: [
       {
         path: '',
         component: HomeComponent,
-      },
-      {
-        path: 'user/:id',
-        component: UserComponent,
         children: [
-          {path: 'posts', component: PostListComponent,},
-          {path: 'info', component: UserInfoComponent},
-        ]
-       ,
-      }
-
-    ]
-  }
-]
+          {
+            path: '',
+            component: PostListComponent,
+          },
+          {
+            path: 'user/:id',
+            component: UserComponent,
+            children: [
+              { path: 'posts', component: PostListComponent },
+              { path: 'info', component: UserInfoComponent },
+            ],
+          },
+          {
+            path: 'friends',
+            component: FriendComponent
+          }
+        ],
+      },
+    ],
+  },
+];
 @NgModule({
   declarations: [],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(routes), CommonModule],
+  exports: [RouterModule],
 })
-export class DefaultRoutingModule { }
+export class DefaultRoutingModule {}

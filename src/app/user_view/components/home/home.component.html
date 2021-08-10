@@ -1,4 +1,4 @@
-<div *ngIf="vm$ | async as vm" nz-row nzJustify="center" class="position-relative">
+<!-- <div *ngIf="vm$ | async as vm" nz-row nzJustify="center" class="position-relative">
   <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="position-relative pt-2" #leftContainer>
     <nz-affix nzTarget="leftContainer" nzOffsetTop="50">
       <app-pane-menu> </app-pane-menu>
@@ -26,5 +26,28 @@
         <app-friends-list></app-friends-list>
       </div>
     </div>
+  </div>
+</div> -->
+
+<div nz-row nzJustify="center" class="position-relative">
+  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="position-relative pt-2" #leftContainer>
+    <nz-affix nzTarget="leftContainer" nzOffsetTop="50">
+      <app-pane-menu> </app-pane-menu>
+    </nz-affix>
+  </div>
+  <div  nz-col nzXl="12" nzLg="10" nzSpan="24"
+    class="h-100 p-3 pt-2">
+    <home-post-container></home-post-container>
+    <router-outlet></router-outlet>
+  </div>
+  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="h-100 p-4 pt-2 ">
+    <!-- <div nz-row *ngIf="vm.currentUser">
+      <div nz-col nzSpan="24">
+        <friend-request-list [currentUser]='vm.currentUser'></friend-request-list>
+      </div>
+      <div nz-col nzSpan="24" class="glass rounded-12 p-3" style="height: 80vh; overflow-y: auto;">
+        <app-friends-list></app-friends-list>
+      </div>
+    </div> -->
   </div>
 </div>
