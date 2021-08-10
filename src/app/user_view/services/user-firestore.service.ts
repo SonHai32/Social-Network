@@ -10,7 +10,7 @@ export class UserFirestoreService {
 
   constructor(private afs: AngularFirestore) { }
 
-  addNewUser(user: User): Promise<DocumentReference<User>>{
-    return this.afs.collection<User>('users').add(user)
+  addNewUser(user: User): Promise<void>{
+    return this.afs.collection<User>('users').doc(user.id).set(user)
   }
 }

@@ -58,7 +58,6 @@ export class AuthWithFirebaseService {
           }
         })
         .catch((error: firebase.FirebaseError) => {
-          console.log(error);
           if (error.code === 'auth/user-not-found') {
             observable.error(new Error('Người dùng không tồn tại'));
           } else if (error.code === 'auth/wrong-password') {
@@ -104,11 +103,9 @@ export class AuthWithFirebaseService {
                 photoURL: userCreated.avatar_url,
               })
               .then(() => {
-                this.userFirestore.addNewUser(userCreated).then((saveUser) => {
-                  if (saveUser) {
-                    observable.next(userCreated);
-                    observable.complete();
-                  }
+                this.userFirestore.addNewUser(userCreated).then(() => {
+                  observable.next(userCreated);
+                  observable.complete();
                 });
               });
           }
@@ -121,10 +118,18 @@ export class AuthWithFirebaseService {
     });
   }
 
-  signInWithPopup(popupType: 'GOOGLE' | 'FACEBOOK' | 'GITHUB'): Observable<User> {
+  signInWithPopup(
+    popupType: 'GOOGLE' | 'FACEBOOK' | 'GITHUB'
+  ): Observable<User> {
     return new Observable<User>((observable) => {
       this.auth
-        .signInWithPopup( popupType === 'FACEBOOK' ? new firebase.auth.FacebookAuthProvider(): popupType ==='GOOGLE' ? new firebase.auth.GoogleAuthProvider : new firebase.auth.GithubAuthProvider)
+        .signInWithPopup(
+          popupType === 'FACEBOOK'
+            ? new firebase.auth.FacebookAuthProvider()
+            : popupType === 'GOOGLE'
+            ? new firebase.auth.GoogleAuthProvider()
+            : new firebase.auth.GithubAuthProvider()
+        )
         .then((userCredential: firebase.auth.UserCredential) => {
           if (userCredential.user) {
             const user: User = {
@@ -134,13 +139,9 @@ export class AuthWithFirebaseService {
               avatar_url: userCredential.user.photoURL,
             };
             if (userCredential.additionalUserInfo?.isNewUser) {
-              this.userFirestore.addNewUser(user).then((userSaved) => {
-                if (userSaved) {
-                  observable.next(user);
-                  observable.complete();
-                } else {
-                  observable.error(new Error('Có lỗi xảy ra'))
-                }
+              this.userFirestore.addNewUser(user).then(() => {
+                observable.next(user);
+                observable.complete();
               });
             } else {
               observable.next(user);
