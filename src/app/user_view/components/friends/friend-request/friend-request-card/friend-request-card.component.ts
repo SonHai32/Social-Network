@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/user_view/services/user.service';
 import { User } from './../../../../models/user.model';
 import { Component, Input, OnInit } from '@angular/core';
 import {
@@ -12,8 +13,15 @@ import {
   ],
 })
 export class FriendRequestCardComponent implements OnInit {
-  constructor() {}
+  constructor(private userService: UserService) {}
   @Input('user') user$!: User;
+  @Input('currentUser') currentUser$!: User;
 
   ngOnInit(): void {}
+
+  friendAccept(friend: User){
+    if(this.currentUser$){
+      this.userService.friendAccept(this.currentUser$, friend)
+    }
+  }
 }

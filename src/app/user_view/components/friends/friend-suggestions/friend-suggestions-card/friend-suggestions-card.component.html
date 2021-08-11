@@ -8,17 +8,17 @@
       ></nz-avatar>
       <div class="d-flex flex-column flex-wrap">
         <a href="#" nz-typography class="mx-2"><strong>{{user$.display_name}}</strong></a>
-        <span nz-typography nzType="secondary" class="mx-2">Muốn kết bạn với bạn </span>
+        <span nz-typography nzType="secondary" class="mx-2">Có thể bạn quen biết</span>
       </div>
     </div>
   </div>
   <div nz-col nzSpan="24" class="mt-4">
     <div nz-row>
       <div nz-col nzSpan="12" class="px-4">
-        <button  (click)="friendAccept(user$)" nz-button nzType="primary" nzBlock>Đồng ý</button>
+        <button (click)="sendFriendRequest(user$)" nz-button nzType="primary" nzBlock>Kết bạn</button>
       </div>
       <div nz-col nzSpan="12" class="px-4">
-        <button nz-button nzBlock>Từ chối</button>
+        <button nz-button nzBlock>Xem</button>
       </div>
     </div>
   </div>

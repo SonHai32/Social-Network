@@ -1,0 +1,33 @@
+<div *ngIf="currentUser | async as user" nz-row class="glass shadow-sm my-3 rounded-12" style="min-height: 50vh;">
+  <div nz-col nzSpan="24">
+    <nz-tabset class="p-4 h-100" nzTabPosition="top" nzCentered="true" nzLinkRouter>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'request' }" queryParamsHandling="merge">
+          Yêu cầu kết bạn
+        </a>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <friend-request-list [currentUser]='user'></friend-request-list>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'all' }" queryParamsHandling="merge">
+          Tất cả bạn bè
+        </a>
+        <app-friends-list [currentUser]='user'></app-friends-list>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'suggestions' }"
+          queryParamsHandling="merge">
+          Gợi ý
+        </a>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <app-friend-suggestions-list [currentUser]='user'></app-friend-suggestions-list>
+          </div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+import { FriendSuggestionsListComponent } from './../components/friends/friend-suggestions/friend-suggestions-list/friend-suggestions-list.component';
+import { FriendComponent } from './../components/friends/friend/friend.component';
 import { PostListComponent } from './../components/post/post-list/post-list.component';
 import { UserInfoComponent } from './../components/user-info/user-info.component';
 import { UserComponent } from './../components/user/user.component';
@@ -24,6 +26,7 @@ import { FriendRequestListComponent } from '../components/friends/friend-request
 import { FriendRequestCardComponent } from '../components/friends/friend-request/friend-request-card/friend-request-card.component';
 import { FromNowPipe } from '../pipes/from-now.pipe';
 import { FriendsListComponent } from '../components/friends/friends-list/friends-list.component';
+import { FriendSuggestionsCardComponent } from '../components/friends/friend-suggestions/friend-suggestions-card/friend-suggestions-card.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { FriendsListComponent } from '../components/friends/friends-list/friends
     FriendRequestListComponent,
     FriendRequestCardComponent,
     FriendsListComponent,
+    FriendComponent,
+    FriendSuggestionsListComponent,
+    FriendSuggestionsCardComponent,
     UserComponent,
     UserInfoComponent,
     FromNowPipe,

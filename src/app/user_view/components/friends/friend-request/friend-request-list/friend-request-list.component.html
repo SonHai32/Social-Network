@@ -1,11 +1,16 @@
-<div nz-row>
-  <div nz-col nzSpan="24" class="mb-2 px-2">
-    <span nz-typography><strong>Lời mời kết bạn</strong></span>
-  </div>
-  <ng-container *ngIf="friendReques$ | async as requests">
-    <div *ngFor="let request of requests" nz-col nzSpan="24">
-      <friend-request-card [user]="request">
-      </friend-request-card>
-    </div>
+<div *ngIf="currentUser" nz-row nzAlign="middle" nzJustify="start" [nzGutter]="[12, 12]">
+  <ng-container *ngIf="friendRequestList$ | async as requestList; else emptyTpl">
+    <ng-container *ngIf="requestList.length > 0; else emptyTpl">
+      <div *ngFor="let user of requestList" nz-col nzXl="12" nzLg="12" nzMd="12" nzSpan="24">
+        <friend-request-card [user]="user" [currentUser]='currentUser'>
+        </friend-request-card>
+      </div>
+    </ng-container>
   </ng-container>
 </div>
+
+<ng-template #emptyTpl>
+  <div class="w-100 h-100 d-flex align-items-center justify-content-center">
+    <nz-empty></nz-empty>
+  </div>
+</ng-template>
