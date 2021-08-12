@@ -1,3 +1,4 @@
+<home-post-container></home-post-container>
 <div *ngIf="vm$ | async as vm" nz-row appScrollable (scrollPosition)="scrollHandle($event)">
   <ng-container *ngIf="vm.posts">
     <div *ngFor="let post of vm.posts" nz-col nzSpan="24">

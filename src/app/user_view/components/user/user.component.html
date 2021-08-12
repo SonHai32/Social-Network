@@ -1,4 +1,4 @@
-<div *ngIf="userID" nz-row nzJustify="center" nzAlign="middle" class="mt-3">
+<div *ngIf="userID" nz-row nzJustify="center" nzAlign="middle" class="mb-3">
   <div  nz-col nzSpan="24"
     class="position-relative rounded-12 vh-50 glass shadow-sm d-flex align-items-end justify-content-around">
     <div *ngIf="user | async as us"
@@ -14,7 +14,7 @@
       <a nz-typography class="mx-2">Bạn bè</a>
     </div>
   </div>
-  <div nz-col nzSpan="24">
+  <div nz-col nzSpan="24" class="mt-3">
     <div nz-row nzAlign="middle" nzJustify="center">
       <div nz-col nzSpan="24">
         <router-outlet></router-outlet>

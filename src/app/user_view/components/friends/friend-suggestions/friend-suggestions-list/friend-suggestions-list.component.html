@@ -1,4 +1,4 @@
-<div *ngIf="userSuggestions | async as userList; else emptyTpl" nz-row nzAlign="middle" nzJustify="start"
+<div *ngIf="userSuggestions | async as userList; else loadingTpl" nz-row nzAlign="middle" nzJustify="start"
   [nzGutter]='[12, 12]'>
   <ng-container *ngIf="userList.length > 0; else emptyTpl">
     <div *ngFor="let user of userList" nz-col nzXl='12' nzLg="12" nzMd="12" nzSpan="24">
@@ -10,5 +10,10 @@
 <ng-template #emptyTpl>
   <div class="w-100 h-100 d-flex align-items-center justify-content-center">
     <nz-empty></nz-empty>
+  </div>
+</ng-template>
+<ng-template #loadingTpl>
+  <div class="w-100 h-100 d-flex align-items-center justify-content-center">
+    <nz-spin nzSimple nzTip="Đang tải ..."></nz-spin>
   </div>
 </ng-template>

@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { PostsService } from './../../services/posts.service';
 import { getUserSelector } from './../../store/auth/auth.selectors';
 import { User } from './../../models/user.model';
@@ -29,7 +30,7 @@ interface PostListVm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  constructor(private store: Store<AppState>,private postService: PostsService) {}
+  constructor(private store: Store<AppState>,private postService: PostsService, private route: ActivatedRoute) {}
 
   totalPost!: number;
   postLimit!: number;
@@ -43,6 +44,8 @@ export class HomeComponent implements OnInit {
 
   vm$!: Observable<PostListVm>;
   ngOnInit(): void {
+
+    this.route.root.url.subscribe(val => console.log(val));
     this.subscription.add(this.store.dispatch(GetAllPost({ limit: 5 })));
     this.subscription.add(
       this.postService.getTotalPost().subscribe((total: number) =>{
