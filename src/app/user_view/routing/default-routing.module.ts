@@ -25,6 +25,7 @@ const routes: Routes = [
             path: 'user/:id',
             component: UserComponent,
             children: [
+              {path: '', pathMatch: 'full', redirectTo: 'info'},
               { path: 'posts', component: PostListComponent },
               { path: 'info', component: UserInfoComponent },
             ],

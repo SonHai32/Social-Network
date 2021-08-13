@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { PostsService } from './../../services/posts.service';
-import { getUserSelector } from './../../store/auth/auth.selectors';
+import { getAuthSelector, getUserSelector } from './../../store/auth/auth.selectors';
 import { User } from './../../models/user.model';
 import { AppState } from './../../store/app.state';
 import {
@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
 
   totalPost!: number;
   postLimit!: number;
+  currentUser$!: User| null;
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit {
 
   vm$!: Observable<PostListVm>;
   ngOnInit(): void {
-
+    this.store.select(getUserSelector).subscribe(user => this.currentUser$ = user)
     this.route.root.url.subscribe(val => console.log(val));
     this.subscription.add(this.store.dispatch(GetAllPost({ limit: 5 })));
     this.subscription.add(

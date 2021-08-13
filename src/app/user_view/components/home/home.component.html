@@ -32,11 +32,16 @@
 <div nz-row nzJustify="center" class="position-relative">
   <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="position-relative pt-2" #leftContainer>
     <nz-affix nzTarget="leftContainer" nzOffsetTop="50">
-      <app-pane-menu> </app-pane-menu>
+      <ng-container *ngIf="currentUser$">
+        <app-pane-menu [currentUser]='currentUser$'> </app-pane-menu>
+      </ng-container>
+      <ng-container *ngIf="!currentUser$">
+        <app-pane-menu> </app-pane-menu>
+      </ng-container>
+
     </nz-affix>
   </div>
-  <div  nz-col nzXl="12" nzLg="10" nzSpan="24"
-    class="h-100 p-3 pt-2">
+  <div nz-col nzXl="12" nzLg="10" nzSpan="24" class="h-100 p-3 pt-2">
     <router-outlet></router-outlet>
   </div>
   <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="h-100 p-4 pt-2 ">
