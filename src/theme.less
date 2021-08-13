@@ -30,8 +30,23 @@
   font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI,
     Roboto, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
-}
 
+}
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #fd70a1;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #fd70a1;
+  }
 body {
   position: relative;
   scroll-behavior: smooth;
