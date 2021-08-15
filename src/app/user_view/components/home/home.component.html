@@ -1,5 +1,5 @@
 <div nz-row nzJustify="center" class="position-relative">
-  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="position-relative pt-2" #leftContainer>
+  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="position-relative" #leftContainer>
     <nz-affix nzTarget="leftContainer" nzOffsetTop="50">
       <ng-container *ngIf="currentUser$">
         <app-pane-menu [currentUser]='currentUser$'> </app-pane-menu>
@@ -9,16 +9,17 @@
       </ng-container>
     </nz-affix>
   </div>
-  <div nz-col nzXl="12" nzLg="10" nzSpan="24" class="h-100 p-3 pt-2">
+  <div nz-col nzXl="12" nzLg="10" nzSpan="24" class="h-100 px-3">
     <router-outlet></router-outlet>
   </div>
-  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="h-100 p-3 pt-2  position-relative" #rightContainer>
+  <div nz-col nzXl="6" nzLg="7" nzSpan="0" class="h-100 px-3  position-relative" #rightContainer>
     <nz-affix nzTarget="rightContainer" nzOffsetTop="50">
-      <div nz-row *ngIf="currentUser$" class="glass shadow-sm rounded-12 p-3">
-        <div nz-col nzSpan="24" class="py-2">
-          <span nz-typography> Danh sách bạn bè </span>
+      <div nz-row *ngIf="currentUser$" class="glass shadow-sm rounded-12 px-3">
+        <div style="height: 8vh;" nz-col nzSpan="24" class="p-2 d-flex align-items-center font-size-md">
+          <i nz-icon nzType="team" nzTheme="outline"></i>
+          <span nz-typography class="mx-2"> Danh sách bạn bè </span>
         </div>
-        <div nz-col nzSpan="24"  style="height: 55vh; overflow-y: auto;">
+        <div nz-col nzSpan="24" style="height: 62vh; overflow-y: auto;">
           <app-friends-list [currentUser]='currentUser$'></app-friends-list>
         </div>
       </div>

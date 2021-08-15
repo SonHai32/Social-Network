@@ -1,16 +1,21 @@
 <div *ngIf="friendList$ | async as friends_list; else loadingTpl" nz-row nzAlign="middle" nzJustify="center">
   <ng-container *ngIf="friends_list.length > 0; else emptyTpl">
-    <div *ngFor="let friend of friends_list" nz-col nzSpan="24" class="my-2">
+    <div *ngFor="let friend of friends_list" nz-col nzSpan="24" class="my-1">
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center p-2">
           <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{friend.avatar_url}}'
             [nzShape]="'square'">
           </nz-avatar>
-          <a class="mx-2" [routerLink]="['/user', friend.id]" nz-typography><strong>{{friend.display_name}}</strong></a>
+          <a class="mx-2 font-size-sm" [routerLink]="['/user', friend.id]" nz-typography><strong>{{friend.display_name}}</strong></a>
         </div>
-        <button nz-button nzType="text" nzShape="circle">
-          <i font-size-md nz-icon nzType="more" nzTheme="outline" [nzRotate]="90"></i>
-        </button>
+        <div class="d-flex">
+          <button [routerLink]="['message', friend.id]" nz-button nzType="text" nzShape="circle">
+            <i nz-icon nzType="send" nzTheme="outline"></i>
+          </button>
+          <button nz-button nzType="text" nzShape="circle">
+            <i font-size-md nz-icon nzType="more" nzTheme="outline" [nzRotate]="90"></i>
+          </button>
+        </div>
       </div>
     </div>
   </ng-container>
