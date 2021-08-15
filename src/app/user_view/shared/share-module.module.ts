@@ -32,7 +32,6 @@ import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
-
 @NgModule({
   imports: [CommonModule],
   exports: [
