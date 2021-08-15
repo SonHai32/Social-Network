@@ -1,3 +1,4 @@
+import { ToHoursPipe } from './../pipes/to-hours.pipe';
 import { FriendSuggestionsListComponent } from './../components/friends/friend-suggestions/friend-suggestions-list/friend-suggestions-list.component';
 import { FriendComponent } from './../components/friends/friend/friend.component';
 import { PostListComponent } from './../components/post/post-list/post-list.component';
@@ -27,6 +28,7 @@ import { FriendRequestCardComponent } from '../components/friends/friend-request
 import { FromNowPipe } from '../pipes/from-now.pipe';
 import { FriendsListComponent } from '../components/friends/friends-list/friends-list.component';
 import { FriendSuggestionsCardComponent } from '../components/friends/friend-suggestions/friend-suggestions-card/friend-suggestions-card.component';
+import { MessageComponent } from '../components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -49,9 +51,11 @@ import { FriendSuggestionsCardComponent } from '../components/friends/friend-sug
     FriendComponent,
     FriendSuggestionsListComponent,
     FriendSuggestionsCardComponent,
+    MessageComponent,
     UserComponent,
     UserInfoComponent,
     FromNowPipe,
+    ToHoursPipe,
     AppLoadingComponent,
     ScrollToCommentDirective,
     ScrollableDirective,
