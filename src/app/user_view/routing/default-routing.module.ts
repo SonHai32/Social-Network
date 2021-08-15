@@ -1,3 +1,4 @@
+import { MessageComponent } from './../components/message/message.component';
 import { FriendComponent } from './../components/friends/friend/friend.component';
 import { PostListComponent } from './../components/post/post-list/post-list.component';
 import { PostLikeSuccess } from './../store/posts/posts.actions';
@@ -25,14 +26,18 @@ const routes: Routes = [
             path: 'user/:id',
             component: UserComponent,
             children: [
-              {path: '', pathMatch: 'full', redirectTo: 'info'},
+              { path: '', pathMatch: 'full', redirectTo: 'info' },
               { path: 'posts', component: PostListComponent },
               { path: 'info', component: UserInfoComponent },
             ],
           },
           {
             path: 'friends',
-            component: FriendComponent
+            component: FriendComponent,
+          },
+          {
+            path: 'message/:id',
+            component: MessageComponent
           }
         ],
       },
