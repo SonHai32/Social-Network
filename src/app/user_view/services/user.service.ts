@@ -192,5 +192,18 @@ export class UserService {
         )
       );
   }
+
+  isFriendExisted(
+    currentUserID: string,
+    friendID: string
+  ): Observable<boolean> {
+    return this.afs
+      .doc<User>(`users/${currentUserID}`)
+      .collection<User>('friend_list')
+      .doc(friendID)
+      .get()
+      .pipe(map((res) => res.exists));
+  }
+
   constructor(private afs: AngularFirestore, private store: Store) {}
 }
