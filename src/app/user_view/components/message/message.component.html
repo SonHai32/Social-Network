@@ -45,7 +45,7 @@
           [nzAutosize]="{ maxRows: 2 }"></textarea>
       </nz-input-group>
       <ng-template #suffixTemplateInfo>
-        <button nz-tooltip nzTooltipTitle="Bình luận" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
+        <button (click)="sendMessage(chatBox)" nz-tooltip nzTooltipTitle="Gửi" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
           nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
           <i nz-icon nzType="send" nzTheme="outline"></i>
         </button>
