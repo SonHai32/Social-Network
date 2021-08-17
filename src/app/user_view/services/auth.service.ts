@@ -10,7 +10,7 @@ import { map } from 'rxjs/internal/operators/map';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthWithFirebaseService {
+export class AuthService {
   constructor(
     private auth: AngularFireAuth,
     private userService: UserService
