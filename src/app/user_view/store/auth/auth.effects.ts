@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { LoadingActions } from './../app-loading/loading.actions';
 import { AppMessageAction } from '../app-message/app-message.actions';
 import { AuthActions } from './auth.action';
-import { AuthWithFirebaseService } from '../../services/auth-with-firebase.service';
+import { AuthService } from '../../services/auth.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
@@ -137,7 +137,7 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
-    private authService: AuthWithFirebaseService,
+    private authService: AuthService,
     private store: Store
   ) {}
 }
