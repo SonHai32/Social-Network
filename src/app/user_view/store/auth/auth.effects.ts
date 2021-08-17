@@ -25,12 +25,20 @@ export class AuthEffects {
       ofType(AuthActions.CheckAuth),
       tap(() => this.store.dispatch(LoadingActions.SetLoading())),
       switchMap(() => this.authService.checkAuth()),
+      map((user: User| null) => {
+        if (user) {
+          return AuthActions.AuthSuccess({ user });
+        } else {
+          return AuthActions.AuthFail({ errorMessage: 'Bạn chưa đăng nhập' });
+        }
+      }),
       tap(() => this.store.dispatch(LoadingActions.ClearLoading())),
-      map((user: User) => AuthActions.AuthSuccess({ user })),
       catchError((err) =>
         of(
-          AppMessageAction.SetAppMessage({ message: err.message, message_type: 'error' }) &&
-            LoadingActions.ClearLoading()
+          AppMessageAction.SetAppMessage({
+            message: err.message,
+            message_type: 'error',
+          }) && LoadingActions.ClearLoading()
         )
       )
     )
@@ -45,7 +53,12 @@ export class AuthEffects {
           catchError((error: firebase.FirebaseError) =>
             merge(
               of(AuthActions.AuthFail({ errorMessage: error.message })),
-              of(AppMessageAction.SetAppMessage({ message: error.message, message_type: 'error' }))
+              of(
+                AppMessageAction.SetAppMessage({
+                  message: error.message,
+                  message_type: 'error',
+                })
+              )
             )
           )
         )
@@ -64,7 +77,12 @@ export class AuthEffects {
             catchError((error: firebase.FirebaseError) =>
               merge(
                 of(AuthActions.AuthFail({ errorMessage: error.message })),
-                of(AppMessageAction.SetAppMessage({ message: error.message, message_type: 'error' }))
+                of(
+                  AppMessageAction.SetAppMessage({
+                    message: error.message,
+                    message_type: 'error',
+                  })
+                )
               )
             )
           )
@@ -80,7 +98,12 @@ export class AuthEffects {
       map(() => AuthActions.LogoutSuccess()),
       tap(() => this.store.dispatch(LoadingActions.ClearLoading())),
       catchError((err) =>
-        of(AppMessageAction.SetAppMessage({ message: err.message, message_type: 'error' }))
+        of(
+          AppMessageAction.SetAppMessage({
+            message: err.message,
+            message_type: 'error',
+          })
+        )
       )
     )
   );
@@ -102,7 +125,7 @@ export class AuthEffects {
               of(
                 AppMessageAction.SetAppMessage({
                   message: err.message,
-                  message_type: 'error'
+                  message_type: 'error',
                 })
               )
             )

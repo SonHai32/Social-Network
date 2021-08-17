@@ -29,6 +29,7 @@ import { FromNowPipe } from '../pipes/from-now.pipe';
 import { FriendsListComponent } from '../components/friends/friends-list/friends-list.component';
 import { FriendSuggestionsCardComponent } from '../components/friends/friend-suggestions/friend-suggestions-card/friend-suggestions-card.component';
 import { MessageComponent } from '../components/message/message.component';
+import { UserDisplayNameFilterPipe } from '../pipes/user-display-name-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { MessageComponent } from '../components/message/message.component';
     UserInfoComponent,
     FromNowPipe,
     ToHoursPipe,
+    UserDisplayNameFilterPipe,
     AppLoadingComponent,
     ScrollToCommentDirective,
     ScrollableDirective,

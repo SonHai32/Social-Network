@@ -1,40 +1,70 @@
+import { User } from 'src/app/user_view/models/user.model';
+import { tap } from 'rxjs/operators';
 import { UserCredentials } from '../models/user-credentials.model';
-import { User } from '../models/user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import firebase from 'firebase/app';
 import { UserFirestoreService } from './user-firestore.service';
-
+import { AngularFireDatabase } from '@angular/fire/database';
+import { map } from 'rxjs/internal/operators/map';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthWithFirebaseService {
   constructor(
     private auth: AngularFireAuth,
-    private afs: AngularFirestore,
-    private userFirestore: UserFirestoreService
+    private userFirestore: UserFirestoreService,
+    private afdb: AngularFireDatabase
   ) {}
 
-  checkAuth(): Observable<User> {
-    return new Observable<User>((observable) => {
-      this.auth.authState.subscribe((currentUser: firebase.User | null) => {
-        if (currentUser) {
-          const user: User = {
-            id: currentUser.uid,
-            avatar_url: currentUser.photoURL,
-            display_name: currentUser.displayName,
-            email: currentUser.email,
-          };
-          observable.next(user);
-          observable.complete();
+  checkAuth(): Observable<User | null> {
+    return this.auth.authState.pipe(
+      map((user) => {
+        if (user) {
+          return {
+            id: user.uid,
+            avatar_url: user.photoURL,
+            display_name: user.displayName,
+            email: user.email,
+          } as User;
         } else {
-          observable.error(new Error('Bạn chưa đăng nhập'));
+          return null;
         }
-      });
-    });
+      }),
+      tap((user) => {
+        if (user) {
+          this.updateOnConnect(user.id).subscribe();
+          this.updateOnDisconnect(user.id).subscribe();
+        }
+      })
+    );
   }
+
+  updateOnConnect(userID: string) {
+    return this.afdb
+      .object('.info/connected')
+      .snapshotChanges()
+      .pipe(
+        map((connection) => (connection ? 'online' : 'offline')),
+        tap((state) => {
+          this.afdb.object(`status/${userID}`).set({
+            state,
+            last_changed: firebase.database.ServerValue.TIMESTAMP,
+          });
+        })
+      );
+  }
+
+  updateOnDisconnect(userID: string) {
+    return from(
+      this.afdb.object(`status/${userID}`).query.ref.onDisconnect().set({
+        state: 'offline',
+        last_changed: firebase.database.ServerValue.TIMESTAMP,
+      })
+    );
+  }
+
   loginWithEmailAndPassword(
     userCredentials: UserCredentials
   ): Observable<User> {
@@ -50,7 +80,9 @@ export class AuthWithFirebaseService {
               id: resUser.user.uid,
               email: resUser.user.email,
               avatar_url: resUser.user.photoURL,
-              display_name: resUser.user.displayName,
+              display_name: resUser.user.displayName
+                ? resUser.user.displayName
+                : '',
             };
 
             observable.next(currentUser);
@@ -135,7 +167,9 @@ export class AuthWithFirebaseService {
             const user: User = {
               id: userCredential.user.uid,
               email: userCredential.user.email,
-              display_name: userCredential.user.displayName,
+              display_name: userCredential.user.displayName
+                ? userCredential.user.displayName
+                : '',
               avatar_url: userCredential.user.photoURL,
             };
             if (userCredential.additionalUserInfo?.isNewUser) {

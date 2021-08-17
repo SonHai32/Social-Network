@@ -193,6 +193,14 @@ export class UserService {
       );
   }
 
+  getTotalFriends(currentUserID: string) :Observable<number>{
+    return this.afs
+      .doc<User>(`users/${currentUserID}`)
+      .collection<User>('friend_list')
+      .snapshotChanges(['added', 'removed'])
+      .pipe(map((res) => res.length));
+  }
+
   isFriendExisted(
     currentUserID: string,
     friendID: string
