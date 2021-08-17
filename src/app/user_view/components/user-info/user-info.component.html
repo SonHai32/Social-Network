@@ -1,6 +1,6 @@
-<div *ngIf="user| async as us" nz-row class="vh-50 glass shadow-sm rounded-12">
+<div *ngIf="user| async as us" nz-row class="glass shadow-sm rounded-12" style="min-height: 50vh;">
   <div nz-col nzSpan="24">
-    <nz-tabset class="p-4 h-100" nzTabPosition="left" nzLinkRouter  >
+    <nz-tabset class="p-4 h-100" nzLinkRouter  nzCentered="true" >
       <nz-tab>
         <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'overview' }" queryParamsHandling="merge">
           Tổng quan
