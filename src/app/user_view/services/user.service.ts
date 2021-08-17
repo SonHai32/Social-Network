@@ -224,20 +224,22 @@ export class UserService {
       .snapshotChanges()
       .pipe(
         map((connection) => (connection ? 'online' : 'offline')),
-        tap((state) => {
-          this.afdb.object(`status/${userID}`).set({
-            state,
-            last_changed: firebase.database.ServerValue.TIMESTAMP,
-          });
-        })
+        tap((state) => this.setUserStatus(userID, state))
       );
+  }
+
+  setUserStatus(userID: string, state: 'online' | 'offline') {
+    return this.afdb.object(`status/${userID}`).set({
+      state,
+      last_changed: firebase.database.ServerValue.TIMESTAMP,
+    });
   }
 
   updateOnDisconnect(userID: string) {
     return from(
       this.afdb.object(`status/${userID}`).query.ref.onDisconnect().set({
         state: 'offline',
-        last_changed: firebase.database.ServerValue.TIMESTAMP.toString(),
+        last_changed: firebase.database.ServerValue.TIMESTAMP,
       })
     );
   }
@@ -249,13 +251,12 @@ export class UserService {
       .pipe(
         map((snap) => snap.payload.val()),
         map((status) => {
-          console.log(status);
           if (status) {
             return status;
           } else {
             return {
               state: 'offline',
-              last_change: firebase.database.ServerValue.TIMESTAMP.toString(),
+              last_change: firebase.database.ServerValue.TIMESTAMP,
             } as UserStatus;
           }
         })

@@ -1,3 +1,5 @@
+import { UserService } from 'src/app/user_view/services/user.service';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoadingActions } from './../app-loading/loading.actions';
 import { AppMessageAction } from '../app-message/app-message.actions';
@@ -95,8 +97,9 @@ export class AuthEffects {
       ofType(AuthActions.Logout),
       tap(() => this.store.dispatch(LoadingActions.SetLoading())),
       switchMap(() => this.authService.logOut()),
-      map(() => AuthActions.LogoutSuccess()),
       tap(() => this.store.dispatch(LoadingActions.ClearLoading())),
+      map(() => AuthActions.LogoutSuccess()),
+      tap(() => this.router.navigate(['/'])),
       catchError((err) =>
         of(
           AppMessageAction.SetAppMessage({
@@ -138,6 +141,8 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private store: Store
+    private userService: UserService,
+    private store: Store,
+    private router: Router
   ) {}
 }

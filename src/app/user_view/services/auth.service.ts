@@ -1,10 +1,10 @@
 import { UserService } from 'src/app/user_view/services/user.service';
 import { User } from 'src/app/user_view/models/user.model';
-import { tap } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 import { UserCredentials } from '../models/user-credentials.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, from } from 'rxjs';
 import firebase from 'firebase/app';
 import { map } from 'rxjs/operators';
 @Injectable({
@@ -163,15 +163,11 @@ export class AuthService {
     });
   }
 
-  logOut(): Observable<boolean> {
-    return new Observable<boolean>((observable) => {
-      this.auth
-        .signOut()
-        .then(() => {
-          observable.next(true);
-          observable.complete();
-        })
-        .catch((err) => observable.error(err));
-    });
+  async logOut() {
+    const user = await this.auth.authState.pipe(first()).toPromise();
+    if (user) {
+      this.userService.setUserStatus(user.uid, 'offline');
+    }
+    return from(this.auth.signOut());
   }
 }
