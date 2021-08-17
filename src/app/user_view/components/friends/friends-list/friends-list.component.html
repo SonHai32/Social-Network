@@ -1,24 +1,38 @@
-<div *ngIf="friendList$ | async as friends_list; else loadingTpl" nz-row nzAlign="middle" nzJustify="center">
-  <ng-container *ngIf="friends_list.length > 0; else emptyTpl">
-    <div *ngFor="let friend of friends_list" nz-col nzSpan="24" class="my-1">
-      <div class="d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center p-2">
-          <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{friend.avatar_url}}'
-            [nzShape]="'square'">
-          </nz-avatar>
-          <a class="mx-2 font-size-sm" [routerLink]="['/user', friend.id]" nz-typography><strong>{{friend.display_name}}</strong></a>
-        </div>
-        <div class="d-flex">
-          <button [routerLink]="['/message', friend.id]" nz-button nzType="text" nzShape="circle">
-            <i nz-icon nzType="send" nzTheme="outline"></i>
-          </button>
-          <button nz-button nzType="text" nzShape="circle">
-            <i font-size-md nz-icon nzType="more" nzTheme="outline" [nzRotate]="90"></i>
-          </button>
+<cdk-virtual-scroll-viewport itemSize="50px" style="height: 50vh; overflow-y: auto;" nz-row nzAlign="middle"
+  nzJustify="center">
+  <ng-container *ngIf="friendList$ | async as friends_list; else loadingTpl">
+    <ng-container *ngIf="friends_list.length > 0; else emptyTpl">
+      <div *ngFor="let friend of friends_list | userDisplayNameFilter: searchFilter " nz-col nzSpan="24" class="my-1">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center p-2">
+            <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{friend.avatar_url}}'
+              [nzShape]="'square'">
+            </nz-avatar>
+            <a class="mx-2 font-size-sm" [routerLink]="['/user', friend.id]"
+              nz-typography><strong>{{friend.display_name}}</strong></a>
+          </div>
+          <div class="d-flex">
+            <button [routerLink]="['/message', friend.id]" nz-button nzType="text" nzShape="circle">
+              <i nz-icon nzType="send" nzTheme="outline"></i>
+            </button>
+            <button nz-button nzType="text" nzShape="circle">
+              <i font-size-md nz-icon nzType="more" nzTheme="outline" [nzRotate]="90"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
+</cdk-virtual-scroll-viewport>
+<div nz-row style="height: 5vh;" nzAlign="middle" nzJustify="center">
+  <div nz-col nzSpan="24" class="d-flex align-items-center py-2">
+    <nz-input-group nzSize="default" [nzSuffix]="suffixIconSearch">
+      <input [(ngModel)]="searchFilter" class="bg-none" type="text" nz-input placeholder="Tìm kiếm" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </div>
 </div>
 <ng-template #emptyTpl>
   <div class="w-100 h-100 d-flex align-items-center justify-content-center">
