@@ -20,7 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 registerLocaleData(vi);
 
 @NgModule({
@@ -35,6 +35,7 @@ registerLocaleData(vi);
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFireDatabaseModule,
     ShareViewModule,
     AppRoutingModule,
     HttpClientModule,
