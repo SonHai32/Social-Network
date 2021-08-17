@@ -1,7 +1,7 @@
 export interface User{
   id: string,
   email: string | null,
-  display_name: string | null,
+  display_name: string,
   birthday?: string,
   phone?: string,
   created_at?: firebase.default.firestore.Timestamp | null,
@@ -10,8 +10,8 @@ export interface User{
   friends?: [],
   friend_requests?: User[],
   messages?: [],
-  gender?: string
-  place?: string
+  gender?: string,
+  place?: string,
 }
 
 
