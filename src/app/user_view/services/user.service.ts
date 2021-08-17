@@ -3,9 +3,10 @@ import { Store } from '@ngrx/store';
 import { User } from 'src/app/user_view/models/user.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import firebase from 'firebase/app';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, from } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
@@ -193,7 +194,7 @@ export class UserService {
       );
   }
 
-  getTotalFriends(currentUserID: string) :Observable<number>{
+  getTotalFriends(currentUserID: string): Observable<number> {
     return this.afs
       .doc<User>(`users/${currentUserID}`)
       .collection<User>('friend_list')
@@ -213,5 +214,35 @@ export class UserService {
       .pipe(map((res) => res.exists));
   }
 
-  constructor(private afs: AngularFirestore, private store: Store) {}
+  addNewUser(user: User): Promise<void> {
+    return this.afs.collection<User>('users').doc(user.id).set(user);
+  }
+  updateOnConnect(userID: string) {
+    return this.afdb
+      .object('.info/connected')
+      .snapshotChanges()
+      .pipe(
+        map((connection) => (connection ? 'online' : 'offline')),
+        tap((state) => {
+          this.afdb.object(`status/${userID}`).set({
+            state,
+            last_changed: firebase.database.ServerValue.TIMESTAMP,
+          });
+        })
+      );
+  }
+
+  updateOnDisconnect(userID: string) {
+    return from(
+      this.afdb.object(`status/${userID}`).query.ref.onDisconnect().set({
+        state: 'offline',
+        last_changed: firebase.database.ServerValue.TIMESTAMP,
+      })
+    );
+  }
+  constructor(
+    private afs: AngularFirestore,
+    private store: Store,
+    private afdb: AngularFireDatabase
+  ) {}
 }

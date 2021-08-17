@@ -1,12 +1,11 @@
+import { UserService } from 'src/app/user_view/services/user.service';
 import { User } from 'src/app/user_view/models/user.model';
 import { tap } from 'rxjs/operators';
 import { UserCredentials } from '../models/user-credentials.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import firebase from 'firebase/app';
-import { UserFirestoreService } from './user-firestore.service';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/internal/operators/map';
 @Injectable({
   providedIn: 'root',
@@ -14,8 +13,7 @@ import { map } from 'rxjs/internal/operators/map';
 export class AuthWithFirebaseService {
   constructor(
     private auth: AngularFireAuth,
-    private userFirestore: UserFirestoreService,
-    private afdb: AngularFireDatabase
+    private userService: UserService
   ) {}
 
   checkAuth(): Observable<User | null> {
@@ -34,33 +32,9 @@ export class AuthWithFirebaseService {
       }),
       tap((user) => {
         if (user) {
-          this.updateOnConnect(user.id).subscribe();
-          this.updateOnDisconnect(user.id).subscribe();
+          this.userService.updateOnConnect(user.id).subscribe();
+          this.userService.updateOnDisconnect(user.id).subscribe();
         }
-      })
-    );
-  }
-
-  updateOnConnect(userID: string) {
-    return this.afdb
-      .object('.info/connected')
-      .snapshotChanges()
-      .pipe(
-        map((connection) => (connection ? 'online' : 'offline')),
-        tap((state) => {
-          this.afdb.object(`status/${userID}`).set({
-            state,
-            last_changed: firebase.database.ServerValue.TIMESTAMP,
-          });
-        })
-      );
-  }
-
-  updateOnDisconnect(userID: string) {
-    return from(
-      this.afdb.object(`status/${userID}`).query.ref.onDisconnect().set({
-        state: 'offline',
-        last_changed: firebase.database.ServerValue.TIMESTAMP,
       })
     );
   }
@@ -135,7 +109,7 @@ export class AuthWithFirebaseService {
                 photoURL: userCreated.avatar_url,
               })
               .then(() => {
-                this.userFirestore.addNewUser(userCreated).then(() => {
+                this.userService.addNewUser(userCreated).then(() => {
                   observable.next(userCreated);
                   observable.complete();
                 });
@@ -173,7 +147,7 @@ export class AuthWithFirebaseService {
               avatar_url: userCredential.user.photoURL,
             };
             if (userCredential.additionalUserInfo?.isNewUser) {
-              this.userFirestore.addNewUser(user).then(() => {
+              this.userService.addNewUser(user).then(() => {
                 observable.next(user);
                 observable.complete();
               });
