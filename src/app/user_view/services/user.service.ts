@@ -1,3 +1,4 @@
+import { UserStatus } from './../types/user-status.type';
 import { AppMessageAction } from './../store/app-message/app-message.actions';
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/user_view/models/user.model';
@@ -236,9 +237,29 @@ export class UserService {
     return from(
       this.afdb.object(`status/${userID}`).query.ref.onDisconnect().set({
         state: 'offline',
-        last_changed: firebase.database.ServerValue.TIMESTAMP,
+        last_changed: firebase.database.ServerValue.TIMESTAMP.toString(),
       })
     );
+  }
+
+  getUserPresence(userID: string): Observable<UserStatus> {
+    return this.afdb
+      .object<UserStatus>(`status/${userID}`)
+      .snapshotChanges()
+      .pipe(
+        map((snap) => snap.payload.val()),
+        map((status) => {
+          console.log(status);
+          if (status) {
+            return status;
+          } else {
+            return {
+              state: 'offline',
+              last_change: firebase.database.ServerValue.TIMESTAMP.toString(),
+            } as UserStatus;
+          }
+        })
+      );
   }
   constructor(
     private afs: AngularFirestore,

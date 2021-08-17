@@ -24,6 +24,7 @@
 @modal-content-bg: rgba(255, 255, 255, 0.9);
 @modal-header-bg: rgba(255, 255, 255, 0.9);
 @modal-mask-bg: fade(white, 50%);
+@badge-dot-size: 8px;
 
 * {
   font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, Arial, Segoe UI,
@@ -50,6 +51,12 @@
 body {
   position: relative;
   scroll-behavior: smooth;
+}
+
+.ant-badge-dot-green {
+  .ant-badge-dot {
+    background: #87d068 !important;
+  }
 }
 
 .absolute-center {
@@ -112,8 +119,8 @@ body:before {
 .bg-white-opacity {
   background-color: rgba(255, 255, 255, 0.48) !important;
 }
-.bg-primary-opacity{
-  background: rgba(253, 112, 161, 0.67)
+.bg-primary-opacity {
+  background: rgba(253, 112, 161, 0.67);
 }
 .text-no-copy {
   -webkit-user-select: none;

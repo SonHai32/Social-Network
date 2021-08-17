@@ -3,6 +3,7 @@ import { UserService } from 'src/app/user_view/services/user.service';
 import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { User } from 'src/app/user_view/models/user.model';
+import { UserStatus } from 'src/app/user_view/types/user-status.type';
 
 @Component({
   selector: 'app-friends-list',
@@ -20,5 +21,6 @@ export class FriendsListComponent implements OnInit {
       this.friendList$ = this.userService.getAllFriend(this.currentUser$.id);
     }
   }
+
 
 }

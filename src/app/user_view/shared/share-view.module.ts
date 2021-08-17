@@ -1,3 +1,4 @@
+import { FriendInfoComponent } from './../components/friends/friend-info/friend-info.component';
 import { ToHoursPipe } from './../pipes/to-hours.pipe';
 import { FriendSuggestionsListComponent } from './../components/friends/friend-suggestions/friend-suggestions-list/friend-suggestions-list.component';
 import { FriendComponent } from './../components/friends/friend/friend.component';
@@ -49,6 +50,7 @@ import { UserDisplayNameFilterPipe } from '../pipes/user-display-name-filter.pip
     FriendRequestListComponent,
     FriendRequestCardComponent,
     FriendsListComponent,
+    FriendInfoComponent,
     FriendComponent,
     FriendSuggestionsListComponent,
     FriendSuggestionsCardComponent,
