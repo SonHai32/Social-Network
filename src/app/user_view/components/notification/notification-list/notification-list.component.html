@@ -1,1 +1,11 @@
-<p>notification-list works!</p>
+<div nz-row nzJustify="center" class="h-100">
+  <div nz-col nzSpan="24" class="h-100">
+    <cdk-virtual-scroll-viewport itemSize="50" class="h-100">
+      <ng-container *ngIf="notifications$ | async as notifications">
+        <ng-container *ngFor="let item of notifications">
+          <app-notification-content [notification]='item' [currentUserID]="currentUser.id"></app-notification-content>
+        </ng-container>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>

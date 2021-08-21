@@ -1,19 +1,22 @@
-import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { map, tap, first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Notification } from './../models/notification.model';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private afs: AngularFirestore) {}
-  addNotification(
-    userID: string,
-    notification: Notification
-  ): Promise<DocumentReference> {
+  constructor(
+    private afs: AngularFirestore,
+    private notification: NzNotificationService,
+    private store: Store
+  ) {}
+  addNotification(userID: string, notification: Notification) {
     return this.afs
       .doc<User>(`users/${userID}`)
       .collection<Notification>('notifications')
@@ -23,8 +26,10 @@ export class NotificationService {
   getNotification(userID: string): Observable<Notification[]> {
     return this.afs
       .doc<User>(`users/${userID}`)
-      .collection<Notification>('notifications')
-      .snapshotChanges(['added'])
+      .collection<Notification>('notifications', (ref) =>
+        ref.orderBy('created_at', 'desc')
+      )
+      .snapshotChanges()
       .pipe(
         map((snap) =>
           snap.map((notification) => {
@@ -35,6 +40,14 @@ export class NotificationService {
           })
         )
       );
+  }
+
+  getUnseenNotification(userID: string): Observable<number> {
+    return this.afs
+      .doc<User>(`users/${userID}`)
+      .collection<Notification>('notifications', (ref) => ref.where('seen', '!=', true))
+      .snapshotChanges()
+      .pipe(map((res) => res.length));
   }
 
   setSeenNotification(userID: string, notificationID: string): Promise<void> {

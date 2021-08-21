@@ -1,3 +1,5 @@
+import { NotificationService } from './../../../services/notification.service';
+import { AppMessageAction } from './../../../store/app-message/app-message.actions';
 import { AuthActions } from './../../../store/auth/auth.action';
 import {
   getUserSelector,
@@ -16,13 +18,18 @@ import { User } from 'src/app/user_view/models/user.model';
 export class HeaderComponent implements OnInit {
   authVisible: boolean = false;
   authFormSelected: string = 'LOGIN';
+  notificationVisible: boolean = false;
   isMobile: boolean = false;
   currentUser!: User;
   isAuthenticated!: boolean;
-
+  totalUnseenNotification!: Observable<number>;
   subscription: Subscription = new Subscription();
 
-  constructor(private dv: DeviceDetectorService, private store: Store) {}
+  constructor(
+    private dv: DeviceDetectorService,
+    private store: Store,
+    private userNotificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.isMobile = this.dv.isMobile();
@@ -35,6 +42,8 @@ export class HeaderComponent implements OnInit {
       this.store.select(getUserSelector).subscribe((user: User | null) => {
         if (user) {
           this.currentUser = user;
+          this.totalUnseenNotification =
+            this.userNotificationService.getUnseenNotification(user.id);
         }
       })
     );
@@ -49,6 +58,18 @@ export class HeaderComponent implements OnInit {
     this.authVisible = !this.authVisible;
     if (formSelect) {
       this.changeAuthForm(formSelect);
+    }
+  }
+  toggleNotification() {
+    if (this.currentUser) {
+      this.notificationVisible = !this.notificationVisible;
+    } else {
+      this.store.dispatch(
+        AppMessageAction.SetAppMessage({
+          message: 'Bạn chưa đăng nhập',
+          message_type: 'warning',
+        })
+      );
     }
   }
   changeAuthForm(formSelected: string): void {

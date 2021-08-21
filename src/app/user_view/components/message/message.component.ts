@@ -71,7 +71,7 @@ export class MessageComponent implements OnInit {
         messageText: this.chatBoxValue ? this.chatBoxValue : '',
       };
       this.messageService
-        .sendMessage(this.currentUser$.id, this.friendID, message)
+        .sendMessage(this.currentUser$, this.friendID, message)
         .then(() => {
           chatBoxEl.blur();
           this.chatBoxValue = '';

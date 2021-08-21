@@ -1,8 +1,6 @@
-import { UserCredentials } from './../../models/user-credentials.model';
 import { AuthState } from './auth.state';
 import { createReducer, on } from '@ngrx/store';
 import { AuthActions } from './auth.action';
-import { state } from '@angular/animations';
 
 export const FEATURE_KEY = 'feature_auth';
 

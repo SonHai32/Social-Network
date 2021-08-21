@@ -1,3 +1,5 @@
+import { NotificationContentComponent } from './../components/notification/notification-content/notification-content.component';
+import { NotificationListComponent } from './../components/notification/notification-list/notification-list.component';
 import { FriendInfoComponent } from './../components/friends/friend-info/friend-info.component';
 import { ToHoursPipe } from './../pipes/to-hours.pipe';
 import { FriendSuggestionsListComponent } from './../components/friends/friend-suggestions/friend-suggestions-list/friend-suggestions-list.component';
@@ -54,6 +56,8 @@ import { UserDisplayNameFilterPipe } from '../pipes/user-display-name-filter.pip
     FriendComponent,
     FriendSuggestionsListComponent,
     FriendSuggestionsCardComponent,
+    NotificationListComponent,
+    NotificationContentComponent,
     MessageComponent,
     UserComponent,
     UserInfoComponent,

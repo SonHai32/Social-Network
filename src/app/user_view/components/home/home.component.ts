@@ -1,3 +1,5 @@
+import { NotificationService } from './../../services/notification.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { getUserSelector } from './../../store/auth/auth.selectors';
 import { User } from './../../models/user.model';
 import { AppState } from './../../store/app.state';
@@ -11,9 +13,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+  ) {}
 
-  currentUser$!: User| null;
+  currentUser$!: User | null;
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -21,9 +25,13 @@ export class HomeComponent implements OnInit {
     this.subscription.unsubscribe();
   }
   subscription: Subscription = new Subscription();
+  notificationSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
-    this.subscription.add(this.store.select(getUserSelector).subscribe(user => this.currentUser$ = user))
+    this.subscription.add(
+      this.store.select(getUserSelector).subscribe((user) => {
+        this.currentUser$ = user;
+      })
+    );
   }
-
 }

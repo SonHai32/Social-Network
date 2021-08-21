@@ -31,6 +31,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 @NgModule({
   imports: [CommonModule],
@@ -66,6 +67,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     NzCommentModule,
     NzTabsModule,
     NzEmptyModule,
+    NzNotificationModule
   ],
   declarations: [],
 })

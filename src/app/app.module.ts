@@ -43,7 +43,7 @@ registerLocaleData(vi);
     AuthModule,
     AppMessageModule,
     LoadingModule,
-    PostsModule
+    PostsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]

@@ -4,23 +4,35 @@
   </div>
   <div nz-col nzLg="12" nzSpan="24">
     <div class="w-100 d-flex align-items-center justify-content-center text-no-copy ">
-      <div nz-button nzType="text" [routerLink]="['/']" class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+      <div nz-button nzType="text" [routerLink]="['/']"
+        class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="home" nzTheme="outline" class="icon-size"></i>
         <span nz-typography class="text-center"><strong>Trang chủ</strong></span>
       </div>
-      <div nz-button nzType="text" [routerLink]="['/friends']" class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+      <div nz-button nzType="text" [routerLink]="['/friends']"
+        class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="team" nzTheme="outline" class="icon-size"></i>
         <span nz-typography class="text-center"><strong>Bạn bè</strong></span>
       </div>
-      <div nz-button nzType="text" [routerLink]="['/']" class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+      <div nz-button nzType="text" [routerLink]="['/']"
+        class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="search" nzTheme="outline" class="icon-size"></i>
         <span nz-typography class="text-center"><strong>Tìm kiếm</strong></span>
       </div>
-      <div nz-button nzType="text" [routerLink]="['/']" class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
-        <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
+      <div (click)="toggleNotification()" nz-button nzType="text"
+        class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+        <ng-container *ngIf="currentUser; else noneNotificationTpl">
+          <ng-container *ngIf="totalUnseenNotification | async as total; else noneNotificationTpl">
+            <nz-badge [nzCount]="total">
+              <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
+            </nz-badge>
+          </ng-container>
+        </ng-container>
         <span nz-typography class="text-center"><strong>Thông báo</strong></span>
+        <ng-template #noneNotificationTpl>
+          <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
+        </ng-template>
       </div>
-
     </div>
   </div>
   <div nz-col nzLg="6" nzSpan="24">
@@ -30,9 +42,6 @@
     <ng-template #elsTpl>
       <ng-container *ngTemplateOutlet="loginBtnTpl"> </ng-container>
     </ng-template>
-
-
-
   </div>
 </div>
 
@@ -123,3 +132,12 @@
     </li>
   </ul>
 </nz-dropdown-menu>
+
+<nz-drawer *ngIf="isAuthenticated" [nzVisible]="notificationVisible" [nzPlacement]="isMobile ? 'bottom': 'right'"
+  (nzOnClose)="toggleNotification()" nzWidth="25%" [nzTitle]="notificationTitleTpl">
+  <app-notification-list [currentUser]='currentUser'></app-notification-list>
+</nz-drawer>
+
+<ng-template #notificationTitleTpl>
+  <h5 nz-typography>Thông báo</h5>
+</ng-template>

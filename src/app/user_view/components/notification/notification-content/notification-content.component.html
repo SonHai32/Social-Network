@@ -1,1 +1,13 @@
-<p>notification-content works!</p>
+<div *ngIf="notification" nz-row class="my-1 p-2">
+  <div (click)="navigateNotification()" nz-col nzSpan="23" class="d-flex align-items-center">
+    <nz-avatar nzIcon="user" nzSrc="{{notification.byUser.avatar_url}}" nzShape="circle" nzSize="large"></nz-avatar>
+    <div class="d-flex flex-column mx-2">
+      <a nz-typography> <strong> {{notification.byUser.display_name}} </strong></a>
+      <span nz-typography>{{notification.title}}</span>
+      <span nz-typography class="font-size-sm ant-text-primary">{{notification.created_at.toDate() | fromNow}}</span>
+    </div>
+  </div>
+  <div *ngIf="!notification.seen" nz-col nzSpan="1">
+    <nz-badge nzStatus="processing" nzStandalone="true"></nz-badge>
+  </div>
+</div>

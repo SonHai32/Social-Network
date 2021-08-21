@@ -16,7 +16,7 @@ import {
   tap,
   switchMap,
 } from 'rxjs/operators';
-import { iif, merge, of } from 'rxjs';
+import { merge, of } from 'rxjs';
 import firebase from 'firebase/app';
 import { User } from '../../models/user.model';
 

@@ -1,10 +1,11 @@
+import { NotificationService } from './notification.service';
 import { UserStatus } from './../types/user-status.type';
 import { AppMessageAction } from './../store/app-message/app-message.actions';
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/user_view/models/user.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { Observable, combineLatest, from } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -17,6 +18,13 @@ export class UserService {
     Promise.all([
       this.addToFriendRequest(friend.id, currentUser),
       this.addToRequestedList(currentUser.id, friend),
+      this.notificationService.addNotification(friend.id, {
+        byUser: currentUser,
+        created_at: firebase.firestore.Timestamp.now(),
+        seen: false,
+        title: 'Đã gừi cho bạn lời mời kết bạn',
+        type: 'friend_request',
+      }),
     ])
       .then(() =>
         this.store.dispatch(
@@ -265,6 +273,7 @@ export class UserService {
   constructor(
     private afs: AngularFirestore,
     private store: Store,
-    private afdb: AngularFireDatabase
+    private afdb: AngularFireDatabase,
+    private notificationService: NotificationService
   ) {}
 }

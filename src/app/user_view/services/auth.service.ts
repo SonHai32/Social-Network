@@ -1,10 +1,11 @@
+import { Store } from '@ngrx/store';
 import { UserService } from 'src/app/user_view/services/user.service';
 import { User } from 'src/app/user_view/models/user.model';
 import { first, tap } from 'rxjs/operators';
 import { UserCredentials } from '../models/user-credentials.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest, from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import firebase from 'firebase/app';
 import { map } from 'rxjs/operators';
 @Injectable({
@@ -13,7 +14,8 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   constructor(
     private auth: AngularFireAuth,
-    private userService: UserService
+    private userService: UserService,
+    private store: Store
   ) {}
 
   checkAuth(): Observable<User | null> {
