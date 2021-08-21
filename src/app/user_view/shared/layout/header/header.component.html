@@ -134,7 +134,7 @@
 </nz-dropdown-menu>
 
 <nz-drawer *ngIf="isAuthenticated" [nzVisible]="notificationVisible" [nzPlacement]="isMobile ? 'bottom': 'right'"
-  (nzOnClose)="toggleNotification()" nzWidth="25%" [nzTitle]="notificationTitleTpl">
+  (nzOnClose)="toggleNotification()" nzWidth="25%" nzHeight="100%" [nzTitle]="notificationTitleTpl">
   <app-notification-list [currentUser]='currentUser'></app-notification-list>
 </nz-drawer>
 
