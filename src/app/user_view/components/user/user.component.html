@@ -1,19 +1,59 @@
-<div *ngIf="userID" nz-row nzJustify="center" nzAlign="middle" class="mb-3">
-  <div  nz-col nzSpan="24"
-    class="position-relative rounded-12 vh-50 glass shadow-sm d-flex align-items-end justify-content-around">
+<div *ngIf="userID" nz-row nzJustify="center" class="mb-3 rounded-12 glass shadow-sm"
+  style="height: 70vh; overflow: hidden;">
+  <div class="h-50 rounded-12 shadow-sm" nz-col nzSpan="24"
+    style=" background: url('https://terrigen-cdn-dev.marvel.com/content/prod/1x/a44.jpg');">
+  </div>
+  <div nz-col nzSpan="24" class="h-50 d-flex align-items-end justify-content-around position-relative">
     <div *ngIf="user | async as us"
-      class="d-flex flex-column absolute-center align-items-center justify-content-center">
+      class=" d-flex flex-column absolute-top-overflow align-items-center justify-content-center">
       <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{us.avatar_url}}' [nzSize]="180">
       </nz-avatar>
-      <span class="text-large" nz-typography><strong>{{us.display_name}}</strong></span>
+      <span class="text-large" nz-typography>{{us.display_name}}</span>
     </div>
-    <div class="w-100 p-3 d-flex justify-content-center" nzJustify="space-around">
+    <div nz-row>
+      <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-center mb-5">
+        <button style="width: 120px;" nz-button nzType="primary"
+          class="mx-2 d-flex align-items-center justify-content-center">
+          <i nz-icon nzType="team" nzTheme="outline"></i>
+          Bạn bè
+        </button>
+        <button style="width: 120px;" nz-button class="mx-2 d-flex align-items-center justify-content-center">
+          <i nz-icon nzType="info-circle" nzTheme="outline"></i>
+          Thông tin
+        </button>
+      </div>
+      <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-center">
+        <nz-statistic class="text-center mx-3" [nzValue]="(60 | number)!" [nzTitle]="friendLinkTpl"
+          [nzValueStyle]="{ color: '#fd70a1' }">
+        </nz-statistic>
+        <nz-statistic class="text-center mx-3" [nzValue]="(1220 | number)!" [nzTitle]="photoLinkTpl"
+          [nzValueStyle]="{ color: '#fd70a1' }">
+        </nz-statistic>
+        <nz-statistic class="text-center mx-3" [nzValue]="(69 | number)!" [nzTitle]="postLinkTpl"
+          [nzValueStyle]="{ color: '#fd70a1' }">
+        </nz-statistic>
+        <ng-template #friendLinkTpl>
+          <a href="" nz-typography>Bạn bè</a>
+        </ng-template>
+        <ng-template #photoLinkTpl>
+          <a href="" nz-typography>Ảnh</a>
+        </ng-template>
+        <ng-template #postLinkTpl>
+          <a [routerLink]="['/user', userID, 'posts']" nz-typography>Bài viết</a>
+        </ng-template>
+      </div>
+    </div>
+    <!-- <div class="w-100 p-3 d-flex justify-content-center" nzJustify="space-around">
       <a nz-typography class="mx-2" [routerLink]="['/user', userID, 'posts']">Bài viết</a>
       <a nz-typography class="mx-2" [routerLink]="['/user', userID, 'info']">Thông tin</a>
       <a nz-typography class="mx-2">Ảnh</a>
       <a nz-typography class="mx-2">Bạn bè</a>
-    </div>
+    </div> -->
   </div>
+
+</div>
+
+<div nz-row>
   <div nz-col nzSpan="24" class="mt-3">
     <div nz-row nzAlign="middle" nzJustify="center">
       <div nz-col nzSpan="24">
@@ -21,5 +61,4 @@
       </div>
     </div>
   </div>
-
 </div>

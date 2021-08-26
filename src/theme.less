@@ -53,17 +53,21 @@ body {
   scroll-behavior: smooth;
 }
 
+.text-wrap {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
 .ant-badge-dot-green {
   .ant-badge-dot {
     background: #87d068 !important;
   }
 }
 
-.absolute-center {
+.absolute-top-overflow {
   position: absolute;
-  top: 50%;
+  top: -25%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -25%);
 }
 
 .text-large {
@@ -74,7 +78,7 @@ body {
   background: @primary-color;
 }
 
-.ant-text-primary{
+.ant-text-primary {
   color: @primary-color;
 }
 

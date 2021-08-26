@@ -32,7 +32,10 @@ import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
-
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 @NgModule({
   imports: [CommonModule],
   exports: [
@@ -67,7 +70,11 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
     NzCommentModule,
     NzTabsModule,
     NzEmptyModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzStatisticModule,
+    ColorPickerModule,
+    NzSelectModule,
+    NzDatePickerModule,
   ],
   declarations: [],
 })

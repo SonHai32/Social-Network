@@ -1,81 +1,229 @@
-<div *ngIf="user| async as us" nz-row class="glass shadow-sm rounded-12" style="min-height: 50vh;">
+<div *ngIf="user; else loadingTpl" nz-row class="glass shadow-sm rounded-12 mb-3" style="min-height: 50vh;">
   <div nz-col nzSpan="24">
-    <nz-tabset class="p-4 h-100" nzLinkRouter  nzCentered="true" >
+    <nz-tabset class="p-4 h-100" nzLinkRouter nzCentered="true">
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'overview' }" queryParamsHandling="merge">
+        <a class="d-flex align-items-center justify-content-center" *nzTabLink nz-tab-link [routerLink]="['.']"
+          [queryParams]="{ tab: 'overview' }" queryParamsHandling="merge">
+          <i class="font-size-md" nz-icon nzType="profile" nzTheme="outline"></i>
           Tổng quan
         </a>
         <div nz-row>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i nz-icon nzType="user" nzTheme="outline" class="text-large"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Tên hiển thị</strong></span>
+                <ng-container *ngIf="!displayNameInputVisible">
+                  <span nz-typography *ngIf="user.display_name; else undefinedTpl">{{user.display_name}}</span>
+                </ng-container>
+                <input (keydown.enter)="closeInput('displayName')"
+                  (ngModelChange)="handleInputChange('displayName', $event)" (blur)="closeInput('displayName')"
+                  *ngIf="displayNameInputVisible" #displayNameInputRef placeholder="Nhập tên của bạn"
+                  [(ngModel)]="user.display_name" nz-input nzAutosize />
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "displayName"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i nz-icon nzType="user-switch" nzTheme="outline" class="text-large"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Giới tính</strong></span>
+                <ng-container *ngIf="!editGenderVisible">
+                  <span nz-typography *ngIf="user.gender; else undefinedTpl">{{user.gender}}</span>
+                </ng-container>
+                <nz-select *ngIf="editGenderVisible" (nzBlur)="closeInput('gender')"
+                  (ngModelChange)="user.gender = $event" [ngModel]="user.gender">
+                  <nz-option *ngFor="let gender of genderOption" [nzLabel]="gender" [nzValue]="gender"></nz-option>
+                </nz-select>
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "gender"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i nz-icon nzType="calendar" nzTheme="outline" class="text-large"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Ngày sinh</strong></span>
+                <ng-container *ngIf="!editBirthdayVisible">
+                  <span nz-typography *ngIf="user.birthday; else undefinedTpl">{{user.birthday | date
+                    :'dd/MM/yyyy'}}</span>
+                </ng-container>
+                <nz-date-picker *ngIf="editBirthdayVisible" (ngModelChange)="closeInput('birthday')"
+                  [(ngModel)]="user.birthday">
+                </nz-date-picker>
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "birthday"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i nz-icon nzType="phone" nzTheme="outline" class="text-large"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Số điện thoại</strong></span>
+                <ng-container *ngIf="!editPhoneNumberVisible">
+                  <span nz-typography *ngIf="user.phone; else undefinedTpl">{{user.phone}}</span>
+                </ng-container>
+                <input (ngModelChange)="handleInputChange('phone', $event)" (blur)="closeInput('phone')"
+                  *ngIf="editPhoneNumberVisible" nz-input [(ngModel)]="user.phone" placeholder="Nhập số điện thoại">
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl, context: {"key": "phone"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i nz-icon nzType="mail" nzTheme="outline" class="text-large"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Email</strong></span>
+                <ng-container *ngIf="!editEmailVisible">
+                  <span nz-typography *ngIf="user.email; else undefinedTpl">{{user.email}}</span>
+                </ng-container>
+                <input (ngModelChange)="handleInputChange('email' ,$event)" *ngIf="editEmailVisible" nz-input
+                  type="email" [(ngModel)]="user.email" (keydown.enter)="closeInput('email')"
+                  (blur)="closeInput('email')" />
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "email"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-end">
+            <button [nzLoading]="isUpdating" *ngIf="isValueChange" (click)="updateSubmit(user)" nz-button
+              nzType="primary">Cập nhật</button>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab>
+        <a class="d-flex align-items-center justify-content-center" *nzTabLink nz-tab-link [routerLink]="['.']"
+          [queryParams]="{ tab: 'contact' }" queryParamsHandling="merge">
+          <i class="font-size-md" nz-icon nzType="share-alt" nzTheme="outline"></i>
+          Biolink
+        </a>
+        <div nz-row>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i class="text-large" nz-icon nzType="github" nzTheme="outline"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Github</strong></span>
+                <ng-container *ngIf="!editGithubVisible">
+                  <a nz-typography *ngIf="user.biolink?.github; else undefinedTpl">{{user.biolink?.github}}</a>
+                </ng-container>
+                <input *ngIf="editGithubVisible" nz-input type="email" (input)="handleInputChange('github', $event)"
+                  (keydown.enter)="closeInput('github')" (blur)="closeInput('github')" />
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "github"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i class="text-large" nz-icon nzType="twitter" nzTheme="outline"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Twitter</strong></span>
+                <ng-container *ngIf="!editTwitterVisible">
+                  <a nz-typography *ngIf="user.biolink?.twitter; else undefinedTpl">{{user.biolink?.twitter}}</a>
+                </ng-container>
+                <input *ngIf="editTwitterVisible" nz-input type="email" (input)="handleInputChange('twitter', $event)"
+                  (keydown.enter)="closeInput('twitter')" (blur)="closeInput('twitter')" />
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "twitter"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i class="text-large" nz-icon nzType="facebook" nzTheme="outline"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Facebook</strong></span>
+                <ng-container *ngIf="!editFacebookVisible">
+                  <a nz-typography *ngIf="user.biolink?.facebook; else undefinedTpl">{{user.biolink?.facebook}}</a>
+                </ng-container>
+                <input *ngIf="editFacebookVisible" nz-input type="email" (input)="handleInputChange('facebook', $event)"
+                  (keydown.enter)="closeInput('facebook')" (blur)="closeInput('facebook')" />
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "facebook"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i class="text-large" nz-icon nzType="instagram" nzTheme="outline"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>Instagram</strong></span>
+                <ng-container *ngIf="!editInstagramVisible">
+                  <a nz-typography *ngIf="user.biolink?.instagram; else undefinedTpl">{{user.biolink?.instagram}}</a>
+                </ng-container>
+                <input *ngIf="editInstagramVisible" nz-input type="email"
+                  (input)="handleInputChange('instagram', $event)" (keydown.enter)="closeInput('instagram')"
+                  (blur)="closeInput('instagram')" />
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "instagram"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i class="text-large" nz-icon nzType="linkedin" nzTheme="outline"></i>
+              <div class="d-flex flex-column mx-3">
+                <span nz-typography><strong>LinkedIn</strong></span>
+                <ng-container *ngIf="!editLinkedinVisible">
+                  <a nz-typography *ngIf="user.biolink?.linkedin; else undefinedTpl">{{user.biolink?.linkedin}}</a>
+                </ng-container>
+                <input *ngIf="editLinkedinVisible" nz-input type="email" (input)="handleInputChange('linkedin', $event)"
+                  (keydown.enter)="closeInput('linkedin')" (blur)="closeInput('linkedin')" />
+              </div>
+            </div>
+            <ng-container *ngTemplateOutlet='editButtonTpl; context: {"key": "linkedin"}'>
+            </ng-container>
+          </div>
+          <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-end">
+            <button [nzLoading]="isUpdating" *ngIf="isValueChange" (click)="updateSubmit(user)" nz-button
+              nzType="primary">Cập nhật</button>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab>
+        <a class="d-flex align-items-center justify-content-center" *nzTabLink nz-tab-link [routerLink]="['.']"
+          [queryParams]="{ tab: 'address' }" queryParamsHandling="merge">
+          <i class="font-size-md" nz-icon nzType="heart" nzTheme="outline"></i>
+          Sở thích
+        </a>
+        <div nz-row>
+          <div *ngIf=" user.hobbies?.length" nz-col nzSpan="24"
+            class="p-2 d-flex align-items-center justify-content-center flex-wrap">
+            <ng-container *ngFor="let hobby of user.hobbies; let i = index">
 
-            <i nz-icon nzType="user" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.display_name; else undefinedTpl"><strong>{{us.display_name}}</strong></span>
-              <span nz-typography>Tên hiển thị</span>
-            </div>
+              <nz-badge [nzCount]="closeIconTpl" class="m-2">
+                <div [style.background]="hobby.bgColor" class="p-2 rounded-12"><span [style.color]="hobby.textColor"
+                    nz-typography><strong>
+                      {{hobby.textHobby}} </strong></span></div>
+              </nz-badge>
+              <ng-template #closeIconTpl>
+                <i (click)="deleteHobby(i)" style="margin-right: 4px;" nzTheme="fill" nz-icon nzType="close-circle"
+                  class="ant-scroll-number-custom-component font-size-sm"></i>
+              </ng-template>
+            </ng-container>
           </div>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
-            <i nz-icon nzType="user-switch" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.gender; else undefinedTpl"><strong>{{us.gender}}</strong></span>
-              <span nz-typography>Giới tính</span>
-            </div>
+          <div *ngIf="hobbies.length > 0" nz-col nzSpan="24"
+            class="p-2 d-flex align-items-center justify-content-center flex-wrap">
+            <ng-container *ngFor="let hobby of hobbies">
+              <div [style.background]="hobby.bgColor" class="p-2 rounded-12 m-2"><span [style.color]="hobby.textColor"
+                  nz-typography><strong>
+                    {{hobby.textHobby}} </strong></span></div>
+            </ng-container>
           </div>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
-            <i nz-icon nzType="calendar" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.birthday; else undefinedTpl"><strong>{{us.birthday}}</strong></span>
-              <span nz-typography>Ngày sinh</span>
-            </div>
+          <div *ngIf="canEdit" nz-col nzSpan="24" class="d-flex align-items-center justify-content-center">
+            <button (click)="toggleEditHobbies()" nzSize="small"
+              class="d-flex align-items-center justify-content-center m-1 p-3" nz-button>
+              <span nz-typography><strong>Thêm</strong> </span>
+            </button>
           </div>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
-            <i nz-icon nzType="phone" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.phone; else undefinedTpl"><strong>{{us.phone}}</strong></span>
-              <span nz-typography>Số điện thoại</span>
-            </div>
-          </div>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
-            <i nz-icon nzType="mail" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.email; else undefinedTpl"><strong>{{us.email}}</strong></span>
-              <span nz-typography>Email</span>
-            </div>
-          </div>
-        </div>
-      </nz-tab>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'contact' }" queryParamsHandling="merge">
-          Liên hệ
-        </a>
-        <div nz-row>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
-            <i nz-icon nzType="phone" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.phone; else undefinedTpl"><strong>{{us.phone}}</strong></span>
-              <span nz-typography>Số điện thoại</span>
-            </div>
-          </div>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
-            <i nz-icon nzType="mail" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.email; else undefinedTpl"><strong>{{us.email}}</strong></span>
-              <span nz-typography>Email</span>
-            </div>
-          </div>
-        </div>
-      </nz-tab>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'address' }" queryParamsHandling="merge">
-          Nơi sinh sống
-        </a>
-        <div nz-row>
-          <div nz-col nzSpan="24" class="p-2 d-flex align-items-center">
-            <i nz-icon nzType="global" nzTheme="outline" class="text-large"></i>
-            <div class="d-flex flex-column mx-3">
-              <span nz-typography *ngIf="us.place; else undefinedTpl"><strong>{{us.place}}</strong></span>
-              <span nz-typography>Nơi sinh sống</span>
-            </div>
+          <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-end">
+            <button [nzLoading]="isUpdating" *ngIf="isValueChange" (click)="updateSubmit(user)" nz-button
+              nzType="primary">Cập nhật</button>
           </div>
         </div>
       </nz-tab>
@@ -83,6 +231,55 @@
   </div>
 </div>
 
-<ng-template #undefinedTpl>
-  <span nz-typography><strong>Chưa có</strong></span>
+<ng-template #loadingTpl>
+  <div nz-row nzAlign="middle" nzJustify="center">
+    <div nz-col>
+      <nz-spin nzSimple="true"></nz-spin>
+    </div>
+  </div>
 </ng-template>
+
+
+<ng-template #undefinedTpl>
+  <span nz-typography>Chưa có</span>
+</ng-template>
+
+<ng-template #editButtonTpl let-key="key">
+  <ng-container *ngIf="canEdit">
+    <button (click)="handleEditClick(key)" nz-button nzShape="circle" nzType="text"
+      class="d-flex align-items-center justify-content-center">
+      <i nz-icon nzType="edit" nzTheme="outline" class="text-large"></i>
+    </button>
+  </ng-container>
+</ng-template>
+
+
+<nz-modal nzTitle="Sở thích" [(nzVisible)]="editHobbiesVisible" nzClosable="true"
+  (nzOnCancel)="this.toggleEditHobbies()" (nzOnOk)="hobbySumited()">
+  <div nz-row nzJustify="center">
+    <div nz-col nzSpan="24">
+      <input [(ngModel)]="textHobby" placeholder="Nhập sở thích của bạn" nz-input id='hobbies-input' />
+    </div>
+    <div [style.background]="backgroundColor" nz-col nzSpan="12"
+      class="my-2 p-4 d-flex justify-content-center align-items-center rounded-12">
+      <span nz-typography [style.color]="textColor" class="font-size-md text-wrap text-center">{{textHobby === '' ? 'Sở
+        thích của bạn':
+        textHobby }}</span>
+    </div>
+    <div nz-col nzSpan="24" class="mt-2 d-flex align-items-center">
+      <div [(colorPicker)]="backgroundColor" [style.background]="backgroundColor"
+        (colorPickerChange)='handleColorPicker($event, "bg")' style="height: 48px; width: 48px;" class="rounded border">
+      </div>
+      <span nz-typography class="mx-2"><strong>Màu nền</strong></span>
+      <i nz-icon nzType="bg-colors" nzTheme="outline"></i>
+    </div>
+    <div nz-col nzSpan="24" class="mt-2 d-flex align-items-center">
+      <div [(colorPicker)]="textColor" [style.background]="textColor"
+        (colorPickerChange)='handleColorPicker($event, "text")' style="height: 48px; width: 48px;"
+        class="rounded border">
+      </div>
+      <span nz-typography class="mx-2"><strong>Màu chữ</strong></span>
+      <i nz-icon nzType="bg-colors" nzTheme="outline"></i>
+    </div>
+  </div>
+</nz-modal>

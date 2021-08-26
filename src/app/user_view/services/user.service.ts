@@ -226,6 +226,9 @@ export class UserService {
   addNewUser(user: User): Promise<void> {
     return this.afs.collection<User>('users').doc(user.id).set(user);
   }
+  updateUserData(user: User): Promise<void> {
+    return this.afs.collection<User>('users').doc<User>(user.id).update(user);
+  }
   updateOnConnect(userID: string) {
     return this.afdb
       .object('.info/connected')

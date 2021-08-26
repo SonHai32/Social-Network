@@ -30,6 +30,7 @@
     "lodash-es": "^4.17.21",
     "moment": "^2.29.1",
     "ng-zorro-antd": "^11.4.2",
+    "ngx-color-picker": "^11.0.0",
     "ngx-device-detector": "^2.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
