@@ -1,3 +1,4 @@
+import { SearchBoxComponent } from './../components/search-box/search-box.component';
 import { NotificationContentComponent } from './../components/notification/notification-content/notification-content.component';
 import { NotificationListComponent } from './../components/notification/notification-list/notification-list.component';
 import { FriendInfoComponent } from './../components/friends/friend-info/friend-info.component';
@@ -58,6 +59,7 @@ import { UserDisplayNameFilterPipe } from '../pipes/user-display-name-filter.pip
     FriendSuggestionsCardComponent,
     NotificationListComponent,
     NotificationContentComponent,
+    SearchBoxComponent,
     MessageComponent,
     UserComponent,
     UserInfoComponent,

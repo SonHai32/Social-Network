@@ -127,6 +127,19 @@ export class UserService {
       );
   }
 
+  searchUser(key: string) {
+    return this.afs
+      .collection<User>('users')
+      .valueChanges()
+      .pipe(
+        map((res) =>
+          res.filter(
+            (val: User) => val.display_name.toLowerCase().indexOf(key.toLowerCase()) >= 0
+          )
+        )
+      );
+  }
+
   getFriendSuggestions(currentUserID: string) {
     return combineLatest([
       this.getFriendListID(currentUserID),

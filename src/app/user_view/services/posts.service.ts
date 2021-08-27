@@ -19,11 +19,38 @@ export class PostsService {
       .pipe(map((resPost) => resPost.length));
   }
 
+  searchPost(key: string) {
+    return this.afs
+      .collection<Post>('posts')
+      .valueChanges()
+      .pipe(
+        map((res) =>
+          res.filter((value) => {
+            if (value.post_content.text_content && value.post_content.hashtag) {
+              return (
+                value.post_content.text_content?.indexOf(key) >= 0 ||
+                value.post_content.hashtag.includes(key)
+              );
+            } else if (value.post_content.hashtag) {
+              return value.post_content.hashtag.includes(key);
+            } else if (value.post_content.text_content) {
+              return value.post_content.text_content?.indexOf(key) >= 0;
+            } else {
+              return false;
+            }
+          })
+        )
+      );
+  }
+
   getAllPosts(limit: number, userID?: string) {
     if (userID) {
       return this.afs
         .collection<Post>('posts', (ref) =>
-          ref.orderBy('created_at', 'desc').where('created_by_id', '==', userID).limit(limit)
+          ref
+            .orderBy('created_at', 'desc')
+            .where('created_by_id', '==', userID)
+            .limit(limit)
         )
         .snapshotChanges(['added', 'removed']);
     }

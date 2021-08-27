@@ -14,7 +14,7 @@
         <i nz-icon nzType="team" nzTheme="outline" class="icon-size"></i>
         <span nz-typography class="text-center"><strong>Bạn bè</strong></span>
       </div>
-      <div nz-button nzType="text" [routerLink]="['/']"
+      <div nz-button nzType="text" (click)="toggleSearch()"
         class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="search" nzTheme="outline" class="icon-size"></i>
         <span nz-typography class="text-center"><strong>Tìm kiếm</strong></span>
@@ -141,3 +141,8 @@
 <ng-template #notificationTitleTpl>
   <h5 nz-typography>Thông báo</h5>
 </ng-template>
+
+<nz-modal *ngIf="searchVisible" [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null" (nzOnCancel)="toggleSearch()"
+  [(nzVisible)]="searchVisible" nzCloseOnNavigation="true">
+  <app-search-box></app-search-box>
+</nz-modal>
