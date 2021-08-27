@@ -1,0 +1,51 @@
+<div nz-row class="mt-4">
+    <div nz-col nzSpan="24">
+      <nz-input-group [nzPrefix]="searchIconTpl">
+        <input #search (input)="handleSearchChange(search.value)" class="px-2" placeholder="Tìm kiếm" nz-input
+          type="text" />
+      </nz-input-group>
+      <ng-template #searchIconTpl>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+    <div nz-col nzSpan="24">
+      <cdk-virtual-scroll-viewport style="height: 60vh;" [itemSize]="100">
+        <nz-list *ngIf="searchVM$ | async as searchVM" class="h-100">
+          <ng-container *ngIf="searchVM.users">
+            <nz-list-item *ngFor="let user of searchVM.users">
+              <nz-skeleton *ngIf="!user" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }"></nz-skeleton>
+              <nz-list-item-meta *ngIf="user" nzAvatar="{{user.avatar_url}}">
+                <nz-list-item-meta-title>
+                  <a [routerLink]="['/user', user.id]" nz-typography><strong>{{user.display_name}} </strong></a>
+                </nz-list-item-meta-title>
+
+                <nz-list-item-meta-description>
+                  <div class="w-100 d-flex align-items-center">
+                    <i nz-icon nzType="user" nzTheme="outline"></i>
+                    <span nz-typography class="mx-2">Người dùng</span>
+                  </div>
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+            </nz-list-item>
+          </ng-container>
+          <ng-container *ngIf="searchVM.posts">
+            <nz-list-item *ngFor="let post of searchVM.posts">
+              <nz-skeleton *ngIf="!post" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }"></nz-skeleton>
+              <nz-list-item-meta *ngIf="post" nzAvatar="{{post.avatar_url}}">
+                <nz-list-item-meta-title>
+                  <a [routerLink]="['/post', post.id]" nz-typography class="mx-2"> <strong>{{post.create_by_username}}
+                    </strong></a>
+                </nz-list-item-meta-title>
+                <nz-list-item-meta-description>
+                  <div class="w-100 d-flex align-items-center">
+                    <i nz-icon nzType="read" nzTheme="outline"></i>
+                    <span nz-typography class="mx-2">Bài viết: {{post.post_content.text_content}}</span>
+                  </div>
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+            </nz-list-item>
+          </ng-container>
+        </nz-list>
+      </cdk-virtual-scroll-viewport>
+    </div>
+  </div>
