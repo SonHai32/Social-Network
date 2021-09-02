@@ -1,0 +1,137 @@
+<section nz-row nzAlign="middle" nzJustify="center" class="vh-100">
+  <div *ngIf="currentCovidData | async as cvData" nz-col nzSpan="24" class="p-3">
+    <div nz-row nzJustify="center">
+      <div *ngIf="currentDate" [@fadeInDown] nz-col>
+        <h4 nz-typography class="text-center">{{'Tình hình dịch bệnh ngày' | uppercase}}<strong
+            class="ant-text-primary"> {{currentDate | date:
+            'dd/MM/yyyy'}} </strong> </h4>
+      </div>
+      <div nz-col nzSpan="24" class="d-flex align-item-center justify-content-center btn-custom my-2">
+        <div (click)="toggleCurrentCovidData('VN')" [class.btn-custom-active]='covidCurrentDataOption === "VN"'
+          class="p-2 mx-2 ant-bg-danger rounded-12 pointer" nz-col>
+          <span nz-typography class="text-white">VIỆT NAM</span>
+        </div>
+        <div (click)="toggleCurrentCovidData('WORLD')" [class.btn-custom-active]='covidCurrentDataOption === "WORLD"'
+          class="p-2 mx-2 ant-bg-info rounded-12 pointer btn-custom" nz-col>
+          <span nz-typography class="text-white">THẾ GIỚI </span>
+        </div>
+      </div>
+    </div>
+    <div nz-row nzJustify="center" class="my-2">
+      <div [@fadeInDown] nz-col nzLg="6" nzMd="8" nzSpan="22"
+        class="glass-2 rounded-12 shadow-sm p-4 d-flex justify-content-center m-2">
+        <ng-container
+          *ngTemplateOutlet="covidStatisticTpl; context: {'color': '#f5222d','title': 'Tổng số ca', 'total': cvData.cases}">
+        </ng-container>
+      </div>
+      <div [@fadeInDown] nz-col nzLg="6" nzMd="8" nzSpan="22"
+        class="glass-2 rounded-12 shadow-sm p-4 d-flex justify-content-center m-2">
+        <ng-container
+          *ngTemplateOutlet="covidStatisticTpl; context: {'color': '#fa8c16','title': 'Đang điều trị', 'total': cvData.active}">
+        </ng-container>
+      </div>
+    </div>
+    <div nz-row nzJustify="center" class="my-2">
+      <div [@fadeInUp] nz-col nzLg="6" nzMd="8" nzSpan="22"
+        class="glass-2 rounded-12 shadow-sm p-4 d-flex justify-content-center m-2">
+        <ng-container
+          *ngTemplateOutlet="covidStatisticTpl; context: {'color': '#a0d911','title': 'Đã chữa khỏi', 'total': cvData.recovered}">
+        </ng-container>
+      </div>
+      <div [@fadeInUp] nz-col nzLg="6" nzMd="8" nzSpan="22"
+        class="glass-2 rounded-12 shadow-sm p-4 d-flex justify-content-center m-2">
+        <ng-container
+          *ngTemplateOutlet="covidStatisticTpl; context: {'color': '#000000','title': 'Tử vong', 'total': cvData.deaths}">
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #covidStatisticTpl let-title="title" let-total="total" let-color='color'>
+  <div class="text-center d-flex flex-column align-items-center justify-content-center w-100">
+    <span [style.color]="color" nz-typography>{{title | uppercase}}</span>
+    <nz-statistic [nzValueStyle]="{'font-weight': 'bold', 'color': color}" [nzValue]="(total |number)!"></nz-statistic>
+  </div>
+</ng-template>
+
+
+<section nz-row nzAlign="middle" nzJustify="center" class="vh-100">
+  <div nz-col>
+    <h4 nz-typography class="text-center">{{'Thống kê tình hình dịch bệnh Việt Nam 15 ngày qua' | uppercase}}</h4>
+  </div>
+  <div nz-col nzSpan="24" class="p-3">
+    <div echarts [options]="options" theme="macarons" class="demo-chart"></div>
+  </div>
+</section>
+
+<section *ngIf="covidNewsData | async as newsList" nz-row nzJustify="center" class="vh-100">
+  <div nz-col nzSpan="24">
+    <h4 nz-typography class="text-center">{{'Tin tức tình hình dịch bệnh COVID-19' | uppercase}}</h4>
+  </div>
+  <div nz-col nzSpan="12" class="p-2">
+    <nz-timeline nzMode="left">
+      <nz-timeline-item *ngFor="let news of newsList" NzLabel="NzLabel">
+        <ng-container
+          *ngTemplateOutlet="newsTpl; context: {'title': news.title, 'content': news.lead, 'newsUrl': news.share_url, 'thumbUrl': news.thumbnail_url}">
+        </ng-container>
+      </nz-timeline-item>
+    </nz-timeline>
+  </div>
+  <ng-template #newsTpl let-title='title' let-content='content' let-newsUrl='newsUrl' let-thumbUrl='thumbUrl'>
+    <div nz-row >
+      <div nz-col nzSpan="24" class="p-2">
+        <h6>{{title}}</h6>
+      </div>
+      <div *ngIf="thumbUrl" nz-col nzSpan="4" class="p-2">
+        <img class="img-fluid" nz-image width="120px" height="120px" nzSrc="{{thumbUrl}}" alt="" />
+      </div>
+      <div nz-col nzSpan="20" class="p-2">
+        <span nz-typography>{{content}}</span>
+      </div>
+    </div>
+  </ng-template>
+
+</section>
+
+<!-- <section nz-row nzAlign="middle" nzJustify="center" class="vh-100">
+  <div nz-col nzSpan="24" class="p-3">
+    <div nz-row class="my-4">
+      <div nz-col nzSpan="24">
+        <h4 nz-typography class="text-center">{{'Dự đoán bạn có đang mắc bệnh' | uppercase}} <span nz-typography
+            class="ant-text-primary"><strong>COVID-19</strong></span></h4>
+      </div>
+    </div>
+    <div nz-row nzJustify="center" nzAlign="middle" [nzGutter]="32">
+      <div nz-col nzSpan="24" class="p-4 d-flex align-items-center justify-content-start">
+        <span nz-typography><strong>Lưu ý: </strong></span>
+        <span nz-typography> Đây là mô hình dự đoán chưa hoàn chỉnh và chưa được chứng nhận, đự đoán có khả năng sai số
+          10%-15%</span>
+      </div>
+      <div nz-col nzSpan="24" class="px-4">
+        <h6 class="text-center">{{'hãy lựa chọn các triệu chứng bạn đang mắc phải một cách chính xác nhất' | uppercase}}
+        </h6>
+      </div>
+      <ng-container *ngFor="let item of covidDataPrediction">
+        <div (click)="item.active = !item.active" nz-col nzXl="5" nzLg="5" nzMd="8" nzSpan="22"
+          class="p-2 m-2 glass-2 rounded-12 shadow-sm d-flex align-items-center justify-content-center pointer">
+          <span nz-typography class="text-center font-size-md text-no-copy"> <strong>
+              {{item.vn_key}}
+            </strong></span>
+          <i *ngIf="item.active" nz-icon nzType="check" nzTheme="outline" class="mx-2 ant-text-primary"></i>
+        </div>
+      </ng-container>
+
+      <div nz-col nzSpan="22" class="m-2">
+        <nz-steps [nzCurrent]="covidPredictionProcess">
+          <nz-step nzTitle="Lựa chọn"></nz-step>
+          <nz-step *ngIf="covidPredictionProcess === 0" nzTitle="Xử lý"></nz-step>
+          <nz-step *ngIf="covidPredictionProcess === 1 " nzTitle="Đang xử lý" nzIcon="loading"></nz-step>
+          <nz-step nzTitle="Hoàn tất"></nz-step>
+        </nz-steps>
+      </div>
+      <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-center my-4">
+        <button nz-button nzType="primary">Tiến hành dự đoán</button>
+      </div>
+    </div>
+  </div>
+</section> -->
