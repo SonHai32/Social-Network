@@ -1,12 +1,12 @@
-import { getAppLoadingSelector } from './user_view/store/app-loading/loading.selectors';
-import { AuthActions } from './user_view/store/auth/auth.action';
+import { getAppLoadingSelector } from './social-network/store/app-loading/loading.selectors';
+import { AuthActions } from './social-network/store/auth/auth.action';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AppMessageState } from './user_view/store/app-message/app-message.state';
+import { AppMessageState } from './social-network/store/app-message/app-message.state';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from './user_view/store/app.state';
+import { AppState } from './social-network/store/app.state';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { getAppMessageSelector } from './user_view/store/app-message/app-message.selectors';
+import { getAppMessageSelector } from './social-network/store/app-message/app-message.selectors';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +45,7 @@ export class AppComponent {
   }
   constructor(
     private readonly store: Store<AppState>,
-    private readonly messageService: NzMessageService
+    private readonly messageService: NzMessageService,
   ) {
     this.$error = this.store.select(getAppMessageSelector);
   }

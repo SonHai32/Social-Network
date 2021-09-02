@@ -1,8 +1,9 @@
-import { PostsModule } from './user_view/modules/posts.module';
-import { LoadingModule } from './user_view/modules/loading.module';
-import { AppMessageModule } from './user_view/modules/app-message.module';
-import { AuthModule } from './user_view/modules/auth.module';
-import { ShareViewModule } from './user_view/shared/share-view.module';
+import { CovidCoreModule } from './covid-feature/covid-core.module';
+import { PostsModule } from './social-network/modules/posts.module';
+import { LoadingModule } from './social-network/modules/loading.module';
+import { AppMessageModule } from './social-network/modules/app-message.module';
+import { AuthModule } from './social-network/modules/auth.module';
+import { ShareViewModule } from './social-network/shared/share-view.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -44,6 +45,7 @@ registerLocaleData(vi);
     AppMessageModule,
     LoadingModule,
     PostsModule,
+    CovidCoreModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]
