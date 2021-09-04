@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'covid',
-    component: HomeCovidComponent
+    loadChildren: () => import('./covid-feature/routings/covid-routing.module').then(m => m.CovidRoutingModule)
   }
 ];
 
