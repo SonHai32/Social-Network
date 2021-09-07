@@ -1,11 +1,8 @@
 import { CovidNews } from './../../models/covid-news.model';
 import { CovidNewsService } from './../../services/covid-news.service';
 import { CovidData, CovidDataHistorical } from './../../models/covid.model';
-import { ThemeOption } from 'ngx-echarts';
 import { Observable, Subscription } from 'rxjs';
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
@@ -15,11 +12,6 @@ import {
   fadeInUpOnEnterAnimation,
 } from 'angular-animations';
 import { EChartsOption } from 'echarts';
-interface CovidPredicton {
-  en_key: string;
-  vn_key: string;
-  active: boolean;
-}
 @Component({
   selector: 'covid-feature-home',
   templateUrl: './home-covid.component.html',
@@ -35,56 +27,7 @@ export class HomeCovidComponent implements OnInit {
   subscription: Subscription = new Subscription();
   historicalCovidData!: CovidDataHistorical;
   covidCurrentDataOption: 'VN' | 'WORLD' = 'VN';
-  covidPredictionProcess: number = 0
   covidNewsData!: Observable<CovidNews[]>;
-  // covidDataPrediction: CovidPredicton[] = [
-  //   {
-  //     en_key: 'cough',
-  //     vn_key: 'Ho',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'fever',
-  //     vn_key: 'Sốt',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'sore_throat',
-  //     vn_key: 'Đau họng',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'shortness_of_breath',
-  //     vn_key: 'Khó thở',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'head_ache',
-  //     vn_key: 'Đau đầu',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'runny_nose',
-  //     vn_key: 'Sổ mũi',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'diarrhea',
-  //     vn_key: 'Tiêu chảy',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'muscle_pain',
-  //     vn_key: 'Đau cơ',
-  //     active: false,
-  //   },
-  //   {
-  //     en_key: 'close_contact',
-  //     vn_key: 'Tiếp xúc gần',
-  //     active: false,
-  //   },
-  // ];
-
 
   options: EChartsOption = {};
   constructor(private covidService: CovidService, private covidNewsService: CovidNewsService) {}

@@ -82,56 +82,10 @@
       <div nz-col nzSpan="24" class="p-2">
         <h6>{{title}}</h6>
       </div>
-      <div *ngIf="thumbUrl" nz-col nzSpan="4" class="p-2">
-        <img class="img-fluid" nz-image width="120px" height="120px" nzSrc="{{thumbUrl}}" alt="" />
-      </div>
-      <div nz-col nzSpan="20" class="p-2">
+      <div nz-col nzSpan="24" class="p-2">
         <span nz-typography>{{content}}</span>
       </div>
     </div>
   </ng-template>
-
 </section>
 
-<!-- <section nz-row nzAlign="middle" nzJustify="center" class="vh-100">
-  <div nz-col nzSpan="24" class="p-3">
-    <div nz-row class="my-4">
-      <div nz-col nzSpan="24">
-        <h4 nz-typography class="text-center">{{'Dự đoán bạn có đang mắc bệnh' | uppercase}} <span nz-typography
-            class="ant-text-primary"><strong>COVID-19</strong></span></h4>
-      </div>
-    </div>
-    <div nz-row nzJustify="center" nzAlign="middle" [nzGutter]="32">
-      <div nz-col nzSpan="24" class="p-4 d-flex align-items-center justify-content-start">
-        <span nz-typography><strong>Lưu ý: </strong></span>
-        <span nz-typography> Đây là mô hình dự đoán chưa hoàn chỉnh và chưa được chứng nhận, đự đoán có khả năng sai số
-          10%-15%</span>
-      </div>
-      <div nz-col nzSpan="24" class="px-4">
-        <h6 class="text-center">{{'hãy lựa chọn các triệu chứng bạn đang mắc phải một cách chính xác nhất' | uppercase}}
-        </h6>
-      </div>
-      <ng-container *ngFor="let item of covidDataPrediction">
-        <div (click)="item.active = !item.active" nz-col nzXl="5" nzLg="5" nzMd="8" nzSpan="22"
-          class="p-2 m-2 glass-2 rounded-12 shadow-sm d-flex align-items-center justify-content-center pointer">
-          <span nz-typography class="text-center font-size-md text-no-copy"> <strong>
-              {{item.vn_key}}
-            </strong></span>
-          <i *ngIf="item.active" nz-icon nzType="check" nzTheme="outline" class="mx-2 ant-text-primary"></i>
-        </div>
-      </ng-container>
-
-      <div nz-col nzSpan="22" class="m-2">
-        <nz-steps [nzCurrent]="covidPredictionProcess">
-          <nz-step nzTitle="Lựa chọn"></nz-step>
-          <nz-step *ngIf="covidPredictionProcess === 0" nzTitle="Xử lý"></nz-step>
-          <nz-step *ngIf="covidPredictionProcess === 1 " nzTitle="Đang xử lý" nzIcon="loading"></nz-step>
-          <nz-step nzTitle="Hoàn tất"></nz-step>
-        </nz-steps>
-      </div>
-      <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-center my-4">
-        <button nz-button nzType="primary">Tiến hành dự đoán</button>
-      </div>
-    </div>
-  </div>
-</section> -->
