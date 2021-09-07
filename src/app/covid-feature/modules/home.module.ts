@@ -1,4 +1,4 @@
-import { NzImageModule } from 'ng-zorro-antd/image';
+import { RouterModule } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -12,8 +12,8 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
-import { NzTimelineItemComponent } from 'ng-zorro-antd/timeline';
-
+import { NzBackTopModule } from 'ng-zorro-antd/back-top';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
 
 @NgModule({
   declarations: [HomeCovidComponent],
@@ -28,7 +28,9 @@ import { NzTimelineItemComponent } from 'ng-zorro-antd/timeline';
     NzButtonModule,
     NzModalModule,
     NzTimelineModule,
-    NzImageModule,
+    NzBackTopModule,
+    NzAffixModule,
+    RouterModule,
     NgxEchartsModule.forRoot({ echarts: () => import('echarts') }),
   ],
 })
