@@ -1,3 +1,4 @@
+import { MessageListComponent } from './../components/message/message-list/message-list.component';
 import { MessageComponent } from '../components/message/message.component';
 import { FriendComponent } from '../components/friends/friend/friend.component';
 import { PostListComponent } from '../components/post/post-list/post-list.component';
@@ -35,10 +36,23 @@ const routes: Routes = [
             path: 'friends',
             component: FriendComponent,
           },
+          // {
+          //   path: 'message/:id',
+          //   component: MessageComponent,
+          // },
           {
-            path: 'message/:id',
-            component: MessageComponent
-          }
+            path: 'messages',
+            children: [
+              {
+                path: '',
+                component: MessageListComponent,
+              },
+              {
+                path: 'message/:id',
+                component: MessageComponent,
+              },
+            ],
+          },
         ],
       },
     ],
