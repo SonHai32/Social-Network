@@ -1,26 +1,25 @@
 <div nz-row class="h-100">
   <div nz-row class="glass w-100 shadow-sm rounded-12">
     <div nz-col nzSpan="24" class="border-bottom px-3 d-flex align-items-center" style="height: 8vh;">
-      <ng-container *ngIf="friend$ | async as friend">
+      <ng-container *ngIf="friend">
         <nz-avatar class="d-flex align-items-center justify-content-center" nz-comment-avatar nzIcon="user"
           nzSrc="{{friend.avatar_url}}"></nz-avatar>
         <span nz-typography class="mx-2"> <strong> {{friend.display_name}} </strong></span>
-
       </ng-container>
     </div>
     <cdk-virtual-scroll-viewport itemSize="100" class="px-3" nz-col nzSpan="24" style="height: 50vh; overflow-y: auto;"
       #messageContainer>
-      <div nz-row class="px-3" *ngIf="messageVM$ | async as messagesVM; else loadingTpl">
-        <div nz-col nzSpan="24" *ngFor="let message of messagesVM.messages" class="my-1 d-flex">
-          <ng-container *ngIf="message.send_by.id !== messagesVM.currentUser.id; else selfMessage">
+      <div nz-row class="px-3" *ngIf="messages$ | async as messages; else loadingTpl">
+        <div nz-col nzSpan="24" *ngFor="let message of messages" class="my-1 d-flex">
+          <ng-container *ngIf="message.sendByID !== currentUser$.id; else selfMessage">
             <div class="w-100 d-flex align-items-center">
               <nz-comment>
-                <nz-avatar class="d-flex align-items-center justify-content-center" nz-comment-avatar nzIcon="user"
-                  nzSrc="{{message.send_by.avatar_url}}"></nz-avatar>
+                <nz-avatar *ngIf="friend" nzSrc="{{friend.avatar_url}}" class="d-flex align-items-center justify-content-center" nz-comment-avatar nzIcon="user"
+                  ></nz-avatar>
                 <nz-comment-content class="bg-white-opacity px-2 py-1 rounded-12 shadow-sm">
                   <span nz-typography nz-tooltip="{{message.created_at.toDate()| toHours}}"
                     style="overflow-wrap: break-word; word-break: break-all;">
-                    {{message.messageText}}
+                    {{message.textMessage}}
                   </span>
                 </nz-comment-content>
               </nz-comment>
@@ -31,7 +30,7 @@
               <span nz-tooltip="Tôi: {{message.created_at.toDate()| toHours}}"
                 class="bg-primary-opacity p-2 rounded-12 shadow-sm text-white " nz-typography
                 style="overflow-wrap: break-word; word-break: break-all;">
-                {{message.messageText}}
+                {{message.textMessage}}
               </span>
             </div>
           </ng-template>
