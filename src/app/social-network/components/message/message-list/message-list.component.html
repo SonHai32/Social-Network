@@ -1,0 +1,20 @@
+<div nz-row class="h-100"  >
+  <div nz-row class="glass w-100 shadow-sm rounded-12 p-2" style="height: 70vh;">
+    <cdk-virtual-scroll-viewport itemSize="100" nz-col nzSpan="24" style="height: 100%; overflow-y: auto;"
+      #messageContainer>
+      <div nz-row class="px-3" *ngIf="messageList$ | async as messagesList; else loadingTpl">
+        <div nz-col nzSpan="24" *ngFor="let userID of messagesList" >
+          <app-message-list-item [friendID]="userID"></app-message-list-item>
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div nz-row class="w-100 h-100 p-4" nzAlign="middle" nzJustify="center">
+    <div nz-col>
+      <nz-spin nzSimple="true" nzSize="small" nzTip="Đang tải..."></nz-spin>
+    </div>
+  </div>
+</ng-template>
