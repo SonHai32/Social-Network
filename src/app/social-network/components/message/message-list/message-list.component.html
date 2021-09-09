@@ -1,9 +1,12 @@
-<div nz-row class="h-100"  >
-  <div nz-row class="glass w-100 shadow-sm rounded-12 p-2" style="height: 70vh;">
-    <cdk-virtual-scroll-viewport itemSize="100" nz-col nzSpan="24" style="height: 100%; overflow-y: auto;"
+<div nz-row class="h-100">
+  <div nz-row class="glass w-100 shadow-sm rounded-12 px-2">
+    <div nz-col nzSpan="24" class="d-flex align-items-center p-2" style="height: 10vh;">
+      <span nz-typography class="font-size-md"><strong> Tin nhắn </strong></span>
+    </div>
+    <cdk-virtual-scroll-viewport itemSize="100" nz-col nzSpan="24" style="height: 60vh; overflow-y: auto;"
       #messageContainer>
       <div nz-row class="px-3" *ngIf="messageList$ | async as messagesList; else loadingTpl">
-        <div nz-col nzSpan="24" *ngFor="let userID of messagesList" >
+        <div nz-col nzSpan="24" *ngFor="let userID of messagesList">
           <app-message-list-item [friendID]="userID"></app-message-list-item>
         </div>
       </div>
