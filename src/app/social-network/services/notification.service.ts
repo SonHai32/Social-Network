@@ -42,12 +42,22 @@ export class NotificationService {
       );
   }
 
-  getUnseenNotification(userID: string): Observable<number> {
+  getUnseenNotification(userID: string): Observable<Notification[]> {
     return this.afs
       .doc<User>(`users/${userID}`)
-      .collection<Notification>('notifications', (ref) => ref.where('seen', '!=', true))
+      .collection<Notification>('notifications', (ref) =>
+        ref.where('seen', '!=', true)
+      )
       .snapshotChanges()
-      .pipe(map((res) => res.length));
+      .pipe(
+        map((res) =>
+          res.map((val) => {
+            return {
+              ...val.payload.doc.data(),
+            } as Notification;
+          })
+        )
+      );
   }
 
   setSeenNotification(userID: string, notificationID: string): Promise<void> {
