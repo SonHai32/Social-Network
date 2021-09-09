@@ -1,3 +1,5 @@
+import { MessageBoxComponent } from './../components/message/message-box/message-box.component';
+import { MessageListComponent } from './../components/message/message-list/message-list.component';
 import { SearchBoxComponent } from '../components/search-box/search-box.component';
 import { NotificationContentComponent } from '../components/notification/notification-content/notification-content.component';
 import { NotificationListComponent } from '../components/notification/notification-list/notification-list.component';
@@ -32,8 +34,8 @@ import { FriendRequestCardComponent } from '../components/friends/friend-request
 import { FromNowPipe } from '../pipes/from-now.pipe';
 import { FriendsListComponent } from '../components/friends/friends-list/friends-list.component';
 import { FriendSuggestionsCardComponent } from '../components/friends/friend-suggestions/friend-suggestions-card/friend-suggestions-card.component';
-import { MessageComponent } from '../components/message/message.component';
 import { UserDisplayNameFilterPipe } from '../pipes/user-display-name-filter.pipe';
+import { MessageListItemComponent } from '../components/message/message-list-item/message-list-item.component';
 
 @NgModule({
   declarations: [
@@ -59,8 +61,10 @@ import { UserDisplayNameFilterPipe } from '../pipes/user-display-name-filter.pip
     FriendSuggestionsCardComponent,
     NotificationListComponent,
     NotificationContentComponent,
+    MessageListComponent,
+    MessageListItemComponent,
+    MessageBoxComponent,
     SearchBoxComponent,
-    MessageComponent,
     UserComponent,
     UserInfoComponent,
     FromNowPipe,
