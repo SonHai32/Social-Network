@@ -4,22 +4,17 @@
   </div>
   <div nz-col nzLg="12" nzSpan="24">
     <div class="w-100 d-flex align-items-center justify-content-center text-no-copy ">
-      <div nz-button nzType="text" [routerLink]="['/']"
-        class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
-        <i nz-icon nzType="home" nzTheme="outline" class="icon-size"></i>
-        <span nz-typography class="text-center"><strong>Trang chủ</strong></span>
-      </div>
-      <div nz-button nzType="text" [routerLink]="['/friends']"
+      <div nz-button nzType="text" (click)="toggleNav('friends')"
         class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <i nz-icon nzType="team" nzTheme="outline" class="icon-size"></i>
         <span nz-typography class="text-center"><strong>Bạn bè</strong></span>
       </div>
-      <div nz-button nzType="text" (click)="toggleSearch()"
+      <div nz-button nzType="text" (click)="toggleNav('messages')"
         class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
-        <i nz-icon nzType="search" nzTheme="outline" class="icon-size"></i>
-        <span nz-typography class="text-center"><strong>Tìm kiếm</strong></span>
+        <i nz-icon nzType="message" nzTheme="outline" class="icon-size"></i>
+        <span nz-typography class="text-center"><strong>Tin nhắn</strong></span>
       </div>
-      <div (click)="toggleNotification()" nz-button nzType="text"
+      <div (click)="toggleNav('notifications')" nz-button nzType="text"
         class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <ng-container *ngIf="currentUser; else noneNotificationTpl">
           <ng-container *ngIf="unseenNotification | async as notification; else noneNotificationTpl">
@@ -32,6 +27,11 @@
         <ng-template #noneNotificationTpl>
           <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
         </ng-template>
+      </div>
+      <div nz-button nzType="text" (click)="toggleNav('search')"
+        class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+        <i nz-icon nzType="search" nzTheme="outline" class="icon-size"></i>
+        <span nz-typography class="text-center"><strong>Tìm kiếm</strong></span>
       </div>
     </div>
   </div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Notification } from './../../../models/notification.model';
 import { tap } from 'rxjs/operators';
@@ -45,7 +46,8 @@ export class HeaderComponent implements OnInit {
     private userNotificationService: NotificationService,
     private userService: UserService,
     private postService: PostsService,
-    private nzNotificationService: NzNotificationService
+    private nzNotificationService: NzNotificationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -63,16 +65,51 @@ export class HeaderComponent implements OnInit {
             .getUnseenNotification(user.id)
             .pipe(
               tap((notifications: Notification[]) => {
-                notifications.forEach(val => {
-                  if((firebase.firestore.Timestamp.now().seconds - val.created_at.seconds) < 2){
-                    this.nzNotificationService.blank(val.byUser.display_name, val.title)
+                notifications.forEach((val) => {
+                  if (
+                    firebase.firestore.Timestamp.now().seconds -
+                      val.created_at.seconds <
+                    2
+                  ) {
+                    this.nzNotificationService.blank(
+                      val.byUser.display_name,
+                      val.title
+                    );
                   }
-                })
+                });
               })
             );
         }
       })
     );
+  }
+
+  toggleNav(path: 'messages' | 'notifications' | 'friends' | 'search') {
+    if (this.currentUser) {
+      switch (path) {
+        case 'messages':
+          this.router.navigate(['/messages']);
+          break;
+        case 'notifications':
+          this.toggleNotification();
+          break;
+        case 'friends':
+          this.router.navigate(['/friends']);
+          break;
+        case 'search':
+          this.toggleSearch();
+          break;
+        default:
+          return;
+      }
+    } else {
+      this.store.dispatch(
+        AppMessageAction.SetAppMessage({
+          message: 'Bạn chưa đăng nhập',
+          message_type: 'warning',
+        })
+      );
+    }
   }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
