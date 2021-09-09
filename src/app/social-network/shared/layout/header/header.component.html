@@ -22,8 +22,8 @@
       <div (click)="toggleNotification()" nz-button nzType="text"
         class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
         <ng-container *ngIf="currentUser; else noneNotificationTpl">
-          <ng-container *ngIf="totalUnseenNotification | async as total; else noneNotificationTpl">
-            <nz-badge [nzCount]="total">
+          <ng-container *ngIf="unseenNotification | async as notification; else noneNotificationTpl">
+            <nz-badge [nzCount]="notification.length">
               <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
             </nz-badge>
           </ng-container>
