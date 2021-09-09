@@ -1,8 +1,7 @@
+import { MessageBoxComponent } from './../components/message/message-box/message-box.component';
 import { MessageListComponent } from './../components/message/message-list/message-list.component';
-import { MessageComponent } from '../components/message/message.component';
 import { FriendComponent } from '../components/friends/friend/friend.component';
 import { PostListComponent } from '../components/post/post-list/post-list.component';
-import { PostLikeSuccess } from '../store/posts/posts.actions';
 import { UserInfoComponent } from '../components/user-info/user-info.component';
 import { UserComponent } from '../components/user/user.component';
 import { DefaultComponent } from '../pages/default/default.component';
@@ -36,10 +35,6 @@ const routes: Routes = [
             path: 'friends',
             component: FriendComponent,
           },
-          // {
-          //   path: 'message/:id',
-          //   component: MessageComponent,
-          // },
           {
             path: 'messages',
             children: [
@@ -49,7 +44,7 @@ const routes: Routes = [
               },
               {
                 path: 'message/:id',
-                component: MessageComponent,
+                component: MessageBoxComponent,
               },
             ],
           },
