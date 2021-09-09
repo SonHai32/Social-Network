@@ -1,3 +1,6 @@
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Notification } from './../../../models/notification.model';
+import { tap } from 'rxjs/operators';
 import { vmFromLatest } from 'src/app/social-network/utils/operators';
 import { Post } from '../../../models/post.model';
 import { UserService } from 'src/app/social-network/services/user.service';
@@ -14,18 +17,18 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/social-network/models/user.model';
 import { PostsService } from 'src/app/social-network/services/posts.service';
-interface SearchVM{
-  users: User[],
-  posts: Post[]
+import firebase from 'firebase/app';
+interface SearchVM {
+  users: User[];
+  posts: Post[];
 }
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-
 export class HeaderComponent implements OnInit {
-  searchVM$!: Observable<SearchVM>
+  searchVM$!: Observable<SearchVM>;
   authVisible: boolean = false;
   authFormSelected: string = 'LOGIN';
   notificationVisible: boolean = false;
@@ -33,7 +36,7 @@ export class HeaderComponent implements OnInit {
   isMobile: boolean = false;
   currentUser!: User;
   isAuthenticated!: boolean;
-  totalUnseenNotification!: Observable<number>;
+  unseenNotification!: Observable<Notification[]>;
   subscription: Subscription = new Subscription();
 
   constructor(
@@ -41,7 +44,8 @@ export class HeaderComponent implements OnInit {
     private store: Store,
     private userNotificationService: NotificationService,
     private userService: UserService,
-    private postService: PostsService
+    private postService: PostsService,
+    private nzNotificationService: NzNotificationService
   ) {}
 
   ngOnInit(): void {
@@ -55,8 +59,17 @@ export class HeaderComponent implements OnInit {
       this.store.select(getUserSelector).subscribe((user: User | null) => {
         if (user) {
           this.currentUser = user;
-          this.totalUnseenNotification =
-            this.userNotificationService.getUnseenNotification(user.id);
+          this.unseenNotification = this.userNotificationService
+            .getUnseenNotification(user.id)
+            .pipe(
+              tap((notifications: Notification[]) => {
+                notifications.forEach(val => {
+                  if((firebase.firestore.Timestamp.now().seconds - val.created_at.seconds) < 2){
+                    this.nzNotificationService.blank(val.byUser.display_name, val.title)
+                  }
+                })
+              })
+            );
         }
       })
     );
@@ -85,18 +98,18 @@ export class HeaderComponent implements OnInit {
       );
     }
   }
-  toggleSearch(){
-    this.searchVisible = !this.searchVisible
+  toggleSearch() {
+    this.searchVisible = !this.searchVisible;
   }
   changeAuthForm(formSelected: string): void {
     this.authFormSelected = formSelected;
   }
 
-  handleSearchChange(value: string){
+  handleSearchChange(value: string) {
     this.searchVM$ = vmFromLatest<SearchVM>({
       users: this.userService.searchUser(value),
-      posts: this.postService.searchPost(value)
-    })
+      posts: this.postService.searchPost(value),
+    });
   }
   logout(): void {
     this.store.dispatch(AuthActions.Logout());
