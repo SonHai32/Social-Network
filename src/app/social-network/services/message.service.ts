@@ -89,6 +89,7 @@ export class MessageService {
     fromUserID: string,
     toUserID: string
   ): Observable<PrivateMessage[]> {
+    this.notificationService.setSeenMessageNotification(fromUserID, toUserID).then(() => console.log('delete'))
     return this.afs
       .doc<User>(`users/${fromUserID}`)
       .collection('messages')

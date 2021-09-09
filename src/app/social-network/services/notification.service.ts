@@ -6,15 +6,13 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-
+import firebase from 'firebase/app';
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   constructor(
     private afs: AngularFirestore,
-    private notification: NzNotificationService,
-    private store: Store
   ) {}
   addNotification(userID: string, notification: Notification) {
     return this.afs
@@ -23,6 +21,19 @@ export class NotificationService {
       .add(notification);
   }
 
+  //TODO: set all notification typeof 'message' to {seen: true}, will be used after user fetch to message
+  async setSeenMessageNotification(currentUserID: string, byUserID: string): Promise<void>{
+    const messageNotification = this.afs.collection('users').doc(currentUserID).collection('notifications').ref.where('type', '==', 'message').where('byUser.id', '==', byUserID).get()
+    const batch = this.afs.firestore.batch()
+    messageNotification.then(snap => {
+      snap.docs.forEach(doc =>{
+        batch.set(doc.ref, {seen: true})
+      })
+      return batch.commit()
+    })
+  }
+
+  //TODO: listen and return all notification realtime if this called
   getNotification(userID: string): Observable<Notification[]> {
     return this.afs
       .doc<User>(`users/${userID}`)
