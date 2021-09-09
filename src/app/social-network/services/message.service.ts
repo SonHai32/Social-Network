@@ -19,10 +19,36 @@ export class MessageService {
   getMessageList(currentUserID: string): Observable<string[]> {
     return this.afs
       .doc<User>(`users/${currentUserID}`)
-      .collection('messages')
-      .stateChanges(['added', 'removed'])
-      .pipe(map((res) => [...res.length.toString()]));
+      .collection('messages', (ref) => ref.orderBy('created_at', 'desc'))
+      .snapshotChanges(['added', 'removed'])
+      .pipe(map((res) => res.map((val) => val.payload.doc.id)));
+  }
 
+  getLastedMessage(fromUserID: string, toUserID: string): Observable<string> {
+    return this.afs
+      .doc<User>(`users/${fromUserID}`)
+      .collection('messages')
+      .doc(toUserID)
+      .collection<PrivateMessage>('message_content', (ref) =>
+        ref.orderBy('created_at', 'desc').limit(1)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((res) =>
+          res.map((val) => {
+            const message = val.payload.doc.data().textMessage;
+            if (val.payload.doc.data().sendByID === fromUserID) {
+              return 'Bạn: ' + (message ? message : 'Hình ảnh');
+            }
+            return message ? message : 'Hình ảnh';
+          })
+        ),
+        map((res) =>
+          res[res.length - 1]
+            ? res[res.length - 1].toString()
+            : 'Chưa có tin nhắn '
+        )
+      );
   }
 
   sendMessage(
@@ -44,6 +70,14 @@ export class MessageService {
   }
 
   saveMessage(fromuserID: string, toUserID: string, message: PrivateMessage) {
+    this.afs
+      .doc<User>(`users/${fromuserID}`)
+      .collection('messages')
+      .doc(toUserID)
+      .set({
+        id: fromuserID + toUserID,
+        created_at: firebase.firestore.Timestamp.now(),
+      });
     return this.afs
       .doc<User>(`users/${fromuserID}`)
       .collection('messages')
@@ -51,7 +85,10 @@ export class MessageService {
       .collection<PrivateMessage>('message_content')
       .add(message);
   }
-  getMessage(fromUserID: string, toUserID: string): Observable<PrivateMessage[]> {
+  getMessage(
+    fromUserID: string,
+    toUserID: string
+  ): Observable<PrivateMessage[]> {
     return this.afs
       .doc<User>(`users/${fromUserID}`)
       .collection('messages')
