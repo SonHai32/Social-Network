@@ -25,7 +25,7 @@ export class NotificationContentComponent implements OnInit {
         this.notification.id
       );
       if (this.notification.type === 'message')
-        this.router.navigate(['/message', this.notification.byUser.id]);
+        this.router.navigate(['/messages/message', this.notification.byUser.id]);
       else
         this.router.navigate(['/friends'], {
           queryParams: { tab: 'request' },
