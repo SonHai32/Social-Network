@@ -1,0 +1,28 @@
+<div *ngIf="friendID" nz-row class="m-1 rounded-12 message-list-item w-100 p-2 pointer">
+  <ng-container *ngIf="friendInfo$ | async as user else loadingTpl">
+    <div [routerLink]="['/messages/message', friendID]" nz-col nzSpan="24"
+      class="d-flex align-items-center justify-content-start">
+      <nz-avatar nzIcon="user" nzSize="large" nzSrc="{{user.avatar_url}}"></nz-avatar>
+      <div nz-row nzAlign="middle" class="ms-3">
+        <div nz-col nzSpan="24">
+          <a [routerLink]="['/user', friendID]" nz-typography>
+            {{user.display_name}}</a>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="lastedMessage | async as message">
+          <span nz-typography class="font-size-sm">{{message}}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+
+<ng-template #loadingTpl>
+  <div class="w-100 m-1 p-1">
+    <nz-skeleton-element nzType="avatar" nzShape="circle" [nzActive]="true" nzSize="large" nzShape="circle">
+    </nz-skeleton-element>
+    <nz-skeleton-element nzType="input" style="width: 200px" nzSize="large" class="rounded-12 ms-3" [nzActive]="true">
+    </nz-skeleton-element>
+  </div>
+
+</ng-template>
