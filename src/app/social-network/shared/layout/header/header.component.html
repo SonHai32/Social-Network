@@ -6,21 +6,25 @@
   <div nz-col nzLg="12" nzSpan="24">
     <header-nav></header-nav>
   </div>
-  <div *ngIf="isAuthenticated" nz-col nzLg="6" nzSpan="0">
-    <ng-container *ngTemplateOutlet="userTpl"> </ng-container>
-  </div>
-  <div *ngIf="!isAuthenticated" nz-col nzLg="6" nzSpan="24">
-    <ng-container *ngTemplateOutlet="loginBtnTpl"> </ng-container>
-  </div>
+  <ng-container *ngIf="currentUser$ | async as currentUser; else loginBtnTpl">
+    <div *ngIf="currentUser" nz-col nzLg="6" nzSpan="0">
+      <ng-container
+        *ngTemplateOutlet="userTpl; context: {'displayName': currentUser.display_name, 'avatarUrl': currentUser.avatar_url}">
+      </ng-container>
+    </div>
+    <div *ngIf="!currentUser" nz-col nzLg="6" nzSpan="24">
+      <ng-container *ngTemplateOutlet="loginBtnTpl"> </ng-container>
+    </div>
+  </ng-container>
 </div>
 
-<ng-template #userTpl>
+<ng-template #userTpl let-displayName="displayName" let-avatarUrl="avatarUrl">
   <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" nzPlacement="bottomCenter"
-    class="w-100 d-flex align-items-center justify-content-center px-5" *ngIf="currentUser">
-    <nz-avatar [nzSize]="48" nzSrc="{{currentUser.avatar_url}}" nzShape="circle"
+    class="w-100 d-flex align-items-center justify-content-center px-5">
+    <nz-avatar [nzSize]="48" nzSrc="{{avatarUrl}}" nzShape="circle"
       class="d-flex align-items-center justify-content-center">
     </nz-avatar>
-    <a nz-typography class="font-size-sm mx-1">{{currentUser.display_name}}</a>
+    <a nz-typography class="font-size-sm mx-1">{{displayName}}</a>
     <i nz-icon nzType="caret-down" nzTheme="outline"></i>
   </div>
 </ng-template>
@@ -45,7 +49,7 @@
   </div>
 </ng-template>
 
-<nz-modal *ngIf="!isAuthenticated" nzNoAnimation [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null"
+<nz-modal *ngIf="!isAuthenticated" [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null"
   (nzOnCancel)="toggleAuth()" [(nzVisible)]="authVisible" nzCloseOnNavigation="true" [nzTitle]="modalAndModalTitleTmp">
   <ng-container *ngTemplateOutlet="authFormTpl"> </ng-container>
 </nz-modal>
