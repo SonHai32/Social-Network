@@ -2,7 +2,6 @@ import { getUserSelector } from '../../../store/auth/auth.selectors';
 import { Subscription } from 'rxjs';
 import { AppMessageAction } from '../../../store/app-message/app-message.actions';
 import { Store } from '@ngrx/store';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { Component, OnInit } from '@angular/core';
 import { getAuthSelector } from 'src/app/social-network/store/auth/auth.selectors';
 import { User } from 'src/app/social-network/models/user.model';
@@ -15,13 +14,11 @@ import { User } from 'src/app/social-network/models/user.model';
 export class PostContainerComponent implements OnInit {
   createPostVisible: boolean = false;
   isAuthenticated!: boolean;
-  isMobile: boolean = false;
   subscription: Subscription = new Subscription();
   currentUser!: User;
-  constructor(private dv: DeviceDetectorService, private store: Store) {}
+  constructor( private store: Store) {}
 
   ngOnInit(): void {
-    this.isMobile = this.dv.isMobile();
     this.subscription.add(this.store
       .select(getAuthSelector)
       .subscribe((authenticated: boolean) => {
