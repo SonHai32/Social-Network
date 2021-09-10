@@ -1,0 +1,48 @@
+<div class="w-100 d-flex align-items-center justify-content-center text-no-copy ">
+  <div nz-button nzType="text" (click)="toggleNavOptions('friends')"
+    class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center font-size-xs">
+    <i nz-icon nzType="team" nzTheme="outline" class="icon-size"></i>
+    <span nz-typography class="text-center"><strong>Bạn bè</strong></span>
+  </div>
+  <div nz-button nzType="text" (click)="toggleNavOptions('messages')"
+    class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center  font-size-xs">
+    <i nz-icon nzType="message" nzTheme="outline" class="icon-size"></i>
+    <span nz-typography class="text-center"><strong>Tin nhắn</strong></span>
+  </div>
+  <div (click)="toggleNavOptions('notifications')" nz-button nzType="text"
+    class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center  font-size-xs">
+    <ng-container *ngIf="currentUser; else noneNotificationTpl">
+      <ng-container *ngIf="unseenNotification | async as notification; else noneNotificationTpl">
+        <nz-badge [nzCount]="notification.length">
+          <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
+        </nz-badge>
+      </ng-container>
+    </ng-container>
+    <span nz-typography class="text-center"><strong>Thông báo</strong></span>
+    <ng-template #noneNotificationTpl>
+      <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
+    </ng-template>
+  </div>
+  <div nz-button nzType="text" (click)="toggleNavOptions('search')"
+    class="mx-2 p-2 py-4 d-flex flex-column justify-content-center align-items-center font-size-xs">
+    <i nz-icon nzType="search" nzTheme="outline" class="icon-size"></i>
+    <span nz-typography class="text-center"><strong>Tìm kiếm</strong></span>
+  </div>
+</div>
+
+<nz-drawer *ngIf="isAuthenticated" [nzVisible]="notificationVisible" [nzPlacement]="isMobile ? 'bottom': 'right'"
+  (nzOnClose)="toggleNotification()" nzWidth="25%" nzHeight="100%" [nzTitle]="notificationTitleTpl">
+  <app-notification-list [currentUser]='currentUser'></app-notification-list>
+  <ng-template #notificationTitleTpl>
+    <h5 nz-typography>Thông báo</h5>
+  </ng-template>
+</nz-drawer>
+
+<nz-modal *ngIf="searchVisible" [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null" (nzOnCancel)="toggleSearch()"
+  [(nzVisible)]="searchVisible" nzCloseOnNavigation="true">
+  <app-search-box></app-search-box>
+</nz-modal>
+
+<ng-template #closeIcon>
+  <i nz-icon nzType="close" nzTheme="outline"></i>
+</ng-template>
