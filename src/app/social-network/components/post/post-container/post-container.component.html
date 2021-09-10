@@ -8,15 +8,7 @@
   </div>
 </div>
 
-<nz-drawer *ngIf="isMobile && isAuthenticated" class="c-bg-secondary"
-  [nzBodyStyle]="{ padding: 0, margin: 0, background: '#F4F6FA' }" nzPlacement="bottom" nzHeight="100%"
-  nzClosable="true" [(nzVisible)]="createPostVisible" (nzOnClose)="toggleCreatePost()" [nzTitle]="title">
-  <ng-container *nzDrawerContent>
-    <home-post-create></home-post-create>
-  </ng-container>
-</nz-drawer>
-
-<nz-modal *ngIf="!isMobile && isAuthenticated" nzCentered nzWidth="50%"
+<nz-modal *ngIf="isAuthenticated" nzCentered
   [nzBodyStyle]="{ padding: '0', 'padding-bottom': '50px' }" [nzTitle]="title" [(nzVisible)]="createPostVisible"
   (nzOnCancel)="toggleCreatePost()" nzClassName="rounded-12" [nzFooter]="null">
   <ng-container *nzModalContent>
