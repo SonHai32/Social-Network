@@ -1,3 +1,4 @@
+import { NavComponent } from './../components/nav/nav.component';
 import { MessageBoxComponent } from './../components/message/message-box/message-box.component';
 import { MessageListComponent } from './../components/message/message-list/message-list.component';
 import { SearchBoxComponent } from '../components/search-box/search-box.component';
@@ -73,6 +74,7 @@ import { MessageListItemComponent } from '../components/message/message-list-ite
     AppLoadingComponent,
     ScrollToCommentDirective,
     ScrollableDirective,
+    NavComponent,
   ],
   imports: [CommonModule, RouterModule, ShareModule],
   exports: [AppLoadingComponent, ScrollToCommentDirective, ScrollableDirective],

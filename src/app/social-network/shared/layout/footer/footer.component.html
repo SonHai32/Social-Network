@@ -1,17 +1,17 @@
-<nz-affix nzOffsetBottom="0">
+<nz-affix nzOffsetBottom="0" class="mt-3">
   <div nz-row>
     <div nz-col nzXXl='0' nzXl='0' nzLg="0" nzSpan="24" class="h-60 glass top-rounded">
       <div class="w-100 h-100 d-flex align-items-center justify-content-around text-no-copy ">
-        <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+        <div [routerLink]="['/']" class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
           <i nz-icon nzType="schedule" nzTheme="outline" class="icon-size"></i>
         </div>
-        <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+        <div (click)="toggleNavOptions('messages')" class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
           <i nz-icon nzType="mail" nzTheme="outline" class="icon-size"></i>
         </div>
-        <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+        <div (click)="toggleNavOptions('search')" class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
           <i nz-icon nzType="search" nzTheme="outline" class="icon-size"></i>
         </div>
-        <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
+        <div (click)="toggleNavOptions('notifications')" class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
           <i nz-icon nzType="notification" nzTheme="outline" class="icon-size"></i>
         </div>
         <div class="mx-3 d-flex flex-column justify-content-center align-items-center my-2 font-size-xs">
