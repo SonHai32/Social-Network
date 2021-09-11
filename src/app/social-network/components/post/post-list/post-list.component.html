@@ -1,13 +1,20 @@
 <home-post-container></home-post-container>
 <div *ngIf="vm$ | async as vm" nz-row appScrollable (scrollPosition)="scrollHandle($event)">
-  <ng-container *ngIf="vm.posts">
-    <div *ngFor="let post of vm.posts" nz-col nzSpan="24">
-      <home-post-card-content [post]='post' [user]='vm.currentUser'></home-post-card-content>
-    </div>
-  </ng-container>
+
   <ng-container *ngIf="vm.isLoading">
     <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 6 }" [nzActive]="true"
       class="glass shadow-sm mt-4 rounded-12 p-4">
     </nz-skeleton>
   </ng-container>
+  <ng-container *ngIf="vm.posts">
+    <div *ngFor="let post of vm.posts" nz-col nzSpan="24">
+      <home-post-card-content [post]='post' [user]='vm.currentUser'></home-post-card-content>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!vm.isLoading && !(vm.posts.length >0)">
+    <div nz-col nzSpan="24">
+      <app-no-data noDataTitle="Không có bài viết nào !"></app-no-data>
+    </div>
+  </ng-container>
 </div>
+

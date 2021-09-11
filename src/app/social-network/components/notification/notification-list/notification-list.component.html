@@ -5,6 +5,12 @@
         <ng-container *ngFor="let item of notifications">
           <app-notification-content [notification]='item' [currentUserID]="currentUser.id"></app-notification-content>
         </ng-container>
+        <ng-container *ngIf="notifications.length <=0">
+          <div nz-row>
+            <app-no-data [noDataTitle]="'Không có thông báo !'"></app-no-data>
+          </div>
+        </ng-container>
+
       </ng-container>
     </cdk-virtual-scroll-viewport>
   </div>

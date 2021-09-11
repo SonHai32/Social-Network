@@ -9,6 +9,12 @@
         <div nz-col nzSpan="24" *ngFor="let userID of messagesList">
           <app-message-list-item [friendID]="userID"></app-message-list-item>
         </div>
+        <ng-container *ngIf="messagesList.length <=0 ">
+          <div nz-col nzSpan="24">
+            <app-no-data [noDataTitle]="'Không có tin nhắn !'"></app-no-data>
+          </div>
+        </ng-container>
+
       </div>
     </cdk-virtual-scroll-viewport>
   </div>

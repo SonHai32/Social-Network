@@ -1,3 +1,4 @@
+import { NoDataComponent } from './layout/no-data/no-data.component';
 import { NavComponent } from './../components/nav/nav.component';
 import { MessageBoxComponent } from './../components/message/message-box/message-box.component';
 import { MessageListComponent } from './../components/message/message-list/message-list.component';
@@ -66,6 +67,7 @@ import { MessageListItemComponent } from '../components/message/message-list-ite
     MessageListItemComponent,
     MessageBoxComponent,
     SearchBoxComponent,
+    NoDataComponent,
     UserComponent,
     UserInfoComponent,
     FromNowPipe,
