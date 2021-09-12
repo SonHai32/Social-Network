@@ -108,4 +108,8 @@ export class PostListComponent implements OnInit {
       this.store.dispatch(PostsActions.GetAllPost({ limit: 5, userID }))
     );
   }
+
+  trackByPost(index: number, items: Post){
+    return items.id
+  }
 }
