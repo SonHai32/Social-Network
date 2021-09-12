@@ -1,3 +1,5 @@
+import { ScrollableModule } from './../directive/scrollable.module';
+import { ScrollableDirective } from './../../directives/scrollable.directive';
 import { NoDataCompModule } from './../layout/no-data-comp.module';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { PostCreateCompModule } from './post-create-comp.module';
@@ -22,6 +24,8 @@ import { CommonModule } from '@angular/common';
     PostCardContentCompModule,
     PostContainerCompModule,
     NoDataCompModule,
+    ScrollableModule,
+
   ],
   exports: [PostListComponent]
 })

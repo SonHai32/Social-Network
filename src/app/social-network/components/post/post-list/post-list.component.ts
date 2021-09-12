@@ -109,7 +109,7 @@ export class PostListComponent implements OnInit {
     );
   }
 
-  trackByPost(index: number, items: Post){
-    return items.id
+  trackByPost(index: number, item: Post){
+    return item.id
   }
 }

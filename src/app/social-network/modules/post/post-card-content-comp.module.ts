@@ -1,3 +1,4 @@
+import { ScrolToCommentsModule } from './../directive/scrol-to-comments.module';
 import { FromNowPipeModule } from '../from-now-pipe/from-now-pipe.module';
 import { ScrollToCommentDirective } from '../../directives/scroll-to-comment.directive';
 import { ScrollableDirective } from '../../directives/scrollable.directive';
@@ -19,7 +20,7 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    PostCardContentComponent, ScrollableDirective, ScrollToCommentDirective,
+    PostCardContentComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +36,7 @@ import { CommonModule } from '@angular/common';
     NzCommentModule,
     NzFormModule,
     FromNowPipeModule,
+    ScrolToCommentsModule
   ],
   exports: [PostCardContentComponent]
 })
