@@ -8,14 +8,14 @@ import { catchError, finalize } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class StorageService {
-  fileUpload(imageFile: NzUploadFile[]): Observable<string[]> {
+  fileUpload(imageFile: NzUploadFile[], userID: string): Observable<string[]> {
     return new Observable<string[]>((observable) => {
       const imageList: Observable<
         firebase.default.storage.UploadTaskSnapshot | undefined
       >[] = [];
       const imageRef: Observable<any>[] = [];
       imageFile.forEach((image: any) => {
-        const path = `images/${image.uid}`;
+        const path = `images/${userID}/${image.uid}`;
         const fileRef = this.afs.ref(path);
         imageRef.push(fileRef.getDownloadURL());
         imageList.push(this.afs.upload(path, image).snapshotChanges());

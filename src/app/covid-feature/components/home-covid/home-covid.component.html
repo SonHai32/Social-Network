@@ -70,7 +70,7 @@
 
 <section id='thong-ke-covid' nz-row nzAlign="middle" nzJustify="center" class="vh-100 p-3">
   <div nz-col nzSpan="24">
-    <div nz-row  class="p-3 glass-2 rounded-12">
+    <div nz-row class="p-3 glass-2 rounded-12">
       <div nz-col nzSpan="24">
         <h4 nz-typography class="text-center">{{'Thống kê tình hình dịch bệnh Việt Nam 15 ngày qua' | uppercase}}</h4>
       </div>
@@ -82,37 +82,43 @@
 </section>
 
 <section id='tin-tuc-covid' nz-row nzJustify="center" class="p-3">
-  <ng-container *ngIf="covidNewsData | async as newsList">
-    <div nz-col nzSpan="24">
-      <h4 nz-typography class="text-center">{{'Tin tức tình hình dịch bệnh COVID-19' | uppercase}}</h4>
+  <div nz-col nzSpan="24">
+    <div nz-row class="glass-2 rounded-12" nzJustify="center">
+      <ng-container *ngIf="covidNewsData | async as newsList">
+        <div nz-col nzSpan="24">
+          <h4 nz-typography class="text-center">{{'Tin tức tình hình dịch bệnh COVID-19' | uppercase}}</h4>
+        </div>
+        <div nz-col nzLg="12" nzMd="20" nzSpan="24" class="p-2 d-flex justify-content-start">
+          <nz-timeline nzMode="left">
+            <nz-timeline-item *ngFor="let news of newsList" NzLabel="NzLabel">
+              <ng-container
+                *ngTemplateOutlet="newsTpl; context: {'title': news.title, 'content': news.lead, 'newsUrl': news.share_url, 'timePulished': news.publish_time}">
+              </ng-container>
+            </nz-timeline-item>
+          </nz-timeline>
+        </div>
+        <ng-template #newsTpl let-title='title' let-content='content' let-newsUrl='newsUrl'
+          let-timePulished='timePulished'>
+          <div nz-row>
+            <div nz-col nzSpan="24" class="my-1">
+              <h6> <a nz-typography href="{{newsUrl}}" target="blank" rel="noopener noreferrer"> {{title}} </a></h6>
+            </div>
+            <div nz-col nzSpan="24" class="my-1">
+              <span nz-typography class="text-dark">{{content}}</span>
+            </div>
+            <div nz-col nzSpan="24" class="my-1">
+              <a nz-typography href="{{newsUrl}}" target="blank" rel="noopener noreferrer"> <strong>{{'==> Xem
+                  thêm'}}</strong></a>
+            </div>
+            <div nz-col nzSpan="24" class="my-1">
+              <span nz-typography> Nguồn: VnExpress ngày {{timePulished | date: 'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
     </div>
-    <div nz-col nzLg="12" nzMd="20" nzSpan="24" class="p-2 d-flex justify-content-start  glass-2 rounded-12">
-      <nz-timeline nzMode="left">
-        <nz-timeline-item *ngFor="let news of newsList" NzLabel="NzLabel">
-          <ng-container
-            *ngTemplateOutlet="newsTpl; context: {'title': news.title, 'content': news.lead, 'newsUrl': news.share_url, 'timePulished': news.publish_time}">
-          </ng-container>
-        </nz-timeline-item>
-      </nz-timeline>
-    </div>
-    <ng-template #newsTpl let-title='title' let-content='content' let-newsUrl='newsUrl' let-timePulished='timePulished'>
-      <div nz-row>
-        <div nz-col nzSpan="24" class="my-1">
-          <h6> <a nz-typography href="{{newsUrl}}" target="blank" rel="noopener noreferrer"> {{title}} </a></h6>
-        </div>
-        <div nz-col nzSpan="24" class="my-1">
-          <span nz-typography class="text-dark">{{content}}</span>
-        </div>
-        <div nz-col nzSpan="24" class="my-1">
-          <a nz-typography href="{{newsUrl}}" target="blank" rel="noopener noreferrer"> <strong>{{'==> Xem
-              thêm'}}</strong></a>
-        </div>
-        <div nz-col nzSpan="24" class="my-1">
-          <span nz-typography> Nguồn: VnExpress ngày {{timePulished | date: 'dd/MM/yyyy'}}</span>
-        </div>
-      </div>
-    </ng-template>
-  </ng-container>
+  </div>
+
 </section>
 
 <nz-back-top nzDuration="300"></nz-back-top>

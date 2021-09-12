@@ -1,5 +1,3 @@
-import { NotificationService } from '../../services/notification.service';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { getUserSelector } from '../../store/auth/auth.selectors';
 import { User } from '../../models/user.model';
 import { AppState } from '../../store/app.state';

@@ -4,8 +4,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
-
 @NgModule({
-  imports: [StoreModule.forFeature('app_message_feature', AppMessageReducers), EffectsModule.forFeature([AppMessageEffects])]
+  imports: [
+    StoreModule.forFeature('app_message_feature', AppMessageReducers),
+    EffectsModule.forFeature([AppMessageEffects]),
+  ],
 })
-export class AppMessageModule{}
+export class AppMessageModule {}

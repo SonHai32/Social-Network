@@ -164,7 +164,7 @@ export class PostsService {
 
       if (postImageContent) {
         this.storageService
-          .fileUpload(postImageContent)
+          .fileUpload(postImageContent, postOriginal.created_by_id)
           .subscribe((val: string[]) => {
             const imageList: NzImage[] = [];
             val.forEach((url: string) => {

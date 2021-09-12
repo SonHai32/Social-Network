@@ -1,13 +1,13 @@
-import { DefaultComponent } from './social-network/pages/default/default.component';
-import { DefaultRoutingModule } from './social-network/routing/default-routing.module';
+import { CoreRoutingModule } from './social-network/routing/core/core-routing.module';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeCovidComponent } from './covid-feature/components/home-covid/home-covid.component';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CoreComponent } from './social-network/components/core/core.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DefaultComponent
+    // component: CoreComponent
+    loadChildren: () => import('./social-network/modules/feature/core/core.module').then(m => m.CoreModule)
   },
   {
     path: 'covid',
@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{anchorScrolling: 'enabled'}), DefaultRoutingModule],
+  imports: [RouterModule.forRoot(routes,{anchorScrolling: 'enabled', preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
