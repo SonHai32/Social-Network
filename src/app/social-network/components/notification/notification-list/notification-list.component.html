@@ -3,7 +3,7 @@
     <cdk-virtual-scroll-viewport itemSize="50" class="h-100">
       <ng-container *ngIf="notifications$ | async as notifications">
         <ng-container *ngFor="let item of notifications">
-          <app-notification-content [notification]='item' [currentUserID]="currentUser.id"></app-notification-content>
+          <app-notification-content (notificationClicked)="handleNotiticationClicked($event)" [notification]='item' [currentUserID]="currentUser.id"></app-notification-content>
         </ng-container>
         <ng-container *ngIf="notifications.length <=0">
           <div nz-row>

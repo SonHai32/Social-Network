@@ -30,18 +30,26 @@
   </div>
 </div>
 
-<nz-drawer *ngIf="isAuthenticated" [nzVisible]="notificationVisible" [nzPlacement]="isMobile ? 'bottom': 'right'"
-  (nzOnClose)="toggleNotification()" nzWidth="25%" nzHeight="100%" [nzTitle]="notificationTitleTpl">
-  <app-notification-list [currentUser]='currentUser'></app-notification-list>
+<nz-drawer *ngIf="isAuthenticated" [nzContent]="notificationTpl" [nzVisible]="notificationVisible"
+  [nzPlacement]="isMobile ? 'bottom': 'right'" (nzOnClose)="toggleNotification()" nzWidth="25%" nzHeight="100%"
+  [nzTitle]="notificationTitleTpl">
   <ng-template #notificationTitleTpl>
     <h5 nz-typography>Thông báo</h5>
   </ng-template>
 </nz-drawer>
 
-<nz-modal *ngIf="searchVisible" [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null" (nzOnCancel)="toggleSearch()"
-  [(nzVisible)]="searchVisible" nzCloseOnNavigation="true">
-  <app-search-box></app-search-box>
+<ng-template #notificationTpl>
+  <app-notification-list (notificationClicked)="toggleNotification()" [currentUser]='currentUser'></app-notification-list>
+</ng-template>
+
+
+<nz-modal *ngIf="searchVisible" [nzContent]="searchBoxTpl" [nzCloseIcon]="closeIcon" nzCentered [nzFooter]="null"
+  (nzOnCancel)="toggleSearch()" [(nzVisible)]="searchVisible" nzCloseOnNavigation="true">
 </nz-modal>
+
+<ng-template #searchBoxTpl>
+  <app-search-box></app-search-box>
+</ng-template>
 
 <ng-template #closeIcon>
   <i nz-icon nzType="close" nzTheme="outline"></i>

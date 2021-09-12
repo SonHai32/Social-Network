@@ -1,7 +1,7 @@
 import { NotificationService } from '../../../services/notification.service';
 import { Router } from '@angular/router';
 import { Notification } from '../../../models/notification.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-notification-content',
@@ -11,6 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NotificationContentComponent implements OnInit {
   @Input('notification') notification!: Notification;
   @Input('currentUserID') currentUserID!: string;
+  @Output('notificationClicked') notificationClicked = new EventEmitter<boolean>(false);
   constructor(
     private router: Router,
     private userNotificationService: NotificationService
@@ -32,5 +33,6 @@ export class NotificationContentComponent implements OnInit {
           queryParamsHandling: 'merge',
         });
     }
+    this.notificationClicked.emit(true)
   }
 }
