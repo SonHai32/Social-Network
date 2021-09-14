@@ -1,0 +1,14 @@
+<ng-container *ngIf="imageList">
+  <div class="d-flex align-items-center justify-content-end flex-wrap p-1" [style.width]="containerSize+'px'">
+    <ng-container *ngFor="let img of imageList;index as idx">
+      <div class="my-1 rounded position-relative" style="overflow: hidden;" [style.width]="imageSize"
+        [style.height]="imageSize">
+        <!-- <img *ngIf="img.src" [width]="imageSize" [height]="imageSize" nz-image nzSrc="{{img.src}}"
+          /> -->
+          <div class="thumb" style="background-image: url('{{img.src}}');" [style.height]="imageSize+'px'" [style.width]="imageSize+'px'"></div>
+        <div class="image-hover" (click)="imagePreview(idx)"></div>
+      </div>
+    </ng-container>
+  </div>
+
+</ng-container>

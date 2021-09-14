@@ -57,7 +57,7 @@
       shadow-sm
     ">
     <nz-badge [nzCount]="iconTemplate">
-      <img nz-image width="48px" height="48px" nzSrc="./assets/images/icons/picture.png" alt="" />
+      <img nzDisablePreview="true" nz-image width="48px" height="48px" nzSrc="./assets/images/icons/picture.png" alt="" />
     </nz-badge>
     <a nz-typography nzType="danger" class="font-size-sm mx-2" (click)="toggleShowListImage()"><strong> {{
         imageFiles.length }} tệp tin đính kèm </strong>
@@ -90,7 +90,7 @@
         shadow-sm
         scale-sm
       ">
-        <img class="mx-1" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/map.png" alt="" />
+        <img nzDisablePreview="true" class="mx-1" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/map.png" alt="" />
         <span nz-typography> <strong> Địa điểm</strong> </span>
       </div>
 
@@ -106,7 +106,7 @@
         shadow-sm
         scale-sm
       ">
-        <img class="mx-2" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/tag.png" alt="" />
+        <img nzDisablePreview="true" class="mx-2" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/tag.png" alt="" />
         <span nz-typography> <strong>Hashtag</strong> </span>
       </div>
       <div nz-col nzLg="7" nzSpan="22" class="
@@ -126,7 +126,7 @@
           <ng-template #nullTpl></ng-template>
           <div class="font-size-xs">
 
-            <img class="mx-1" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/picture.png" alt="" />
+            <img nzDisablePreview="true" class="mx-1" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/picture.png" alt="" />
             <span nz-typography> <strong>Khoảnh khắc</strong> </span>
           </div>
         </nz-upload>
@@ -143,7 +143,7 @@
         shadow-sm
         scale-sm
       ">
-        <img class="mx-1" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/add-friend.png" alt="" />
+        <img nzDisablePreview="true" class="mx-1" nz-image width="28px" height="28px" nzSrc="./assets/images/icons/add-friend.png" alt="" />
         <span nz-typography> <strong>Bạn bè</strong> </span>
       </div>
     </div>

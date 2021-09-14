@@ -1,10 +1,14 @@
+import { NzImage } from 'ng-zorro-antd/image';
+import { StorageService } from './storage.service';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { PrivateMessage } from './../models/message.model';
 import { NotificationService } from './notification.service';
-import { map } from 'rxjs/operators';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
+import { take, map } from 'rxjs/operators';
+
 import firebase from 'firebase/app';
 
 @Injectable({
@@ -13,7 +17,8 @@ import firebase from 'firebase/app';
 export class MessageService {
   constructor(
     private afs: AngularFirestore,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private storageService: StorageService
   ) {}
 
   getMessageList(currentUserID: string): Observable<string[]> {
@@ -54,19 +59,60 @@ export class MessageService {
   sendMessage(
     fromUser: User,
     toUserID: string,
-    message: PrivateMessage
-  ): Promise<[DocumentReference, DocumentReference, DocumentReference]> {
-    return Promise.all([
-      this.saveMessage(fromUser.id, toUserID, message),
-      this.saveMessage(toUserID, fromUser.id, message),
-      this.notificationService.addNotification(toUserID, {
-        byUser: fromUser,
-        created_at: firebase.firestore.Timestamp.now(),
-        seen: false,
-        title: 'Đã gửi tin nhắn cho bạn',
-        type: 'message',
-      }),
-    ]);
+    message: PrivateMessage,
+    imageList?: NzUploadFile[] | undefined
+  ): Promise<string> {
+    return new Promise<string>((reslove, reject) => {
+      if (imageList && imageList.length > 0) {
+        this.storageService
+          .fileUpload(imageList, fromUser.id + toUserID)
+          .pipe(
+            map((res: string[]) =>
+              res.map((val: string) => {
+                return {
+                  src: val,
+                  alt: 'image_from_user_private_message',
+                } as NzImage;
+              })
+            ),
+          )
+          .subscribe((imageList: NzImage[]) => {
+            Promise.all([
+              this.saveMessage(fromUser.id, toUserID, {
+                ...message,
+                imageMessage: imageList,
+              }),
+              this.saveMessage(toUserID, fromUser.id, {
+                ...message,
+                imageMessage: imageList,
+              }),
+              this.notificationService.addNotification(toUserID, {
+                byUser: fromUser,
+                created_at: firebase.firestore.Timestamp.now(),
+                seen: false,
+                title: 'Đã gửi tin nhắn cho bạn',
+                type: 'message',
+              }),
+            ])
+              .then(() => reslove('SUCCESS'))
+              .catch((err) => reject(err));
+          });
+      } else {
+        Promise.all([
+          this.saveMessage(fromUser.id, toUserID, message),
+          this.saveMessage(toUserID, fromUser.id, message),
+          this.notificationService.addNotification(toUserID, {
+            byUser: fromUser,
+            created_at: firebase.firestore.Timestamp.now(),
+            seen: false,
+            title: 'Đã gửi tin nhắn cho bạn',
+            type: 'message',
+          }),
+        ])
+          .then(() => reslove('SUCCESS'))
+          .catch((err) => reject(err));
+      }
+    });
   }
 
   saveMessage(fromuserID: string, toUserID: string, message: PrivateMessage) {
@@ -89,7 +135,8 @@ export class MessageService {
     fromUserID: string,
     toUserID: string
   ): Observable<PrivateMessage[]> {
-    this.notificationService.setSeenMessageNotification(fromUserID, toUserID).then(() => console.log('delete'))
+    this.notificationService
+      .setSeenMessageNotification(fromUserID, toUserID)
     return this.afs
       .doc<User>(`users/${fromUserID}`)
       .collection('messages')

@@ -14,43 +14,73 @@
           <ng-container *ngIf="message.sendByID !== currentUser$.id; else selfMessage">
             <div class="w-100 d-flex align-items-center">
               <nz-comment>
-                <nz-avatar *ngIf="friend" nzSrc="{{friend.avatar_url}}" class="d-flex align-items-center justify-content-center" nz-comment-avatar nzIcon="user"
-                  ></nz-avatar>
-                <nz-comment-content class="bg-white-opacity px-2 py-1 rounded-12 shadow-sm">
+                <nz-avatar *ngIf="friend" nzSrc="{{friend.avatar_url}}"
+                  class="d-flex align-items-center justify-content-center" nz-comment-avatar nzIcon="user"></nz-avatar>
+                <nz-comment-content *ngIf="message.textMessage" class="bg-white-opacity px-2 py-1 rounded-12 shadow-sm">
                   <span nz-typography nz-tooltip="{{message.created_at.toDate()| toHours}}"
                     style="overflow-wrap: break-word; word-break: break-all;">
                     {{message.textMessage}}
                   </span>
+
                 </nz-comment-content>
+                <div *ngIf="message.imageMessage" class="w-100 d-flex align-items-center justify-content-end">
+                  <app-image-display [imageList]="message.imageMessage"></app-image-display>
+                </div>
               </nz-comment>
             </div>
           </ng-container>
           <ng-template #selfMessage>
-            <div class="w-100 d-flex align-items-center justify-content-end">
-              <span nz-tooltip="Tôi: {{message.created_at.toDate()| toHours}}"
+            <div class="w-100 d-flex align-items-center justify-content-end flex-wrap ">
+              <span *ngIf="message.textMessage" nz-tooltip="Tôi: {{message.created_at.toDate()| toHours}}"
                 class="bg-primary-opacity p-2 rounded-12 shadow-sm text-white " nz-typography
                 style="overflow-wrap: break-word; word-break: break-all;">
                 {{message.textMessage}}
               </span>
+              <div *ngIf="message.imageMessage" class="w-100 d-flex align-items-center justify-content-end">
+                <app-image-display [imageList]="message.imageMessage"></app-image-display>
+              </div>
             </div>
+
           </ng-template>
         </div>
       </div>
     </cdk-virtual-scroll-viewport>
-    <div nz-col nzSpan="24" class="border-top p-2 d-flex align-items-start" style="height: 12vh;">
+    <div nz-col nzSpan="24" class="border-top p-2 d-flex align-items-start position-relative" style="height: 12vh">
+      <div *ngIf="imageBase64List | async as list" class="w-100 img-upload-list d-flex p-1 rounded" style="overflow-x: auto;">
+        <ng-container *ngFor="let image of list">
+          <div class="position-relative mx-1">
+            <div class="p-1 rounded border" style="overflow: hidden;">
+              <img nzDisablePreview class="mx-2" nz-image nzSrc="{{image.url}}" width="80" height="80" />
+              <div (click)="imageUploadRemove(image.originalIndex)"
+                class="rounded image-overlay d-flex justify-content-center align-items-center">
+                <i class="close-icon" nz-icon type="close-circle" nzTheme="outline"></i>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
       <nz-input-group class="align-items-center border-none" [nzSuffix]="suffixTemplateInfo">
-        <textarea #chatBox [(ngModel)]="chatBoxValue" (keydown.enter)="sendMessage(chatBox)" type="text" nz-input
+        <textarea #chatBox [(ngModel)]="chatBoxValue" (keydown.enter)="sendMessage()" type="text" nz-input
           placeholder="Nhập tin nhắn" nzSize="large" class="my-1 px-3 rounded no-resize border-none"
           [nzAutosize]="{ maxRows: 2 }"></textarea>
       </nz-input-group>
       <ng-template #suffixTemplateInfo>
-        <button (click)="sendMessage(chatBox)" nz-tooltip nzTooltipTitle="Gửi" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
-          nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
+        <button (click)="sendMessage()" nz-tooltip nzTooltipTitle="Gửi" nzTooltipTrigger="hover"
+          nzTooltipPlacement="top" nz-button nzShape="circle" nzType="text"
+          class="d-flex align-items-center justify-content-center">
           <i nz-icon nzType="send" nzTheme="outline"></i>
         </button>
-        <button nz-tooltip nzTooltipTitle="Hình ảnh" nzTooltipTrigger="hover" nzTooltipPlacement="top" nz-button
-          nzShape="circle" nzType="text" class="d-flex align-items-center justify-content-center">
-          <i nz-icon nzType="picture" nzTheme="outline"></i></button>
+        <nz-upload
+          nzAccept="image/png,image/jpeg,image/gif,image/bmp,image/svg+xml, image/jpg, image/webp"
+          nzFileType="image/png,image/jpeg,image/gif,image/bmp,image/svg+xml, image/jpg, image/webp" nzSize="15360"
+          [nzMultiple]="true" [nzFileListRender]="disableNzImageRender" [nzBeforeUpload]="beforeUpload">
+          <button (nzRemove)="test()" nz-tooltip nzTooltipTitle="Hình ảnh" nzTooltipTrigger="hover"
+            nzTooltipPlacement="top" nz-button nzShape="circle" nzType="text"
+            class="d-flex align-items-center justify-content-center">
+            <i nz-icon nzType="picture" nzTheme="outline"></i></button>
+        </nz-upload>
+        <ng-template #disableNzImageRender></ng-template>
+
       </ng-template>
     </div>
   </div>

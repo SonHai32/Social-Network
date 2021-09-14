@@ -1,0 +1,17 @@
+.image-hover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all .2s ease-in-out;
+  &:hover{
+    background-color: rgba($color: #000000, $alpha: 0.3);
+  }
+}
+
+.thumb {
+    // display: inline-block;
+    background-position: center center;
+    background-size: cover;
+}

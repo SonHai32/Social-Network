@@ -1,7 +1,8 @@
+import { ImageDisplayCompModule } from './../image-display-comp/image-display-comp.module';
+import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ScrollableDirective } from './../../directives/scrollable.directive';
 import { ToHoursPipeModule } from './../to-hours-pipe/to-hours-pipe.module';
-import { ToHoursPipe } from '../../pipes/to-hours.pipe';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormsModule } from '@angular/forms';
@@ -30,8 +31,11 @@ import { CommonModule } from '@angular/common';
     NzToolTipModule,
     NzInputModule,
     NzButtonModule,
+    NzUploadModule,
+    NzImageModule,
     NzSpinModule,
     FormsModule,
+    ImageDisplayCompModule,
     ToHoursPipeModule,
     ScrollingModule,
   ],
