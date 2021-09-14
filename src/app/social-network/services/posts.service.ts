@@ -2,21 +2,55 @@ import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Post } from '../models/post.model';
-import { map } from 'rxjs/operators';
+import { map, take, scan, reduce } from 'rxjs/operators';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { status } from '../models/status.model';
 import { NzImage } from 'ng-zorro-antd/image';
 import { StorageService } from './storage.service';
-
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  getTotalPost(): Observable<number> {
+  getTotalPost(byUserID?: string): Observable<number> {
+    if (byUserID) {
+      return this.afs
+        .collection<Post>('posts', (ref) =>
+          ref.where('created_by_id', '==', byUserID)
+        )
+        .snapshotChanges(['added', 'removed'])
+        .pipe(
+          take(1),
+          map((resPost) => resPost.length)
+        );
+    } else {
+      return this.afs
+        .collection<Post>('posts')
+        .snapshotChanges(['added', 'removed'])
+        .pipe(map((resPost) => resPost.length));
+    }
+  }
+
+  getTotalImagePostByUser(byUserID: string): Observable<number> {
     return this.afs
-      .collection<Post>('posts')
-      .snapshotChanges(['added', 'removed'])
-      .pipe(map((resPost) => resPost.length));
+      .collection<Post>('posts', (ref) =>
+        ref.where('created_by_id', '==', byUserID)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((posts) =>
+          posts.map((post) => {
+            const imageLength: number | undefined = (
+              post.payload.doc.data() as Post
+            ).post_content.image_content?.length;
+            return imageLength ? imageLength : 0;
+          })
+        ),
+        map((res) => {
+          if (res && res.length > 0) {
+            return res.reduce((acc, val) => acc + val);
+          } else return 0;
+        })
+      );
   }
 
   searchPost(key: string) {

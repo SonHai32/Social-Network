@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { User } from 'src/app/social-network/models/user.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, take } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { Observable, combineLatest, from } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -286,6 +286,11 @@ export class UserService {
         })
       );
   }
+  //Get total user's friend list only once
+  getTotalFriend(userID: string): Observable<number>{
+    return this.afs.collection<User>('users').doc(userID).collection('friend_list').snapshotChanges().pipe(take(1), map(res => res.length))
+  }
+
   constructor(
     private afs: AngularFirestore,
     private store: Store,

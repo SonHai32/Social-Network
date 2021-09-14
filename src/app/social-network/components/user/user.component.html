@@ -1,14 +1,14 @@
-<div *ngIf="userID" nz-row nzJustify="center" class="mb-3 rounded-12 glass shadow-sm"
+<div *ngIf="userStatic | async as us" nz-row nzJustify="center" class="mb-3 rounded-12 glass shadow-sm"
   style="height: 70vh; overflow: hidden;">
   <div class="h-50 rounded-12 shadow-sm" nz-col nzSpan="24"
     style=" background: url('https://terrigen-cdn-dev.marvel.com/content/prod/1x/a44.jpg');">
   </div>
   <div nz-col nzSpan="24" class="h-50 d-flex align-items-end justify-content-around position-relative">
-    <div *ngIf="user | async as us"
-      class=" d-flex flex-column absolute-top-overflow align-items-center justify-content-center">
-      <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{us.avatar_url}}' [nzSize]="180">
+    <div class=" d-flex flex-column absolute-top-overflow align-items-center justify-content-center">
+      <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{us.userInfo.avatar_url}}'
+        [nzSize]="180">
       </nz-avatar>
-      <span class="text-large" nz-typography>{{us.display_name}}</span>
+      <span class="text-large" nz-typography>{{us.userInfo.display_name}}</span>
     </div>
     <div nz-row>
       <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-center mb-5">
@@ -23,13 +23,13 @@
         </button>
       </div>
       <div nz-col nzSpan="24" class="d-flex align-items-center justify-content-center">
-        <nz-statistic class="text-center mx-3" [nzValue]="(60 | number)!" [nzTitle]="friendLinkTpl"
+        <nz-statistic class="text-center mx-3" [nzValue]="(us.totalFriend| number)!" [nzTitle]="friendLinkTpl"
           [nzValueStyle]="{ color: '#fd70a1' }">
         </nz-statistic>
-        <nz-statistic class="text-center mx-3" [nzValue]="(1220 | number)!" [nzTitle]="photoLinkTpl"
+        <nz-statistic class="text-center mx-3" [nzValue]="(us.totalImage| number)!" [nzTitle]="photoLinkTpl"
           [nzValueStyle]="{ color: '#fd70a1' }">
         </nz-statistic>
-        <nz-statistic class="text-center mx-3" [nzValue]="(69 | number)!" [nzTitle]="postLinkTpl"
+        <nz-statistic class="text-center mx-3" [nzValue]="(us.totalPost| number)!" [nzTitle]="postLinkTpl"
           [nzValueStyle]="{ color: '#fd70a1' }">
         </nz-statistic>
         <ng-template #friendLinkTpl>

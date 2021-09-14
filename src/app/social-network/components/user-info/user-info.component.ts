@@ -1,3 +1,5 @@
+import { PostsService } from 'src/app/social-network/services/posts.service';
+import { vmFromLatest } from 'src/app/social-network/utils/operators';
 import { getUserSelector } from '../../store/auth/auth.selectors';
 import { Subscription, Observable } from 'rxjs';
 import { AppMessageAction } from '../../store/app-message/app-message.actions';
@@ -13,7 +15,6 @@ import {
   ElementRef,
   ChangeDetectorRef,
 } from '@angular/core';
-import { isEqual } from 'lodash-es';
 
 @Component({
   selector: 'app-user-info',
@@ -51,6 +52,7 @@ export class UserInfoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private postService: PostsService,
     private router: Router,
     private store: Store,
     private detector: ChangeDetectorRef
@@ -64,6 +66,7 @@ export class UserInfoComponent implements OnInit {
           this.store.select(getUserSelector).subscribe((user) => {
             if (user) {
               this.canEdit = id === user.id;
+
             }
           })
         );
