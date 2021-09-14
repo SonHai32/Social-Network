@@ -1,12 +1,12 @@
 <div *ngIf="userStatic | async as us" nz-row nzJustify="center" class="mb-3 rounded-12 glass shadow-sm"
   style="height: 70vh; overflow: hidden;">
-  <div class="h-50 rounded-12 shadow-sm" nz-col nzSpan="24"
-    style=" background: url('https://terrigen-cdn-dev.marvel.com/content/prod/1x/a44.jpg');">
+  <div class="h-50 rounded-12 shadow-sm user-background" nz-col nzSpan="24"
+    style=" background-image: url('https://firebasestorage.googleapis.com/v0/b/social-network-360bd.appspot.com/o/public%2Fassets%2Fbackground%2F3415007.jpg?alt=media&token=35cf6768-0c95-487e-990e-8c2abbf40037');">
   </div>
   <div nz-col nzSpan="24" class="h-50 d-flex align-items-end justify-content-around position-relative">
-    <div class=" d-flex flex-column absolute-top-overflow align-items-center justify-content-center">
-      <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{us.userInfo.avatar_url}}'
-        [nzSize]="180">
+    <div
+      class=" d-flex flex-column absolute-top-overflow align-items-center justify-content-center">
+      <nz-avatar class="d-flex align-items-center justify-content-center" nzSrc='{{us.userInfo.avatar_url}}' [nzSize]="180">
       </nz-avatar>
       <span class="text-large" nz-typography>{{us.userInfo.display_name}}</span>
     </div>

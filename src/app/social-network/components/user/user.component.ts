@@ -31,7 +31,6 @@ export class UserComponent implements OnInit {
       const ID = val.get('id');
       if (ID) {
         this.userID = val.get('id');
-        // this.user = this.userService.getUserInfo(ID);
         this.userStatic = vmFromLatest<userStaticVM>({
           totalFriend: this.userService.getTotalFriend(ID),
           totalImage: this.postService.getTotalImagePostByUser(ID),
