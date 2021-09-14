@@ -202,7 +202,7 @@
                       {{hobby.textHobby}} </strong></span></div>
               </nz-badge>
               <ng-template #closeIconTpl>
-                <i (click)="deleteHobby(i)" style="margin-right: 4px;" nzTheme="fill" nz-icon nzType="close-circle"
+                <i *ngIf="canEdit" (click)="deleteHobby(i)" style="margin-right: 4px;" nzTheme="fill" nz-icon nzType="close-circle"
                   class="ant-scroll-number-custom-component font-size-sm"></i>
               </ng-template>
             </ng-container>
