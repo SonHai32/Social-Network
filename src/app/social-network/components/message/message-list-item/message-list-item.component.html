@@ -1,6 +1,6 @@
 <div *ngIf="friendID" nz-row class="m-1 rounded-12 message-list-item w-100 p-2 pointer">
   <ng-container *ngIf="friendInfo$ | async as user else loadingTpl">
-    <div [routerLink]="['/messages/message', friendID]" nz-col nzSpan="24"
+    <div nz-col nzSpan="24"
       class="d-flex align-items-center justify-content-start">
       <nz-avatar nzIcon="user" nzSize="large" nzSrc="{{user.avatar_url}}"></nz-avatar>
       <div nz-row nzAlign="middle" class="ms-3">
