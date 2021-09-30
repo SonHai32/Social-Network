@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { ScrolToCommentsModule } from './../directive/scrol-to-comments.module';
 import { FromNowPipeModule } from '../from-now-pipe/from-now-pipe.module';
 import { ScrollToCommentDirective } from '../../directives/scroll-to-comment.directive';
@@ -24,6 +25,7 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     NzAvatarModule,
     NzGridModule,
     NzButtonModule,

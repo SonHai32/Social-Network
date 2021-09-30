@@ -6,7 +6,7 @@
         <nz-avatar class="d-flex align-items-center justify-content-center" [nzSize]="48" nzSrc="{{post.avatar_url}}">
         </nz-avatar>
         <div class="d-flex flex-column mx-2">
-          <a href="#" nz-typography><strong> {{ post.create_by_username }}</strong></a>
+          <a [routerLink]="['user', post.created_by_id]" nz-typography><strong> {{ post.create_by_username }}</strong></a>
           <span nz-typography nzType="secondary">{{post.created_at | fromNow }} </span>
         </div>
       </div>
