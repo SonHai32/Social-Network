@@ -1,10 +1,7 @@
-import { NzImageService, NzImageModule } from 'ng-zorro-antd/image';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { AppLoadingCompModule } from './social-network/modules/layout/app-loading-comp.module';
 import { CoreCompModule } from './social-network/modules/core/core-comp.module';
 import { CoreRoutingModule } from './social-network/routing/core/core-routing.module';
-import { PostsCompModule } from './social-network/modules/post/posts-comp.module';
-import { CovidCoreModule } from './covid-feature/covid-core.module';
 import { LoadingModule } from './social-network/modules/loading.module';
 import { AppMessageModule } from './social-network/modules/app-message.module';
 import { AuthModule } from './social-network/modules/auth.module';

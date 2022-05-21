@@ -5,10 +5,6 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./social-network/modules/feature/core/core.module').then(m => m.CoreModule)
-  },
-  {
-    path: 'covid',
-    loadChildren: () => import('./covid-feature/covid-core.module').then(m => m.CovidCoreModule)
   }
 ];
 
